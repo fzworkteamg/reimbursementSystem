@@ -24,5 +24,17 @@
 		<include refid="processColums" />
 		FROM process WHERE process_id=#{processId}
 	</select>
+	
+    <insert id="insertProcess" parameterType="java.util.Map">
+        insert into process
+        <foreach collection="processMap.keys" separator="," item="key" open="(" close=")">
+            ${key}
+        </foreach>
+        values
+        <foreach collection="processMap.keys" item="key" separator="," open="(" close=")">
+            #{processMap[${key}]}
+        </foreach>
+
+    </insert>
 
 </mapper>
