@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是命名空间，是mapper接口的全路径 -->
+<mapper namespace="cn.reimbursement.dao.StaffDao">
+
+	<!--resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象 -->
+	<resultMap id="staffMap"
+		type="cn.reimbursement.pojo.Staff">
+		<id property="staffId" column="staff_id" />
+		<result property="staffPassword" column="staff_password" />
+		<result property="staffName"
+			column="staff_name" />
+		<result property="staffSex" column="staff_sex" />
+		<result property="staffAge" column="staff_age" />
+		<result property="staffTel" column="staff_tel" />
+		<result property="staffEmail" column="staff_eamil" />
+		<result property="staffAddress" column="staff_address" />
+		<result property="companyName" column="company_name" />
+		<result property="depName" column="dep_name" />
+		<result property="dutyName" column="duty_name" />
+		<result property="temDutyName" column="tem_duty_name" />
+	</resultMap>
+
+	<!--sql – 可被其他语句引用的可重用语句块 -->
+	<sql id="processColums">
+		staff_id,staff_password,staff_name,staff_sex,staff_age,staff_tel,staff_eamil,staff_address,company_name,dep_name,duty_name,tem_duty_name
+	</sql>
+	<select id="selectStaffById" resultMap="staffMap">
+		SELECT <include refid="processColums"/> FROM staff WHERE staff_id=#{staffId}
+	</select>
+
+</mapper>

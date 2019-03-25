@@ -20,9 +20,14 @@ public class ServerResult<T> {
 		this.status = status;
 		this.msg = msg;
 	}
-
+	
 	public ServerResult() {
 		super();
+	}
+
+	public ServerResult(Integer status) {
+		super();
+		this.status = status;
 	}
 
 }

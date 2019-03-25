@@ -10,8 +10,14 @@ public class ViewController {
 	
 	
 	@PostMapping("/toLogin")
-	public String selectProcessById(Integer processId) {
+	public String toLigin() {
 		return "login";
 	}
+	
+	@PostMapping("/toIndex")
+	public String toIndex() {
+		return "index";
+	}
+	
 	
 }

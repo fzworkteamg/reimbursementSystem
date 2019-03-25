@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.ProcessDao;
-import cn.reimbursement.enums.ProcessEnum;
+import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Process;
 import cn.reimbursement.util.ServerResult;
 
@@ -22,9 +22,9 @@ public class ProcessServiceImpl implements ProcessService {
 //		System.out.println(arr[1]);
 		Process process=processDao.selectProcessById(processId);
 		if(process!=null) {
-			return new ServerResult<Process>(0,ProcessEnum.SUCCESS.getName(),process);
+			return new ServerResult<Process>(0,InfoEnum.SUCCESS.getName(),process);
 		}
-		return new ServerResult<Process>(1,ProcessEnum.FAIL.toString());
+		return new ServerResult<Process>(1,InfoEnum.FAIL.toString());
 	}
 
 	public ServerResult insertProcess(Map<String, String> processMap) {

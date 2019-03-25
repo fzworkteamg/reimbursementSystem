@@ -8,6 +8,7 @@ import lombok.Data;
 @Component
 public class Staff {
 	private String staffId;
+	private String staffPassword;
 	private String staffName;
 	private Integer staffSex;
 	private Integer staffAge;
