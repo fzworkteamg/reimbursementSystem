@@ -1,7 +1,6 @@
 package cn.reimbursement.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -9,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
 	
 	
-	@PostMapping("/toLogin")
+	@RequestMapping("/toLogin")
 	public String toLigin() {
 		return "login";
 	}
 	
-	@PostMapping("/toIndex")
+	@RequestMapping("/toIndex")
 	public String toIndex() {
 		return "index";
 	}
