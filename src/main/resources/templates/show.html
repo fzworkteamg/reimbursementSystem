@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<script>
+    var companys;
+    $(document).ready(function () {
+        //获取公司填充下拉列表
+        $.ajax({
+            url: '/company/selectCompany',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (result) {
+                companys = result.data;
+                for (var i = 0; i <companys.length; i++){
+                    $("#selectCompany").append($("<option>"+companys[i]+"</option>"))
+                }
+            }
+        })
+
+        $("select[name='company']").change(function () {
+            var company = $("#selectCompany").val();
+            console.log($("#selectCompany").val());
+            if(company!="--选择公司--"){
+                $.ajax({
+                    url: '/dep/selectDepByCompany',
+                    type: 'post',
+                    dataType: 'json',
+                    data:JSON.stringify(company),
+                    contentType: "application/json",
+                    success: function (result) {
+                        var deps = result.data;
+                        for (var i = 0; i <deps.length; i++){
+                            console.log(deps);
+                            $("#selectDep").append($("<option>"+deps[i]+"</option>"))
+                        }
+                    }
+                })
+            }
+        })
+
+
+
+        // var formData = new FormData($("#selectForm")[0]);//此处id为form表单的id
+        // $.ajax({
+        //     url: 'movieCapsulePut',
+        //     type: 'post',
+        //     // dataType: 'json',
+        //     contentType: false,
+        //     data: formData,
+        //     processData: false,
+        //     async: false,
+        //     cache: false,
+        //     success: function (result) {
+        //
+        //     },
+        //     fail: function () {
+        //         window.alert("系统错误，请联系管理员");
+        //     }
+        // })
+
+    })
+</script>
+<div class="layui-container">
+    <div class="layui-row">
+        <form id="selectForm" enctype="multipart/form-data">
+            业务所属公司<select style="width:110px" id="selectCompany" name="company"><option>--选择公司--</option></select>
+            业务所属部门<select style="width:110px" id="selectDep" name="dep"><option>--选择部门--</option></select>
+            属性<select style="width:110px" name="attribute"><option>--选择类别--</option></select>
+            类别<select style="width:110px" name="type"><option>--选择类别--</option></select>
+            发票状态<select style="width:110px" name="invoice"><option>--选择类别--</option></select>
+            合同状态<select style="width:110px" name="contract"><option>--选择类别--</option></select>
+            <br><br>
+            报销单号<input type="text" style="width:110px" name="billId">
+            经办人<input type="text" style="width:110px" name="chargePerson">
+            登记人<input type="text" style="width:110px" name="registrantPerson">
+            <!--财务经手人<input type="text" style="width:110px" name="">-->
+            备注<input type="text" style="width:110px" name="summary">
+            科目<select style="width:110px"  name="subject"></select>
+            <br><br>
+            产生日期<input type="date" style="width:120px" name="produceData">
+            登记日期<input type="date" style="width:120px" name="registrantDate">
+            结束日期<input type="date" style="width:120px" name="endDate">
+            金额<input type="text" style="width:60px" name="amountLow">至<input type="text" style="width:60px" name="amoutHigh">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius">
+        </form>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
