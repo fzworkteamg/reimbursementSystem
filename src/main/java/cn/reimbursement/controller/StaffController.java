@@ -22,10 +22,7 @@ public class StaffController {
 	
 	@PostMapping("/loginByIdAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
-		String staffId=map.get("staffId");
-		String staffPassword=map.get("staffPassword");
-		//System.out.println(staffId+","+staffPassword+","+request.getParameter("staffId")+","+request.getParameter("staffPassword"));
-		return staffService.loginByIdAndPassword(request, staffId, staffPassword);
+		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));
 	}
 	
 }
