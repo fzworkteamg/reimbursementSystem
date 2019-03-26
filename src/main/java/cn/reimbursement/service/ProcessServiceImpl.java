@@ -1,5 +1,6 @@
 package cn.reimbursement.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,25 @@ public class ProcessServiceImpl implements ProcessService {
 
 	public ServerResult<Process> selectProcessById(Integer processId) {
 		System.out.println("zero");
-//		int[] arr=new int[] {0};
-//		System.out.println(arr[1]);
 		Process process=processDao.selectProcessById(processId);
 		if(process!=null) {
 			return new ServerResult<Process>(0,InfoEnum.SUCCESS.getName(),process);
 		}
 		return new ServerResult<Process>(1,InfoEnum.FAIL.toString());
 	}
-
+	
+	//test
 	public ServerResult insertProcess(Map<String, String> processMap) {
 		processDao.insertProcess(processMap);
+		return null;
+	}
+	
+	//test
+	public ServerResult selectProcess(Map<String, String> processMap) {
+		List<Process> procssList=processDao.selectProcess(processMap);
+		for (Process process : procssList) {
+			System.out.println(process);
+		}
 		return null;
 	}
 

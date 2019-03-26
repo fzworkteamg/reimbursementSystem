@@ -7,5 +7,5 @@ import cn.reimbursement.pojo.Staff;
 
 @Repository
 public interface StaffDao {
-	public Staff selectStaffdById(@Param("staffId") String staffId);
+	public Staff selectStaffById(@Param("staffId") String staffId);
 }

@@ -34,7 +34,23 @@
         <foreach collection="processMap.keys" item="key" separator="," open="(" close=")">
             #{processMap[${key}]}
         </foreach>
-
     </insert>
-
+    
+	<select id="selectProcess" parameterType="java.util.Map" resultMap="processMap">  
+	    SELECT <include refid="processColums"/>
+	    FROM process
+	    WHERE 1=1
+	    <if test="processMap.processCompany != null"> 
+	        AND process_company = #{processMap.processCompany}
+	    </if>  
+	    <if test="processMap.processDepartment != null">  
+	        AND process_department = #{processMap.processDepartment}
+	    </if>  
+	    <if test="processMap.processContent != null">  
+	        AND process_content = #{processMap.processContent}
+	    </if>  
+	    <if test="processMap.processCount != null">  
+	        AND process_count = #{processMap.processCount}
+	    </if>  
+	</select>
 </mapper>
