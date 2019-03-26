@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是命名空间，是mapper接口的全路径 -->
+<mapper namespace="cn.reimbursement.dao.DepDao">
+
+	<!--resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象 -->
+	<resultMap id="DepMap"
+		type="cn.reimbursement.pojo.Dep">
+		<id property="depId" column="dep_id" />
+		<result property="depSeq" column="dep_seq" />
+		<result property="depName" column="dep_name" />
+		<result property="companyName" column="company_name" />
+	</resultMap>
+
+	<!--sql – 可被其他语句引用的可重用语句块 -->
+	<sql id="depColums">
+		dep_id,dep_seq,dep_name,company_name
+	</sql>
+	<select id="selectDepByCompany" resultType="java.lang.String">
+		SELECT
+		dep_name
+		FROM dep WHERE company_name=#{companyName}
+	</select>
+</mapper>
