@@ -66,11 +66,11 @@
     }
     document.querySelector(".login-button").onclick = function(){
         var staffId = $("#staffId").val();
-        var password = $("#password").val();
+        var staffPassword = $("#password").val();
 
         var sData = {
             staffId :staffId,
-            password:password
+            staffPassword:staffPassword
         }
         console.log(sData);
         $.ajax({
