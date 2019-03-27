@@ -17,6 +17,15 @@ public class ViewController {
 	public String toIndex() {
 		return "index";
 	}
-	
+
+	@RequestMapping("/toShow")
+	public String toShow(){
+		return "show";
+	}
+
+	@RequestMapping("/toAddBill")
+	public String toAddBill() {
+		return "addBill";
+	}
 	
 }
