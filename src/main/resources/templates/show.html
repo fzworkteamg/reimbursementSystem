@@ -2,77 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title></title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <script src="/js/jquery-3.3.1.min.js"></script>
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script src="/js/tools.js"></script>
+    <script src="/js/show.js"></script>
 </head>
 <body>
-<script>
-    var companys;
-    $(document).ready(function () {
-        //获取公司填充下拉列表
-        $.ajax({
-            url: '/company/selectCompany',
-            type: 'post',
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (result) {
-                companys = result.data;
-                for (var i = 0; i <companys.length; i++){
-                    $("#selectCompany").append($("<option>"+companys[i]+"</option>"))
-                }
-            }
-        })
-
-        $("select[name='company']").change(function () {
-            var company = $("#selectCompany").val();
-            console.log($("#selectCompany").val());
-            if(company!="--选择公司--"){
-                $.ajax({
-                    url: '/dep/selectDepByCompany',
-                    type: 'post',
-                    dataType: 'json',
-                    data:{
-                        "company":company
-                    },
-                    // contentType: "application/json",
-                    success: function (result) {
-                        var deps = result.data;
-                        for (var i = 0; i <deps.length; i++){
-                            console.log(deps);
-                            $("#selectDep").append($("<option>"+deps[i]+"</option>"))
-                        }
-                    }
-                })
-            }
-        })
-
-
-
-        // var formData = new FormData($("#selectForm")[0]);//此处id为form表单的id
-        // $.ajax({
-        //     url: 'movieCapsulePut',
-        //     type: 'post',
-        //     // dataType: 'json',
-        //     contentType: false,
-        //     data: formData,
-        //     processData: false,
-        //     async: false,
-        //     cache: false,
-        //     success: function (result) {
-        //
-        //     },
-        //     fail: function () {
-        //         window.alert("系统错误，请联系管理员");
-        //     }
-        // })
-
-    })
-</script>
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data">
