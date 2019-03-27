@@ -36,8 +36,10 @@
                     url: '/dep/selectDepByCompany',
                     type: 'post',
                     dataType: 'json',
-                    data:JSON.stringify(company),
-                    contentType: "application/json",
+                    data:{
+                        "company":company
+                    },
+                    // contentType: "application/json",
                     success: function (result) {
                         var deps = result.data;
                         for (var i = 0; i <deps.length; i++){
