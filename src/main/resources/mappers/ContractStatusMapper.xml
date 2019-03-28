@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.ContractStatusDao">
+
+	<resultMap id="contractStatusMap"
+		type="cn.reimbursement.pojo.ContractStatus">
+		<id property="contractStatusId" column="contract_status_id" />
+		<result property="contractStatusName" column="contract_status_name" />
+	</resultMap>
+
+	<sql id="contractStatusColums">
+		contract_status_id,contract_status_name
+	</sql>
+	<select id="selectContractStatusName" resultType="java.lang.String">
+		SELECT
+		contract_status_name
+		FROM contract_status
+	</select>
+</mapper>
