@@ -157,13 +157,13 @@
         }
     });
 
-    // $("#childSelectDep").(function () {
-    //     var deps = selectDepByCompany($("#childSelectCompany").val());
-    //     console.log("sssssss"+deps);
-    //     for (var i = 0; i <deps.length; i++){
-    //         $("#childSelectDepelectDep").append($("<option>"+deps[i]+"</option>"))
-    //     }
-    // })
+    $("#childSelectDep").change(function () {
+        var deps = selectDepByCompany($("#childSelectCompany").val());
+        console.log("sssssss"+deps);
+        for (var i = 0; i <deps.length; i++){
+            $("#childSelectDepelectDep").append($("<option>"+deps[i]+"</option>"))
+        }
+    })
 
     // $("select[name='childSelectCompany1']").change(function () {
     //     var deps = selectDepByCompany($("#childSelectCompany").val());
