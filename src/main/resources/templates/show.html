@@ -10,28 +10,33 @@
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/tools.js"></script>
     <script src="/js/show.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
 </head>
 <body>
 <div class="layui-container">
     <div class="layui-row">
-        <form id="selectForm" enctype="multipart/form-data">
-            业务所属公司<select style="width:110px" id="selectCompany" name="company"><option>--选择公司--</option></select>
-            业务所属部门<select style="width:110px" id="selectDep" name="dep"><option>--选择部门--</option></select>
-            属性<select style="width:110px" name="attribute"><option>--选择类别--</option></select>
-            类别<select style="width:110px" name="type"><option>--选择类别--</option></select>
-            发票状态<select style="width:110px" name="invoice"><option>--选择类别--</option></select>
-            合同状态<select style="width:110px" name="contract"><option>--选择类别--</option></select>
+        <form id="selectForm" enctype="multipart/form-data" class="layui-form">
+            业务所属公司<select style="width:110px" id="selectCompany" name="company"><option></option></select>
+            业务所属部门<select style="width:110px" id="selectDep" name="dep"><option></option></select>
+            属性<select style="width:110px" name="attribute" id="attribute">
+            <option></option>
+            <option>正常</option>
+            <option>取消</option>
+            </select>
+            类别<select style="width:110px" name="type" id="type"><option></option></select>
+            发票状态<select style="width:110px" name="invoice" id="invoice"><option></option></select>
+            合同状态<select style="width:110px" name="contract" id="contract"><option></option></select>
             <br><br>
-            报销单号<input type="text" style="width:110px" name="billId">
-            经办人<input type="text" style="width:110px" name="chargePerson">
-            登记人<input type="text" style="width:110px" name="registrantPerson">
+            报销单号<input type="text" style="width:110px" name="billId" id="billId">
+            经办人<input type="text" style="width:110px" name="chargePerson" id="chargePerson">
+            登记人<input type="text" style="width:110px" name="registrantPerson" id="registrantPerson">
             <!--财务经手人<input type="text" style="width:110px" name="">-->
-            备注<input type="text" style="width:110px" name="summary">
-            科目<select style="width:110px"  name="subject"></select>
+            备注<input type="text" style="width:110px" name="summary" id="summary">
+            科目<select style="width:110px"  name="subject" id="subject"></select>
             <br><br>
-            产生日期<input type="date" style="width:120px" name="produceData">
-            登记日期<input type="date" style="width:120px" name="registrantDate">
-            结束日期<input type="date" style="width:120px" name="endDate">
+            产生日期<input type="date" style="width:120px" name="produceData" id="produceData">
+            登记日期<input type="date" style="width:120px" name="registrantDate" id="registrantDate">
+            结束日期<input type="date" style="width:120px" name="endDate" id="endDate">
             金额<input type="text" style="width:60px" name="amountLow">至<input type="text" style="width:60px" name="amoutHigh">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius">
@@ -39,6 +44,11 @@
     </div>
 </div>
 </div>
-
+<script>
+    layui.use('form', function() {
+        form = layui.form;
+        form.render();
+    })
+</script>
 </body>
 </html>

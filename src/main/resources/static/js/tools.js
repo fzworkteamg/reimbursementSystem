@@ -35,7 +35,7 @@ function selectDepByCompany(company){
 function selectInvoiceStatus() {
     var invoiceStatus;
     $.ajax({
-        url:'invoice/selectInvoice',
+        url:'/invoiceStatus/selectInvoiceStatus',
         type:'post',
         dataType:'json',
         async : false,
@@ -51,7 +51,7 @@ function selectInvoiceStatus() {
 function selectContractStatus() {
     var contractStatus;
     $.ajax({
-        url:'invoice/selectInvoice',
+        url:'/contractStatus/selectContractStatus',
         type:'post',
         dataType:'json',
         async : false,
@@ -61,4 +61,33 @@ function selectContractStatus() {
         }
     });
     return contractStatus;
+}
+
+//根据传入的集合与元素id渲染select
+function romance(data,id) {
+    for (var i = 0; i <data.length; i++){
+        $("#"+id).append($("<option>"+data[i]+"</option>"))
+    }
+}
+function cleanSelect(id) {
+    $("#"+id).empty();
+}
+
+//根据公司与部门查询职工
+function selectPersonsByCompanyAndDep(company,dep) {
+    var persons;
+    $.ajax({
+        url:'/staff/selectPersonsByCompanyAndDep',
+        type:'post',
+        dataType:'json',
+        data:{
+            company:company,
+            dep:dep
+        },
+        async:false,
+        success:function (result) {
+            persons = result.data;
+        }
+    })
+    return persons;
 }

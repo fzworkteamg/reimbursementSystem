@@ -1,30 +1,26 @@
 $(document).ready(function () {
     //获取公司填充下拉列表
     var companys = selectCompany();
-    for (var i = 0; i <companys.length; i++){
-        $("#selectCompany").append($("<option>"+companys[i]+"</option>"))
-    }
+    romance(companys,"selectCompany")
+
+    //填充部门
     $("select[name='company']").change(function () {
         var company = $("#selectCompany").val();
-        console.log($("#selectCompany").val());
         if(company!="--选择公司--"){
-            $.ajax({
-                url: '/dep/selectDepByCompany',
-                type: 'post',
-                dataType: 'json',
-                data:{
-                    "company":company
-                },
-                success: function (result) {
-                    var deps = result.data;
-                    $("#selectDep").empty();
-                    for (var i = 0; i <deps.length; i++){
-                        $("#selectDep").append($("<option>"+deps[i]+"</option>"))
-                    }
-                }
-            })
+            var deps = selectDepByCompany(company);
+            cleanSelect("selectDep");
+            romance(deps,"selectDep");
         }
     })
+    //填充发票
+    var invoice = selectInvoiceStatus();
+    romance(invoice,"invoice");
+
+    //填充合同
+    var contract = selectInvoiceStatus();
+    romance(contract,"contract");
+
+    //填充类别
 
     var formData = new FormData($("#selectForm")[0]);//此处id为form表单的id
     $.ajax({

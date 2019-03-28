@@ -1,29 +1,20 @@
 $(document).ready(function () {
-
     //填充公司下拉框
     var companys = selectCompany();
-    for (var i = 0; i <companys.length; i++){
-        $("#selectCompany").append($("<option>"+companys[i]+"</option>"))
-    }
+    romance(companys,"selectCompany")
+
+    //根据公司填充部门
     var company = $("#company").val()
     var deps = selectDepByCompany(company);
-    for (var i = 0; i <deps.length; i++){
-        $("#selectDep").append($("<option>"+deps[i]+"</option>"))
-    }
+    romance(deps,"selectDep")
+
 
     //填充发票状态
     var invoiceStatus = selectInvoiceStatus();
-    for (var i = 0; i <invoiceStatus.length; i++){
-        $("#selectInvoiceStatus").append($("<option>"+invoiceStatus[i]+"</option>"))
-    }
+    romance(invoiceStatus,"selectInvoiceStatus")
 
-    //填充发票状态
+
+    //填充合同状态
     var contractStatus = selectContractStatus();
-    for (var i = 0; i <contractStatus.length; i++){
-        $("#selectContractStatus").append($("<option>"+contractStatus[i]+"</option>"))
-    }
-
-
-
-
+    romance(contractStatus,"selectContractStatus")
 })

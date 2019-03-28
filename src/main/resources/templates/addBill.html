@@ -8,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
     <script src="/js/addBill.js"></script>
     <script src="/js/tools.js"></script>
-    <script src="/layer-v3.1.1/layer/layer.js"></script>
+    <!--<script src="/layer-v3.1.1/layer/layer.js"></script>-->
     <style type="text/css">
         .table-c{
             border-right:1px solid #9F9F9F;
@@ -39,6 +40,7 @@
     <div class="layui-row">
         <div class="layui-col-xs-1"></div>
         <div class="layui-col-xs-10">
+            <form class="layui-form" id="form1">
             <table  class="table-c">
                 <caption>支出（报销）新增</caption>
                 <tr>
@@ -67,13 +69,14 @@
                 <tr>
                     <td class="firstTd">类别</td>
                     <td>
-                        <input type="radio" name="type">收入
-                        <input type="radio" name="type">支出
+                        <input type="radio" name="type" title="收入">
+                        <input type="radio" name="type" title="支出">
                     </td>
                     <td rowspan="3" class="thirdTd">摘要
-                        (说明费用产生原由</td>
+                        (说明费用产生原由）</td>
                     <td rowspan="3">
-                        <textarea cols="25" style="height: 50px"></textarea>
+                        <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <!--<textarea cols="25" style="height: 50px"></textarea>-->
                     </td>
                 </tr>
                 <tr>
@@ -85,14 +88,14 @@
                 <tr>
                     <td class="firstTd">业务所属公司</td>
                     <td>
-                        <select id="selectCompany" name="selectCompany">
+                        <select id="selectCompany" name="selectCompany" lay-filter='selectCompany'>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="firstTd">报销人</td>
                     <td>
-                        <input type="text"><span style="cursor: pointer">点击选择</span>
+                        <input type="text"><span style="cursor: pointer" onclick="openAddReiPerson()">点击选择</span>
                     </td>
                     <td class="thirdTd">发票</td>
                     <td>
@@ -102,7 +105,7 @@
                 <tr>
                     <td class="firstTd">经办人</td>
                     <td>
-                        <input type="text"><span style="cursor: pointer">点击选择</span>
+                        <input type="text"><span style="cursor: pointer" >点击选择</span>
                     </td>
                     <td class="thirdTd">发票金额</td>
                     <td><input type="number" style="width: 80px">元（保留两位小数）</td>
@@ -118,7 +121,7 @@
                 <tr>
                     <td class="firstTd">属性</td>
                     <td>
-                        <input type="radio" name="type2">需要报备
+                        <input type="radio" name="type2" title="需要报备">
                     </td>
                     <td class="thirdTd"></td>
                     <td></td>
@@ -128,50 +131,84 @@
                     <td>
                         <input type="button" value="新增保存" class="layui-btn layui-btn-primary layui-btn-sm">
                     </td>
-                    <td class="thirdTd">
-                    <td><button id="parentIframe">ceshi</button></td></td>
+                    <td class="thirdTd"></td>
+                    <td></td>
                 </tr>
             </table>
+            </form>
+            <!--<button onclick="openAddReiPerson()" class="layui-btn layui-btn-primary" >测试</button>-->
         </div>
     </div>
 </div>
+
 <script>
-    //iframe层-父子操作
-    $('#parentIframe').on('click', function(){
-        //弹出一个页面层
-            layer.open({
-                type: 1,
-                area: ['600px', '360px'],
-                shadeClose: true, //点击遮罩关闭
-                content: "<div class='row'>" +
-                    "<select id='childSelectCompany' name='childSelectCompany1'>" +
-                    "<option>--请先选择公司--</option>" +
-                    "</select>" +
-                    "<select id='childSelectDep'></select>" +
-                    "<select id='childSelectPerson'></select>" +
-                    "</div>"
-        });
-        var companys = selectCompany();
-        for (var i = 0; i <companys.length; i++){
-            $("#childSelectCompany").append($("<option>"+companys[i]+"</option>"))
-        }
+    // 载入form模块
+    var form;
+    layui.use('form', function(){
+        form = layui.form;
+        //监听
+        form.on('select(childSelectCompany)',function (data) {
+            var deps = selectDepByCompany(data.value);
+            cleanSelect("childSelectDep");
+            romance(deps,"childSelectDep");
+            form.render();
+        })
+        form.on('select(childSelectDep)',function (data) {
+            var persons = selectPersonsByCompanyAndDep($("#childSelectCompany").val(),$("#childSelectDep").val());
+            cleanSelect("childSelectPerson")
+            romance(persons,"childSelectPerson");
+            form.render();
+        })
+
+    });
+    //载入jquery模块
+    layui.use('jquery'),function(){
+        $=layui.jquery;
+    }
+    //载入layer模块
+    layui.use('layer', function(){
+        var layer = layui.layer;
     });
 
-    $("#childSelectDep").change(function () {
-        var deps = selectDepByCompany($("#childSelectCompany").val());
-        console.log("sssssss"+deps);
-        for (var i = 0; i <deps.length; i++){
-            $("#childSelectDepelectDep").append($("<option>"+deps[i]+"</option>"))
-        }
-    })
-
-    // $("select[name='childSelectCompany1']").change(function () {
-    //     var deps = selectDepByCompany($("#childSelectCompany").val());
-    //     console.log("sssssss"+deps);
-    //     for (var i = 0; i <deps.length; i++){
-    //         $("#childSelectDepelectDep").append($("<option>"+deps[i]+"</option>"))
-    //     }
-    // })
-</script>
+    function  openAddReiPerson() {
+        layer.open({
+            type: 1,
+            area: ['400px', '300px'],
+            shadeClose: true, //点击遮罩关闭
+            content: "<div class='layui-row' style='text-align: center'>\n" +
+                "<form class=\"layui-form\" action=\"\">\n" +
+                "<div class=\"layui-form-item\">\n" +
+                "    <label class=\"layui-form-label\">选择公司：</label>\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "        <select id='childSelectCompany' name='childSelectCompany1' lay-filter='childSelectCompany' lay-verify=\"required\">\n" +
+                "<option></option>" +
+                "        </select>\n" +
+                "    </div>\n" +
+                "</div>\n" +
+                "<div class=\"layui-form-item\">\n" +
+                "    <label class=\"layui-form-label\">选择部门：</label>\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "        <select id='childSelectDep' lay-verify=\"required\" lay-filter='childSelectDep'>\n" +
+                "<option></option>" +
+                "        </select>\n" +
+                "    </div>\n" +
+                "</div>\n" +
+                "<div class=\"layui-form-item\">\n" +
+                "    <label class=\"layui-form-label\">选择员工：</label>\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "        <select name=\"childSelectPerson\" lay-verify=\"required\" lay-filter='childSelectPerson'>\n" +
+                "<option></option>" +
+                "        </select>\n" +
+                "    </div>\n" +
+                "</div>\n" +
+                "<button type='button' class='layui-btn'>确定</button>" +
+                "</form>\n" +
+                "</div>"
+        });
+        var companys = selectCompany();
+        romance(companys,"childSelectCompany");
+        form.render();
+    }
+ </script>
 </body>
 </html>

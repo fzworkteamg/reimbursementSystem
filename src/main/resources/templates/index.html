@@ -6,26 +6,25 @@
     <title>福正后台管理</title>
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <script src="/js/jquery-3.3.1.min.js"></script>
-    <!--<script src="/layui-v2.4.5/layui/layui.js"></script>-->
-    <script src="/layer-v3.1.1/layer/layer.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">台账系统</div>
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
+        <!--<ul class="layui-nav layui-layout-left">-->
+            <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
+            <!--<li class="layui-nav-item"><a href="">商品管理</a></li>-->
+            <!--<li class="layui-nav-item"><a href="">用户</a></li>-->
+            <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;">其它系统</a>-->
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="">邮件管理</a></dd>-->
+                    <!--<dd><a href="">消息管理</a></dd>-->
+                    <!--<dd><a href="">授权管理</a></dd>-->
+                <!--</dl>-->
+            <!--</li>-->
+        <!--</ul>-->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
@@ -66,8 +65,8 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <iframe style="border: none;width: 100%" th:src="@{/view/toShow}">
+        <div style="padding: 15px;" class="layui-row">
+            <iframe style="border: none;width: 100%;height: 1000px" th:src="@{/view/toShow}">
             </iframe>
         </div>
     </div>
@@ -81,17 +80,22 @@
 
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
+    // layui.use('element', function(){
+    //     var element = layui.element;
+    // });
+
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        // layer.msg('hello');
     });
 
     function openAddBill() {
         layer.open({
             type: 2,
-            title: '报销人选择',
+            title: '支出（报销）新增',
             maxmin: true,
             shadeClose: true, //点击遮罩关闭层
-            area : ['800px' , '520px'],
+            area : ['820px' , '620px'],
             content: '/view/toAddBill'
         });
     }
