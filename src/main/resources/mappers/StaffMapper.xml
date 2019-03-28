@@ -29,5 +29,9 @@
 	<select id="selectStaffById" resultMap="staffMap">
 		SELECT <include refid="processColums"/> FROM staff WHERE staff_id=#{staffId}
 	</select>
+	
+	<select id="selectStaffByCompanyAndDep" resultMap="staffMap">
+		SELECT <include refid="processColums"/> FROM staff WHERE company_name=#{company} and dep_name=#{dep}
+	</select>
 
 </mapper>

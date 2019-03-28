@@ -1,5 +1,6 @@
 package cn.reimbursement.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,11 @@ public class StaffController {
 	@PostMapping("/loginByIdAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
 		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));
+	}
+	
+	@PostMapping("/selectStaffByCompanyAndDep")
+	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
+		return staffService.selectStaffByCompanyAndDep(company, dep);
 	}
 	
 }
