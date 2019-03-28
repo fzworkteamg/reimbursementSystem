@@ -7,10 +7,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.reimbursement.pojo.Bill;
+import cn.reimbursement.util.ServerResult;
 
 @Repository
 public interface BillDao {
-	public List<Bill> selectBillByCompany(@Param("billCompany")String billCompany);
-	public int selectBillById(@Param("billId")String billId);
+	List<Bill> selectBillByCompany(@Param("billCompany")String billCompany);
+	int selectBillById(@Param("billId")String billId);
 	void insertBill(@Param("billMap")Map<String,Object> billMap);
+	List<Bill> selectBill(@Param("billMap")Map<String,String> billMap);
 }

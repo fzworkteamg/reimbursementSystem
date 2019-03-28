@@ -32,4 +32,10 @@ public class BillController {
 		return billService.insertBill(billMap);
 	}
 	
+	@PostMapping("/selectBill")
+	public ServerResult<List<Bill>> selectBill(HttpServletRequest request) {
+		return billService.selectBill(request);
+	}
+	
+	
 }
