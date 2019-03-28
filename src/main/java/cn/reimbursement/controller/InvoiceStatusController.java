@@ -1,5 +1,25 @@
 package cn.reimbursement.controller;
 
-public class InvoiceStatusController {
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.reimbursement.service.InvoiceStatusService;
+import cn.reimbursement.util.ServerResult;
+
+@RestController
+@RequestMapping("/invoiceStatus")
+public class InvoiceStatusController {
+	
+	@Autowired
+	private InvoiceStatusService invoiceStatusService;
+	
+	@PostMapping("/selectInvoiceStatus")
+	public ServerResult<List<String>> selectInvoiceStatusName(){
+		return invoiceStatusService.selectInvoiceStatusName();
+	}
+	
 }
