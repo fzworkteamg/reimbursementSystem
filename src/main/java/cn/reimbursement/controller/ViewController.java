@@ -1,7 +1,11 @@
 package cn.reimbursement.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import cn.reimbursement.util.Util;
 
 @Controller
 @RequestMapping("/view")
@@ -14,18 +18,24 @@ public class ViewController {
 	}
 	
 	@RequestMapping("/toIndex")
-	public String toIndex() {
-		return "index";
+	public String toIndex(HttpServletRequest request) {
+		if(Util.isLogin(request))
+			return "index";
+		return "login";
 	}
 
 	@RequestMapping("/toShow")
-	public String toShow(){
-		return "show";
+	public String toShow(HttpServletRequest request){
+		if(Util.isLogin(request))
+			return "show";
+		return "login";
 	}
 
 	@RequestMapping("/toAddBill")
-	public String toAddBill() {
-		return "addBill";
+	public String toAddBill(HttpServletRequest request){
+		if(Util.isLogin(request))
+			return "addBill";
+		return "login";
 	}
 	
 }
