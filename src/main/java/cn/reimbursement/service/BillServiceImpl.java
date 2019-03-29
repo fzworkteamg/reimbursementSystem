@@ -1,7 +1,6 @@
 package cn.reimbursement.service;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import cn.reimbursement.dao.BillDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.pojo.Staff;
+import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
 
 @Service
@@ -44,7 +44,7 @@ public class BillServiceImpl implements BillService {
 		return new ServerResult(1, InfoEnum.FAIL.toString());
 	}
 
-	public ServerResult<List<Bill>> selectBill(HttpServletRequest httpServletRequest) {
+	public LayuiResult<List<Bill>> selectBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String> billMap = new HashMap<String, String>();
 		if (request.getParameter("company").endsWith("--"))
@@ -88,7 +88,7 @@ public class BillServiceImpl implements BillService {
 		billMap.put("amountLow", request.getParameter("amountLow"));
 		billMap.put("amoutHigh", request.getParameter("amoutHigh"));
 		List<Bill> billList=billDao.selectBill(billMap);
-		return new ServerResult<List<Bill>>(0, InfoEnum.SUCCESS.toString(),billList);
+		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(),billList,0,billList.size());
 	}
 
 }
