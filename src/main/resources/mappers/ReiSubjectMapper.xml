@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是命名空间，是mapper接口的全路径 -->
+<mapper namespace="cn.reimbursement.dao.ReiSubjectDao">
+
+	<!--resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象 -->
+	<resultMap id="reiSubjectMap"
+		type="cn.reimbursement.pojo.ReiSubject">
+		<id property="reiSubjectId" column="rei_subject_id" />
+		<result property="reiSubjectCompanyName" column="rei_subject_company_name" />
+		<result property="reiSubjectDepName" column="rei_subject_dep_name" />
+		<result property="reiSubjectContent" column="rei_subject_content" />
+		<result property="reiSubjectComment" column="rei_subject_comment" />
+	</resultMap>
+	
+	<!--sql – 可被其他语句引用的可重用语句块 -->
+	<sql id="reiSubjectColums">
+		rei_subject_id,rei_subject_company_name,rei_subject_dep_name,rei_subject_content,rei_subject_comment
+	</sql>
+	<select id="selectDepContentCommentByCompanyDep" resultType="java.util.Map">
+		SELECT
+		rei_subject_dep_name,rei_subject_content,rei_subject_comment
+		FROM rei_subject WHERE rei_subject_company_name=#{company} AND rei_subject_dep_name=#{dep}
+	</select>
+</mapper>
