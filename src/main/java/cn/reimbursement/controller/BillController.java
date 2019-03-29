@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.BillService;
+import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
 
 @RestController
@@ -33,7 +34,7 @@ public class BillController {
 	}
 	
 	@PostMapping("/selectBill")
-	public ServerResult<List<Bill>> selectBill(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
 		return billService.selectBill(request);
 	}
 	
