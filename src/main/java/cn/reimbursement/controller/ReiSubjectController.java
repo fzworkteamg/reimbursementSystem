@@ -19,7 +19,7 @@ public class ReiSubjectController {
 	private ReiSubjectService reiSubjectService;
 	
 	@PostMapping("/selectDepContentCommentByCompanyDep")
-	public ServerResult<List<Map<String,String>>> selectDepContentCommentByCompanyDep(String company,String dep) {
+	public List<Map<String,String>> selectDepContentCommentByCompanyDep(String company,String dep) {
 		return reiSubjectService.selectDepContentCommentByCompanyDep(company,dep);
 	}
 	
