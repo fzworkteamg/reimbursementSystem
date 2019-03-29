@@ -3,8 +3,8 @@ package cn.reimbursement.service;
 import java.util.List;
 import java.util.Map;
 
-import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.util.LayuiResult;
 
 public interface ReiSubjectService {
-	List<Map<String,String>> selectDepContentCommentByCompanyDep(String company,String dep);
+	LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(String company,String dep);
 }

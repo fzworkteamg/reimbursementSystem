@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.reimbursement.service.ReiSubjectService;
-import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.util.LayuiResult;
 
 @RestController
 @RequestMapping("/reiSubject")
@@ -19,7 +19,7 @@ public class ReiSubjectController {
 	private ReiSubjectService reiSubjectService;
 	
 	@PostMapping("/selectDepContentCommentByCompanyDep")
-	public List<Map<String,String>> selectDepContentCommentByCompanyDep(String company,String dep) {
+	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(String company,String dep) {
 		return reiSubjectService.selectDepContentCommentByCompanyDep(company,dep);
 	}
 	

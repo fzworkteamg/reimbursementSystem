@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.ReiSubjectDao;
 import cn.reimbursement.enums.InfoEnum;
-import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.util.LayuiResult;
 
 @Service
 public class ReiSubjectServiceImpl implements ReiSubjectService {
@@ -16,8 +16,9 @@ public class ReiSubjectServiceImpl implements ReiSubjectService {
 	@Autowired
 	private ReiSubjectDao reiSubjectDao;
 	
-	public List<Map<String, String>> selectDepContentCommentByCompanyDep(String company,String dep) {
-		return reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep);
+	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(String company,String dep) {
+		List<Map<String, String>> subjectMapList=reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep);
+		return new LayuiResult(InfoEnum.SUCCESS.toString(),subjectMapList,0,subjectMapList.size());
 	}
 
 }
