@@ -11,6 +11,6 @@ import cn.reimbursement.util.ServerResult;
 
 public interface BillService {
 	ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception;
-	ServerResult insertBill(Map<String,Object> billMap);
+	ServerResult insertBill(HttpServletRequest request);
 	LayuiResult<List<Bill>> selectBill(HttpServletRequest request);
 }

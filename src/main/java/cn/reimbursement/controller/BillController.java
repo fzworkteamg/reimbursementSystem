@@ -29,8 +29,8 @@ public class BillController {
 	}
 	
 	@PostMapping("/insertBill")
-	public ServerResult insertBill(@RequestBody Map<String,Object> billMap) {
-		return billService.insertBill(billMap);
+	public ServerResult insertBill(HttpServletRequest request) {
+		return billService.insertBill(request);
 	}
 	
 	@PostMapping("/selectBill")

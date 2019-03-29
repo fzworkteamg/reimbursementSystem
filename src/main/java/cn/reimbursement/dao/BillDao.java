@@ -13,6 +13,6 @@ import cn.reimbursement.util.ServerResult;
 public interface BillDao {
 	List<Bill> selectBillByCompany(@Param("billCompany")String billCompany);
 	int selectBillById(@Param("billId")String billId);
-	void insertBill(@Param("billMap")Map<String,Object> billMap);
+	void insertBill(@Param("billMap")Map<String,String> billMap);
 	List<Bill> selectBill(@Param("billMap")Map<String,String> billMap);
 }

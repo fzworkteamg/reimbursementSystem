@@ -30,8 +30,27 @@ public class BillServiceImpl implements BillService {
 		return new ServerResult<List<Bill>>(0, InfoEnum.SUCCESS.toString(), billList);
 	}
 
-	public ServerResult insertBill(Map<String, Object> billMap) {
-		String billId = (String) billMap.get("bill_id");
+	public ServerResult insertBill(HttpServletRequest httpServletRequest) {
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
+		Map<String, String> billMap = new HashMap<String, String>();
+		String billId=request.getParameter("bill_id_pre")+request.getParameter("bill_id_suff");
+		billMap.put("bill_id",billId );
+		billMap.put("bill_amount",request.getParameter("bill_amount"));
+		billMap.put("bill_company",request.getParameter("bill_company"));
+		billMap.put("bill_produce_date",request.getParameter("bill_produce_date"));
+		billMap.put("bill_reimbursement_dep",request.getParameter("bill_reimbursement_dep"));
+		billMap.put("bill_registrant_date",request.getParameter("bill_registrant_date"));
+		billMap.put("bill_type",request.getParameter("bill_type"));
+		billMap.put("bill_summary",request.getParameter("bill_summary"));
+		billMap.put("bill_subject",request.getParameter("bill_subject"));
+		billMap.put("bill_belong_company",request.getParameter("bill_belong_company"));
+		billMap.put("bill_reimbursement_person",request.getParameter("bill_reimbursement_person"));
+		billMap.put("bill_invoice_status_name",request.getParameter("bill_invoice_status_name"));
+		billMap.put("bill_charge_person",request.getParameter("bill_charge_person"));
+		billMap.put("bill_invoice_amount",request.getParameter("bill_invoice_amount"));
+		billMap.put("bill_registrant_person",request.getParameter("bill_registrant_person"));
+		billMap.put("bill_contract_status_name",request.getParameter("bill_contract_status_name"));
+		billMap.put("bill_attribute",request.getParameter("bill_attribute"));
 		int count = billDao.selectBillById(billId);
 		if (count > 0) {
 			return new ServerResult(1, InfoEnum.FAIL.toString());
