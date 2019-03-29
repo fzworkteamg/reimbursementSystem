@@ -20,7 +20,7 @@ public class StaffController {
 	
 	@Autowired
 	private StaffService staffService;
-	
+
 	@PostMapping("/loginByIdAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
 		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));

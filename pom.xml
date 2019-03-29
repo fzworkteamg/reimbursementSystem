@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>cn.reimbursement</groupId>
 	<artifactId>reimbursement</artifactId>
@@ -22,6 +22,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+          		<exclusion>
+               		<groupId>org.springframework.boot</groupId>
+                	<artifactId>spring-boot-starter-logging</artifactId>
+            	</exclusion>
+        	</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -51,6 +57,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+       		<artifactId>spring-boot-starter-log4j</artifactId>
+        	<version>1.3.8.RELEASE</version>
+   		</dependency>
 	</dependencies>
 
 	<build>
