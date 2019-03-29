@@ -22,9 +22,6 @@ $(document).ready(function () {
 
 })
 
-
-
-
 var subjectIndex;
 var reiPersonIndex;
 var chargePersonIndex;

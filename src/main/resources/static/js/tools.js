@@ -72,9 +72,6 @@ function romance(data,id) {
 function cleanSelect(id) {
     $("#"+id).empty();
 }
-function cleanTable(id) {
-    $("#"+id).empty();
-}
 //根据公司与部门查询职工
 function selectPersonsByCompanyAndDep(company,dep) {
     var persons;

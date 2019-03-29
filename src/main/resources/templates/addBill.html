@@ -144,7 +144,8 @@
                     <tr>
                         <td class="firstTd">属性</td>
                         <td>
-                            <input type="radio" name="bill_attribute" title="需要报备">
+                            <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
+                            <input type="radio" name="bill_attribute" title="不需要报备" checked value="不需要报备">
                         </td>
                         <td class="thirdTd"></td>
                         <td></td>
@@ -152,8 +153,9 @@
                     <tr>
                         <td class="firstTd"></td>
                         <td>
-                            <input type="submit" value="新增保存" class="layui-btn layui-btn-primary layui-btn-sm"
-                                   lay-filter='insertBill'>
+                            <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
+                            <!--<input type="submit" value="新增保存" class="layui-btn layui-btn-primary layui-btn-sm"-->
+                                   <!--lay-filter='insertBill'>-->
                         </td>
                         <td class="thirdTd"></td>
                         <td></td>
