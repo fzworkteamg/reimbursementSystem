@@ -38,25 +38,7 @@ $(document).ready(function () {
 
     //填充类别
 
-    formData = new FormData($("#selectForm")[0]);//此处id为form表单的id
-    // $.ajax({
-    //     url: '/bill/selectBill',
-    //     type: 'post',
-    //     // dataType: 'json',
-    //     contentType: false,
-    //     data: formData,
-    //     processData: false,
-    //     async: false,
-    //     cache: false,
-    //     success: function (result) {
-    //         console.log(result.data);
-    //     },
-    //     fail: function () {
-    //         window.alert("系统错误，请联系管理员");
-    //     }
-    // })
-
-
+    // formData = new FormData($("#selectForm")[0]);//此处id为form表单的id
 })
 
 function remoceBillTable() {
@@ -85,11 +67,29 @@ function remoceBillTable() {
         },
         url: '/bill/selectBill',
         method: 'post',
+        page:true,
+        limit: 10,
         cols: [[
-            {field:'xuhao',width:50,title:'序号',templet:'#xuhao'},
-            {field: 'rei_subject_dep_name', width: 100, title: '部门'},
-            {field: 'rei_subject_content', width: 150, title: '科目'},
-            {field: 'rei_subject_comment', width: 280, title: '备注'},
+            {field:'xuhao',width:80,title:'序号',templet:'#xuhao'},
+            {field: 'billId', width: 180, title: '单号'},
+            {field: 'billAttribute', width: 80, title: '属性'},
+            {field: 'billType', width: 80, title: '类型'},
+            {field: 'billReimbursementDep', width: 100, title: '报销部门'},
+            {field: 'billSubject', width: 100, title: '科目'},
+            {field: 'billBelongCompany', width: 130, title: '业务所属公司'},
+            {field: 'billReimbursementPerson', width: 80, title: '报销人'},
+            {field: 'billSummary', width: 150, title: '摘要'},
+            {field: 'billAmount', width: 100, title: '金额'},
+            {field: 'billContractStatusName', width: 120, title: '合同'},
+            {field: 'billInvoiceStatusName', width: 120, title: '发票'},
+            {field: 'billInvoiceAmount', width: 100, title: '发票金额'},
+            {field: 'billReimbursementPersonConfirm', width: 100, title: '报销人确认'},
+            {field: 'billChargePerson', width: 80, title: '经办人'},
+            {field: 'billRegistrantPerson', width: 80, title: '登记人'},
+            {field: 'billRegistrantDate', width: 120, title: '登记日期'},
+            {field: 'billProduceDate', width: 120, title: '产生日期'},
+            {field: 'billEndDate', width: 120, title: '结束日期'},
+            // {field: 'billEndDate', width: 280, title: '流程执行情况'},
             // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo',title:'确定'}
         ]],
         done: function (res) {

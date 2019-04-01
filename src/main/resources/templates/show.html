@@ -18,21 +18,21 @@
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data" class="layui-form">
-            业务所属公司<select style="width:110px" id="selectCompany" name="company" lay-ignore>
+            业务所属公司<select style="width:100px" id="selectCompany" name="company" lay-ignore>
             <option>--选择公司--</option>
         </select>
-            业务所属部门<select style="width:110px" id="selectDep" name="dep" lay-ignore>
+            业务所属部门<select style="width:100px" id="selectDep" name="dep" lay-ignore>
             <option>--选择部门--</option>
         </select>
-            属性<select style="width:110px" name="attribute" id="attribute" lay-ignore>
+            属性<select style="width:100px" name="attribute" id="attribute" lay-ignore>
             <option>正常</option>
             <option>取消</option>
         </select>
-            类别<select style="width:110px" name="type" id="type" lay-ignore>
+            类别<select style="width:100px" name="type" id="type" lay-ignore>
             <option>收入</option>
             <option>支出</option>
         </select>
-            发票状态<select style="width:110px" name="invoice" id="invoice" lay-ignore></select><br><br>
+            发票状态<select style="width:100px" name="invoice" id="invoice" lay-ignore></select><br><br>
             合同状态<select style="width:110px" name="contract" id="contract" lay-ignore></select>
             报销单号<input type="text" style="width:110px" name="billId" id="billId">
             经办人<input type="text" style="width:110px" name="chargePerson" id="chargePerson">
@@ -45,12 +45,11 @@
             结束日期<input type="date" style="width:120px" name="endDate" id="endDate">
             金额<input type="text" style="width:60px" name="amountLow" id="amountLow">至<input type="text" style="width:60px"
                                                                              name="amoutHigh" id="amoutHigh">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius">
         </form>
     </div>
-    <div class="layui-row">
-        <table id="billTable" lay-filter="billTable"></table>
+    <div class="layui-row" style="width: 1300px">
+        <table id="billTable" lay-filter="billTable" style="width: 1300px"></table>
     </div>
 </div>
 </div>
