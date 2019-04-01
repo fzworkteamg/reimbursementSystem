@@ -16,9 +16,9 @@ public class ProcessController {
 	@Autowired
 	private ProcessService processService;
 	
-	@PostMapping("/selectProcessById")
-	public ServerResult<Process> selectProcessById(Integer processId) {
-		return processService.selectProcessById(processId);
-	}
+//	@PostMapping("/selectProcessById")
+//	public ServerResult<Process> selectProcessById(Integer processId) {
+//		return processService.selectProcessById(processId);
+//	}
 	
 }
