@@ -12,4 +12,5 @@ public class Process {
 	private String processDepartment;
 	private String processContent;
 	private Integer processCount;
+	private String processAuditor;
 }

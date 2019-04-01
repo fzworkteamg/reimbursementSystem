@@ -23,6 +23,8 @@ public class StaffController {
 
 	@PostMapping("/loginByIdAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
+		int[] arr=new int[2];
+		System.out.println(arr[2]);
 		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));
 	}
 	
