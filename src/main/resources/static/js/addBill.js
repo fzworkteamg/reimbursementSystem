@@ -267,7 +267,7 @@ function billIdByTime() {
     // myDate.toLocaleDateString();     //获取当前日期
     // var mytime=myDate.toLocaleTimeString();     //获取当前时间
     // myDate.toLocaleString( );        //获取日期与时间
-    var billId = myDate.getFullYear()+""+(myDate.getMonth()+1)+""+myDate.getDate()+""+myDate.getDay()+""+myDate.getHours()+""+myDate.getMinutes();
+    var billId = myDate.getFullYear()+""+(myDate.getMonth()+1)+""+myDate.getDate()+""+myDate.getDay()+""+myDate.getHours()+""+myDate.getMinutes()+""+myDate.getSeconds();
     return billId;
 }
 
