@@ -63,19 +63,18 @@ public class BillServiceImpl implements BillService {
 		return new ServerResult(1, InfoEnum.FAIL.toString());
 	}
 
-	public LayuiResult<List<Bill>> selectBill(HttpServletRequest httpServletRequest) {
-		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
+	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
 		Map<String, String> billMap = new HashMap<String, String>();
-		if (request.getParameter("company").endsWith("--"))
+		if (request.getParameter("company").endsWith("--")){
 			billMap.put("billCompany", "");
-		else
+		}else{
 			billMap.put("billCompany", request.getParameter("company"));
-
-		if (request.getParameter("dep").endsWith("--"))
+		}
+		if (request.getParameter("dep").endsWith("--")){
 			billMap.put("billDep", "");
-		else
+		}else{
 			billMap.put("billDep", request.getParameter("dep"));
-
+		}
 		if (request.getParameter("attribute").endsWith("--"))
 			billMap.put("billAttribute", "");
 		else
@@ -95,7 +94,6 @@ public class BillServiceImpl implements BillService {
 			billMap.put("billContractStatusName", "");
 		else
 			billMap.put("billContractStatusName", request.getParameter("contract"));
-		
 		billMap.put("billId", request.getParameter("billId"));
 		billMap.put("billChargePerson", request.getParameter("chargePerson"));
 		billMap.put("billRegistrantPerson", request.getParameter("registrantPerson"));

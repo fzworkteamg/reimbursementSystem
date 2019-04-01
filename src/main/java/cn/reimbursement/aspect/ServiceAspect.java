@@ -36,7 +36,7 @@ public class ServiceAspect {
 		String[] argNames = ((MethodSignature)joinPoint.getSignature()).getParameterNames();
 		if(args.length==argNames.length) {
 			StringBuilder sb=new StringBuilder("args:\t");
-			for(int i=0;i<args.length;i++) 
+			for(int i=0;i<args.length;i++)
 				sb.append(argNames[i]+":"+args[i]+"\t");
 			logger.info(sb);
 		}

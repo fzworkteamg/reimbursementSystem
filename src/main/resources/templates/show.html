@@ -7,17 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/tools.js"></script>
     <script src="/js/show.js"></script>
-    <script src="/layui-v2.4.5/layui/layui.js"></script>
+
+    <!--<script src="/js/addBill.js"></script>-->
 </head>
 <body>
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data" class="layui-form">
-            业务所属公司<select style="width:110px" id="selectCompany" name="company" lay-ignore><option>--选择公司--</option></select>
-            业务所属部门<select style="width:110px" id="selectDep" name="dep" lay-ignore></select>
+            业务所属公司<select style="width:110px" id="selectCompany" name="company" lay-ignore>
+            <option>--选择公司--</option>
+        </select>
+            业务所属部门<select style="width:110px" id="selectDep" name="dep" lay-ignore>
+            <option>--选择部门--</option>
+        </select>
             属性<select style="width:110px" name="attribute" id="attribute" lay-ignore>
             <option>正常</option>
             <option>取消</option>
@@ -37,19 +43,19 @@
             产生日期<input type="date" style="width:120px" name="produceData" id="produceData">
             登记日期<input type="date" style="width:120px" name="registrantDate" id="registrantDate">
             结束日期<input type="date" style="width:120px" name="endDate" id="endDate">
-            金额<input type="text" style="width:60px" name="amountLow">至<input type="text" style="width:60px"
-                                                                             name="amoutHigh">
+            金额<input type="text" style="width:60px" name="amountLow" id="amountLow">至<input type="text" style="width:60px"
+                                                                             name="amoutHigh" id="amoutHigh">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius">
         </form>
     </div>
+    <div class="layui-row">
+        <table id="billTable" lay-filter="billTable"></table>
+    </div>
 </div>
 </div>
-<script>
-    layui.use('form', function () {
-        form = layui.form;
-        form.render();
-    })
+<script type="text/html" id="xuhao">
+    {{d.LAY_TABLE_INDEX+1}}
 </script>
 </body>
 </html>

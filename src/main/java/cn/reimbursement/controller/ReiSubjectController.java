@@ -21,7 +21,6 @@ public class ReiSubjectController {
 	
 	@GetMapping("/selectDepContentCommentByCompanyDep")
 	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(String company,String dep) {
-		System.out.println(company+"===="+dep);
 		return reiSubjectService.selectDepContentCommentByCompanyDep(company,dep);
 	}
 	
