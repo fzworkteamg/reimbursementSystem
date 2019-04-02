@@ -21,6 +21,21 @@ $(document).ready(function () {
             //obj.update(fields) //修改当前行数据
             openBillDetail();
         });
+        //顶部工具栏
+        table.on('toolbar(billTable)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'thisMonth':
+                    layer.msg('本月的');
+                    break;
+                case 'done':
+                    layer.msg('经办的');
+                    break;
+                case 'toDo':
+                    layer.msg('待审核');
+                    break;
+            };
+        });
     });
     //获取公司填充下拉列表
     var companys = selectCompany();
@@ -141,9 +156,9 @@ function openBillDetail() {
         type: 2,
         title: '账单详情',
         maxmin: true,
-        offset: '50px',
+        offset: '20px',
         shadeClose: true, //点击遮罩关闭层
-        area : ['820px' , '550px'],
+        area : ['850px' , '550px'],
         content: '/view/toBillDetail'
     });
 }
