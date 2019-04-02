@@ -16,6 +16,7 @@ public class ProcessStatus {
 	private String processStatusOpinion;
 	private Integer processStatusStep;
 	private String processStatusCompany;
+	private String processStatusAuditor;
 	private Date processStatusLastUpload;
 
 }

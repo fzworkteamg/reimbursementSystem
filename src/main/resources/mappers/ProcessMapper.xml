@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--namespace是命名空间，是mapper接口的全路径 -->
 <mapper namespace="cn.reimbursement.dao.ProcessDao">
 
-	<!--resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象 -->
 	<resultMap id="processMap"
 		type="cn.reimbursement.pojo.Process">
 		<id property="processId" column="process_id" />
@@ -13,16 +11,19 @@
 			column="process_department" />
 		<result property="processContent" column="process_content" />
 		<result property="processCount" column="process_count" />
-		<result property="processAuditor" column="process_auditor" />
 	</resultMap>
 
-	<!--sql – 可被其他语句引用的可重用语句块 -->
 	<sql id="processColums">
-		process_id,process_company,process_department,process_content,process_count,process_auditor
+		process_id,process_company,process_department,process_content,process_count
 	</sql>
 	<select id="selectProcessById" resultMap="processMap">
 		SELECT
 		<include refid="processColums" />
 		FROM process WHERE process_id=#{processId}
+	</select>
+	<select id="selectProcessByCompanyAndDepartment" resultType="java.lang.String">
+		SELECT
+		process_content
+		FROM process WHERE process_company=#{processCompany} AND process_department=#{processDepartment}
 	</select>
 </mapper>

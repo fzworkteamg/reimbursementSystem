@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.ProcessStatusDao">
+
+	<resultMap id="processStatusMap"
+		type="cn.reimbursement.pojo.ProcessStatus">
+		<id property="processStatusBillId" column="process_status_bill_id" />
+		<result property="processStatusProcessName"
+			column="process_status_process_name" />
+		<result property="processStatusState"
+			column="process_status_state" />
+		<result property="processStatusOpinion"
+			column="process_status_opinion" />
+		<result property="processStatusStep"
+			column="process_status_step" />
+		<result property="processStatusCompany"
+			column="process_status_company" />
+		<result property="processStatusAuditor"
+			column="process_status_auditor" />
+		<result property="processSatusLastUpload"
+			column="process_satus_last_upload" />
+	</resultMap>
+
+	<sql id="processStatusColums">
+		process_status_bill_id,process_status_process_name,process_status_state,process_status_opinion,process_status_step,process_status_company,
+		process_status_auditor,process_satus_last_upload
+	</sql>
+	<insert id="insertProcessStatus">
+		INSERT INTO
+		process_status(process_status_bill_id,process_status_name,process_status_state,process_status_step,process_status_company)
+		VALUES(#{processStatusBillId},#{processStatusName},#{processStatusState},#{processStatusStep},#{processStatusBCompany})
+	</insert>
+</mapper>

@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.reimbursement.dao.BillDao;
+import cn.reimbursement.dao.CurrentStepDao;
+import cn.reimbursement.dao.ProcessDao;
+import cn.reimbursement.dao.ProcessStatusDao;
+import cn.reimbursement.dao.StaffDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.pojo.Staff;
@@ -22,6 +26,14 @@ public class BillServiceImpl implements BillService {
 
 	@Autowired
 	private BillDao billDao;
+	@Autowired
+	private StaffDao staffDao;
+	@Autowired
+	private ProcessDao processDao;
+	@Autowired
+	private ProcessStatusDao processStatusDao;
+	@Autowired
+	private CurrentStepDao currentStepDao;
 
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		Staff staff = (Staff) request.getSession().getAttribute("staff");
@@ -33,24 +45,39 @@ public class BillServiceImpl implements BillService {
 	public ServerResult insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String> billMap = new HashMap<String, String>();
-		String billId=request.getParameter("bill_id_pre")+request.getParameter("bill_id_suff");
-		billMap.put("bill_id",billId );
-		billMap.put("bill_amount",request.getParameter("bill_amount"));
-		billMap.put("bill_company",request.getParameter("bill_company"));
-		billMap.put("bill_produce_date",request.getParameter("bill_produce_date"));
-		billMap.put("bill_reimbursement_dep",request.getParameter("bill_reimbursement_dep"));
-		billMap.put("bill_registrant_date",request.getParameter("bill_registrant_date"));
-		billMap.put("bill_type",request.getParameter("bill_type"));
-		billMap.put("bill_summary",request.getParameter("bill_summary"));
-		billMap.put("bill_subject",request.getParameter("bill_subject"));
-		billMap.put("bill_belong_company",request.getParameter("bill_belong_company"));
-		billMap.put("bill_reimbursement_person",request.getParameter("bill_reimbursement_person"));
-		billMap.put("bill_invoice_status_name",request.getParameter("bill_invoice_status_name"));
-		billMap.put("bill_charge_person",request.getParameter("bill_charge_person"));
-		billMap.put("bill_invoice_amount",request.getParameter("bill_invoice_amount"));
-		billMap.put("bill_registrant_person",request.getParameter("bill_registrant_person"));
-		billMap.put("bill_contract_status_name",request.getParameter("bill_contract_status_name"));
-		billMap.put("bill_attribute",request.getParameter("bill_attribute"));
+		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
+		String staffId = request.getParameter("staffId");
+		Staff staff = staffDao.selectStaffById(staffId);
+		System.out.println("staff:"+staff.toString());
+		if (staff == null)
+			return new ServerResult(1, InfoEnum.FAIL.toString());
+		String processContent = processDao.selectProcessByCompanyAndDepartment(staff.getCompanyName(),
+				staff.getDepName());
+		System.out.println( processContent );
+		if (processContent == null)
+			return new ServerResult(1, InfoEnum.FAIL.toString());
+		String[] processContents = processContent.split("|");
+		for (int i = 0; i < processContents.length;)
+			processStatusDao.insertProcessStatus(Integer.valueOf(billId), processContents[i], i == 0 ? "待审核" : "", i++,
+					request.getParameter("bill_belong_company"));
+		currentStepDao.insertCurrentStep(Integer.valueOf(billId));
+		billMap.put("bill_id", billId);
+		billMap.put("bill_amount", request.getParameter("bill_amount"));
+		billMap.put("bill_company", request.getParameter("bill_company"));
+		billMap.put("bill_produce_date", request.getParameter("bill_produce_date"));
+		billMap.put("bill_reimbursement_dep", request.getParameter("bill_reimbursement_dep"));
+		billMap.put("bill_registrant_date", request.getParameter("bill_registrant_date"));
+		billMap.put("bill_type", request.getParameter("bill_type"));
+		billMap.put("bill_summary", request.getParameter("bill_summary"));
+		billMap.put("bill_subject", request.getParameter("bill_subject"));
+		billMap.put("bill_belong_company", request.getParameter("bill_belong_company"));
+		billMap.put("bill_reimbursement_person", request.getParameter("bill_reimbursement_person"));
+		billMap.put("bill_invoice_status_name", request.getParameter("bill_invoice_status_name"));
+		billMap.put("bill_charge_person", request.getParameter("bill_charge_person"));
+		billMap.put("bill_invoice_amount", request.getParameter("bill_invoice_amount"));
+		billMap.put("bill_registrant_person", request.getParameter("bill_registrant_person"));
+		billMap.put("bill_contract_status_name", request.getParameter("bill_contract_status_name"));
+		billMap.put("bill_attribute", request.getParameter("bill_attribute"));
 		int count = billDao.selectBillById(billId);
 		if (count > 0) {
 			return new ServerResult(1, InfoEnum.FAIL.toString());
@@ -65,14 +92,14 @@ public class BillServiceImpl implements BillService {
 
 	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
 		Map<String, String> billMap = new HashMap<String, String>();
-		if (request.getParameter("company").endsWith("--")){
+		if (request.getParameter("company").endsWith("--")) {
 			billMap.put("billCompany", "");
-		}else{
+		} else {
 			billMap.put("billCompany", request.getParameter("company"));
 		}
-		if (request.getParameter("dep").endsWith("--")){
+		if (request.getParameter("dep").endsWith("--")) {
 			billMap.put("billDep", "");
-		}else{
+		} else {
 			billMap.put("billDep", request.getParameter("dep"));
 		}
 		if (request.getParameter("attribute").endsWith("--"))
@@ -104,8 +131,8 @@ public class BillServiceImpl implements BillService {
 		billMap.put("billEndDate", request.getParameter("endDate"));
 		billMap.put("amountLow", request.getParameter("amountLow"));
 		billMap.put("amoutHigh", request.getParameter("amoutHigh"));
-		List<Bill> billList=billDao.selectBill(billMap);
-		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(),billList,0,billList.size());
+		List<Bill> billList = billDao.selectBill(billMap);
+		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(), billList, 0, billList.size());
 	}
 
 }

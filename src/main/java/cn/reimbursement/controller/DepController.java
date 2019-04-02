@@ -23,7 +23,6 @@ public class DepController {
 
 	@PostMapping("/selectDepByCompany")
 	public ServerResult<List<String>> selectDepByCompany(HttpServletRequest request) {
-		System.out.println("param:"+request.getParameter("company"));
 		return depService.selectDepByCompany(request.getParameter("company"));
 	}
 

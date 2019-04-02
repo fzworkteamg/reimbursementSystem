@@ -9,6 +9,7 @@ import cn.reimbursement.pojo.Process;
 
 public interface ProcessDao {
 	Process selectProcessById(@Param("processId")Integer processId);
-	public void insertProcess(@Param("processMap")Map<String,String> processMap);
-	public List<Process> selectProcess(@Param("processMap")Map<String, String> processMap);
+	void insertProcess(@Param("processMap")Map<String,String> processMap);
+	List<Process> selectProcess(@Param("processMap")Map<String, String> processMap);
+	String selectProcessByCompanyAndDepartment(@Param("processCompany")String processCompany,@Param("processDepartment")String processDepartment);
 }
