@@ -14,7 +14,13 @@ $(document).ready(function () {
     layui.use('table', function () {
         table = layui.table;
         remoceBillTable();
-
+        table.on('rowDouble(billTable)', function (obj) {
+            // console.log(obj.tr) //得到当前行元素对象
+            // console.log(obj.data) //得到当前行数据
+            //obj.del(); //删除当前行
+            //obj.update(fields) //修改当前行数据
+            openBillDetail();
+        });
     });
     //获取公司填充下拉列表
     var companys = selectCompany();
@@ -43,7 +49,7 @@ $(document).ready(function () {
 
 
 })
-
+//表格初始渲染
 function remoceBillTable() {
     billTable = table.render({
         id: 'billTable',
@@ -102,7 +108,7 @@ function remoceBillTable() {
     })
 }
 
-
+//查询按钮刷新表格
 function reloadBillTable() {
     billTable.reload({
         where: { //设定异步数据接口的额外参数，任意设
@@ -128,3 +134,17 @@ function reloadBillTable() {
         }
     });
 }
+
+//弹出账单详情页面
+function openBillDetail() {
+    layer.open({
+        type: 2,
+        title: '账单详情',
+        maxmin: true,
+        offset: '50px',
+        shadeClose: true, //点击遮罩关闭层
+        area : ['820px' , '550px'],
+        content: '/view/toBillDetail'
+    });
+}
+

@@ -11,7 +11,6 @@
     <script src="/layui-v2.4.5/layui/layui.js"></script>
     <script th:inline="none" src="/js/addBill.js"></script>
     <script src="/js/tools.js"></script>
-    <!--<script src="/layer-v3.1.1/layer/layer.js"></script>-->
     <style type="text/css">
         .table-c {
             border-right: 1px solid #9F9F9F;
@@ -44,6 +43,7 @@
         <div class="layui-col-xs-1"></div>
         <div class="layui-col-xs-10">
             <form class="layui-form" id="form1" enctype="multipart/form-data">
+                <input type="hidden" id="staffId">
                 <table class="table-c">
                     <caption>支出（报销）新增</caption>
                     <tr>
@@ -85,7 +85,6 @@
                         <td rowspan="3">
                             <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" required
                                       lay-verify="required"></textarea>
-                            <!--<textarea cols="25" style="height: 50px"></textarea>-->
                         </td>
                     </tr>
                     <tr>

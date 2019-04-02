@@ -37,5 +37,12 @@ public class ViewController {
 			return "addBill";
 		return "login";
 	}
+
+	@RequestMapping("/toBillDetail")
+	public String toBillDetail(HttpServletRequest request){
+		if(Util.isLogin(request))
+			return "audit";
+		return "login";
+	}
 	
 }
