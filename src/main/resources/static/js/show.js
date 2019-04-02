@@ -29,8 +29,9 @@ $(document).ready(function () {
                 case 'thisMonth'://查询本月的账单
                     var date = new Date();
                     billTable.reload({
+                        url:'/bill/selectBillByMonth',
                         where: { //设定异步数据接口的额外参数，任意设
-                            date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
+                            date: date.getFullYear() + "-" + (date.getMonth() + 1)
                         }
                         , page: {
                             curr: 1 //重新从第 1 页开始
@@ -47,11 +48,15 @@ $(document).ready(function () {
                         }
                     });
                     break;
-                case 'toDo'://本人待审核账单的查询
+                case 'toAudit'://本人待审核账单的查询
                     billTable.reload({
                         // where: {
                         //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
                         // },
+                        url:'/bill/selectBillByAuditor',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            date: date.getFullYear() + "-" + (date.getMonth() + 1)
+                        },
                         page: {
                             curr: 1
                         }

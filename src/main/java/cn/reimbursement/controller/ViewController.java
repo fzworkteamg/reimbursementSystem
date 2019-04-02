@@ -2,25 +2,20 @@ package cn.reimbursement.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import netscape.javascript.JSObject;
-import org.apache.ibatis.jdbc.SqlBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.reimbursement.service.StaffService;
 import cn.reimbursement.util.Util;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
 public class ViewController {
 	
-	
+	@Autowired
+	private StaffService staffService;
+
 	@RequestMapping("/toLogin")
 	public String toLigin() {
 		return "login";
@@ -48,11 +43,16 @@ public class ViewController {
 	}
 
 	@RequestMapping("/toBillDetail")
-	public String toBillDetail(String data, HttpServletRequest request){
-		System.out.println(data);
+	public String toBillDetail(HttpServletRequest request){
 		if(Util.isLogin(request))
 			return "audit";
 		return "login";
 	}
-	
+
+	@RequestMapping("loginOut")
+	public String loginOut(HttpServletRequest request) {
+		staffService.loginOut(request);
+		return "login";
+	}
+
 }
