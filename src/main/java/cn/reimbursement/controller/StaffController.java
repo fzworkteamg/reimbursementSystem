@@ -31,4 +31,9 @@ public class StaffController {
 		return staffService.selectStaffByCompanyAndDep(company, dep);
 	}
 	
+	@PostMapping("/loginOut")
+	public ServerResult loginOut(HttpServletRequest request) {
+		return null;
+	}
+	
 }

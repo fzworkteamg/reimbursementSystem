@@ -45,18 +45,12 @@ public class BillServiceImpl implements BillService {
 	public ServerResult insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String> billMap = new HashMap<String, String>();
-		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
-		String staffId = request.getParameter("staffId");
-		Staff staff = staffDao.selectStaffById(staffId);
-		System.out.println("staff:"+staff.toString());
-		if (staff == null)
-			return new ServerResult(1, InfoEnum.FAIL.toString());
-		String processContent = processDao.selectProcessByCompanyAndDepartment(staff.getCompanyName(),
-				staff.getDepName());
-		System.out.println( processContent );
+		String processContent = processDao.selectProcessByCompanyAndDepartment("staffCompany", "staffDep");
+		System.out.println(processContent);
 		if (processContent == null)
 			return new ServerResult(1, InfoEnum.FAIL.toString());
 		String[] processContents = processContent.split("|");
+		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
 		for (int i = 0; i < processContents.length;)
 			processStatusDao.insertProcessStatus(Integer.valueOf(billId), processContents[i], i == 0 ? "待审核" : "", i++,
 					request.getParameter("bill_belong_company"));
