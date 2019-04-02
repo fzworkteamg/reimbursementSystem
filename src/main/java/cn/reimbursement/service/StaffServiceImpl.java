@@ -41,13 +41,11 @@ public class StaffServiceImpl implements StaffService {
 		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),staffDutyList);
 	}
 
-	public ServerResult loginOut(HttpServletRequest request) {
+	public void loginOut(HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		Staff staff=(Staff) session.getAttribute("staff");
-		if(staff==null)
-			return new ServerResult(1,InfoEnum.FAIL.toString());
-		session.setAttribute("staff", "");
-		return new ServerResult(0,InfoEnum.SUCCESS.toString());
+		if(staff!=null)
+			session.setAttribute("staff", "");
 	}
 
 }
