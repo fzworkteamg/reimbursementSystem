@@ -107,5 +107,8 @@
 			and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
 		</if>
 	</select>
-
+	<select id="selectBillByMonth" resultMap="billMap">
+		SELECT <include refid="billColums"/>
+		FROM bill WHERE #{year} = YEAR(bill_registrant_date) AND #{month} = MONTH(bill_registrant_date) ORDER BY bill_registrant_date DESC
+	</select>
 </mapper>

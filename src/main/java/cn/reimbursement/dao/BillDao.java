@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.reimbursement.pojo.Bill;
-import cn.reimbursement.util.ServerResult;
 
 @Repository
 public interface BillDao {
@@ -15,4 +14,5 @@ public interface BillDao {
 	int selectBillById(@Param("billId")String billId);
 	void insertBill(@Param("billMap")Map<String,String> billMap);
 	List<Bill> selectBill(@Param("billMap")Map<String,String> billMap);
+	List<Bill> selectBillByMonth(@Param("year") String year,@Param("month") String month);
 }

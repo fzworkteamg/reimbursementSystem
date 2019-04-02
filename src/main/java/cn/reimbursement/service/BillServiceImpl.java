@@ -1,5 +1,6 @@
 package cn.reimbursement.service;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,6 @@ import cn.reimbursement.dao.BillDao;
 import cn.reimbursement.dao.CurrentStepDao;
 import cn.reimbursement.dao.ProcessDao;
 import cn.reimbursement.dao.ProcessStatusDao;
-import cn.reimbursement.dao.StaffDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.pojo.Staff;
@@ -26,8 +26,6 @@ public class BillServiceImpl implements BillService {
 
 	@Autowired
 	private BillDao billDao;
-	@Autowired
-	private StaffDao staffDao;
 	@Autowired
 	private ProcessDao processDao;
 	@Autowired
@@ -126,6 +124,12 @@ public class BillServiceImpl implements BillService {
 		billMap.put("amoutHigh", request.getParameter("amoutHigh"));
 		List<Bill> billList = billDao.selectBill(billMap);
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(), billList, 0, billList.size());
+	}
+
+	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException {
+		String date=request.getParameter("date");
+		List<Bill> billList=billDao.selectBillByMonth(date.split("-")[0],date.split("-")[1]);
+		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(),billList,0,billList.size());
 	}
 
 }

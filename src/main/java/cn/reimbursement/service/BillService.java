@@ -1,5 +1,6 @@
 package cn.reimbursement.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,4 +13,5 @@ public interface BillService {
 	ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception;
 	ServerResult insertBill(HttpServletRequest request);
 	LayuiResult<List<Bill>> selectBill(HttpServletRequest request);
+	LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException ;
 }

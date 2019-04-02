@@ -1,5 +1,6 @@
 package cn.reimbursement.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,10 @@ public class BillController {
 	@PostMapping("/selectBill")
 	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
 		return billService.selectBill(request);
+	}
+	@PostMapping("/selectBillByMonth")
+	public  LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException{
+		return billService.selectBillByMonth(request);
 	}
 	
 	
