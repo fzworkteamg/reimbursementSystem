@@ -11,8 +11,9 @@ import cn.reimbursement.pojo.Bill;
 @Repository
 public interface BillDao {
 	List<Bill> selectBillByCompany(@Param("billCompany")String billCompany);
-	int selectBillById(@Param("billId")String billId);
+	int selectBillCountById(@Param("billId")String billId);
 	void insertBill(@Param("billMap")Map<String,String> billMap);
 	List<Bill> selectBill(@Param("billMap")Map<String,String> billMap);
 	List<Bill> selectBillByMonth(@Param("year") String year,@Param("month") String month);
+	Bill selectBillById(@Param("billId")String billId);
 }

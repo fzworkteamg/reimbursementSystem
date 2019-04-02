@@ -35,7 +35,7 @@
 	<select id="selectBillByCompany" resultMap="billMap">
 		select <include refid="billColums"/> from bill where bill_company =#{billCompany} order by bill_registrant_date desc
 	</select>
-	<select id="selectBillById" resultType="int">
+	<select id="selectBillCountById" resultType="int">
 		select count(*) from bill where bill_id =#{billId}
 	</select>
 	
@@ -110,5 +110,9 @@
 	<select id="selectBillByMonth" resultMap="billMap">
 		SELECT <include refid="billColums"/>
 		FROM bill WHERE #{year} = YEAR(bill_registrant_date) AND #{month} = MONTH(bill_registrant_date) ORDER BY bill_registrant_date DESC
+	</select>
+	<select id="selectBillById" resultMap="billMap">
+		SELECT <include refid="billColums"/>
+		FROM bill WHERE #{billId} = bill_id
 	</select>
 </mapper>

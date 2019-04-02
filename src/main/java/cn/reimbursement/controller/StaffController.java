@@ -33,7 +33,7 @@ public class StaffController {
 	
 	@PostMapping("/loginOut")
 	public ServerResult loginOut(HttpServletRequest request) {
-		return null;
+		return staffService.loginOut(request);
 	}
 	
 }
