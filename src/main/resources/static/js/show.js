@@ -19,22 +19,46 @@ $(document).ready(function () {
             // console.log(obj.data) //得到当前行数据
             //obj.del(); //删除当前行
             //obj.update(fields) //修改当前行数据
-            openBillDetail();
+            openBillDetail(obj.data);
         });
         //顶部工具栏
-        table.on('toolbar(billTable)', function(obj){
+        table.on('toolbar(billTable)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'thisMonth':
-                    layer.msg('本月的');
+            var date = new Date();
+            switch (obj.event) {
+                case 'thisMonth'://查询本月的账单
+                    var date = new Date();
+                    billTable.reload({
+                        where: { //设定异步数据接口的额外参数，任意设
+                            date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
+                        }
+                        , page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
                     break;
-                case 'done':
-                    layer.msg('经办的');
+                case 'done'://本人已审核账单的查询
+                    billTable.reload({
+                        // where: {
+                        //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
+                        // },
+                        page: {
+                            curr: 1
+                        }
+                    });
                     break;
-                case 'toDo':
-                    layer.msg('待审核');
+                case 'toDo'://本人待审核账单的查询
+                    billTable.reload({
+                        // where: {
+                        //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
+                        // },
+                        page: {
+                            curr: 1
+                        }
+                    });
                     break;
-            };
+            }
+            ;
         });
     });
     //获取公司填充下拉列表
@@ -64,6 +88,7 @@ $(document).ready(function () {
 
 
 })
+
 //表格初始渲染
 function remoceBillTable() {
     billTable = table.render({
@@ -151,15 +176,16 @@ function reloadBillTable() {
 }
 
 //弹出账单详情页面
-function openBillDetail() {
+function openBillDetail(data) {
+    data = JSON.stringify(data);
     layer.open({
         type: 2,
         title: '账单详情',
         maxmin: true,
         offset: '20px',
         shadeClose: true, //点击遮罩关闭层
-        area : ['850px' , '550px'],
-        content: '/view/toBillDetail'
+        area: ['850px', '550px'],
+        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
     });
 }
 

@@ -18,9 +18,11 @@ $(document).ready(function () {
     var contractStatus = selectContractStatus();
     romance(contractStatus,"selectContractStatus");
 
-    console.log(billIdByTime());
     $('#bill_id_suff').val(billIdByTime());
     $("#bill_id_suff").attr("readOnly",true);
+
+    $("#reiPerson").attr("readOnly",true);
+    $("#chargePerson").attr("readOnly",true);
 
 })
 
@@ -90,6 +92,7 @@ layui.use('form', function () {
                 }
             }
         })
+        return false;
     })
 
 });
@@ -135,6 +138,7 @@ function openAddSubjet() {
     var companys = selectCompany();
     romance(companys, "selectSubjectCompany");
     form.render();
+
 }
 
 function openAddReiPerson() {
@@ -239,6 +243,7 @@ function romanceTable() {
 function chooseReiPersonAndCloseTip() {
     var data = $("#childSelectPerson").val();
     var arr = data.split("|");
+    $("#reiPerson").attr("readOnly",false);
     $("#reiPerson").val(arr[0]);
     $("#staffCompany").val($("#childSelectCompany").val());
     $("#staffDep").val($("#childSelectDep").val());
@@ -249,6 +254,7 @@ function chooseReiPersonAndCloseTip() {
 function chooseChargePersonAndCloseTip() {
     var data = $("#childSelectPerson").val();
     var arr = data.split("|");
+    $("#chargePerson").attr("readOnly",false);
     $("#chargePerson").val(arr[0]);
     layer.close(chargePersonIndex);
 }
