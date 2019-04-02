@@ -9,5 +9,5 @@ import cn.reimbursement.util.ServerResult;
 public interface StaffService {
 	ServerResult loginByIdAndPassword(HttpServletRequest request,String staffId,String staffPassword);
 	ServerResult<List<String>> selectStaffByCompanyAndDep(String company,String dep);
-	ServerResult loginOut(HttpServletRequest request);
+	void loginOut(HttpServletRequest request);
 }
