@@ -10,7 +10,7 @@ import lombok.Data;
 @Component
 public class ProcessStatus {
 	private Integer processStatusId;
-	private Integer processStatusBillId;
+	private String processStatusBillId;
 	private String processStatusProcessName;
 	private String processStatusState;
 	private String processStatusOpinion;

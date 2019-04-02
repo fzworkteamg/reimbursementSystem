@@ -44,17 +44,16 @@ public class BillServiceImpl implements BillService {
 
 	public ServerResult insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
-		Map<String, String> billMap = new HashMap<String, String>();
-		String processContent = processDao.selectProcessByCompanyAndDepartment("staffCompany", "staffDep");
-		System.out.println(processContent);
+		String processContent = processDao.selectProcessByCompanyAndDepartment(request.getParameter("staffCompany"), request.getParameter("staffDep"));
 		if (processContent == null)
 			return new ServerResult(1, InfoEnum.FAIL.toString());
-		String[] processContents = processContent.split("|");
+		String[] processContents = processContent.split("\\|");
 		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
 		for (int i = 0; i < processContents.length;)
-			processStatusDao.insertProcessStatus(Integer.valueOf(billId), processContents[i], i == 0 ? "待审核" : "", i++,
+			processStatusDao.insertProcessStatus(billId, processContents[i], i == 0 ? "待审核" : "", i++,
 					request.getParameter("bill_belong_company"));
-		currentStepDao.insertCurrentStep(Integer.valueOf(billId));
+		currentStepDao.insertCurrentStep(billId);
+		Map<String, String> billMap = new HashMap<String, String>();
 		billMap.put("bill_id", billId);
 		billMap.put("bill_amount", request.getParameter("bill_amount"));
 		billMap.put("bill_company", request.getParameter("bill_company"));

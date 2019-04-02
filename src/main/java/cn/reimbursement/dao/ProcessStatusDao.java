@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProcessStatusDao {
-	void insertProcessStatus(@Param("processStatusBillId") int processStatusBillId,
+	void insertProcessStatus(@Param("processStatusBillId") String processStatusBillId,
 			@Param("processStatusName") String processStatusName,
 			@Param("processStatusState") String processStatusState,
 			@Param("processStatusStep") int processStatusStep,
