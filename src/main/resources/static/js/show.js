@@ -14,6 +14,15 @@ $(document).ready(function () {
     layui.use('table', function () {
         table = layui.table;
         remoceBillTable();
+        table.on('row(billTable)', function (obj) {
+            // console.log(obj.tr) //得到当前行元素对象
+            // console.log(obj.data) //得到当前行数据
+            //obj.del(); //删除当前行
+            //obj.update(fields) //修改当前行数据
+            // openBillDetail(obj.data);
+            openBillProcess(obj.data.billId);
+        });
+
         table.on('rowDouble(billTable)', function (obj) {
             // console.log(obj.tr) //得到当前行元素对象
             // console.log(obj.data) //得到当前行数据
@@ -192,5 +201,26 @@ function openBillDetail(data) {
         area: ['850px', '550px'],
         content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
     });
+}
+
+//弹出当前账单流程页面
+function openBillProcess(id) {
+    // $.ajax({
+    //     url:'/bill/selectProcessByBillId',
+    //     data:{
+    //         billId:id
+    //     },
+    //     method: 'post',
+    //     success:function (result) {
+    //         layer.msg(result.data,{
+    //             time: 6000,
+    //             offset: '126px',
+    //         })
+    //     }
+    // })
+    layer.msg('result.data', {
+        time: 6000,
+        offset: '126px',
+    })
 }
 
