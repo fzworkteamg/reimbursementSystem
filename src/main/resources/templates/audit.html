@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账单详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs-1"></div>
+        <div class="layui-col-xs-10">
+            <table class="table-c">
+                <caption>支出（报销）新增</caption>
+                <tr>
+                    <td class="firstTd">报销单号</td>
+                    <td><input type="text" style="width: 120px" th:value="${session.bill.billId}" readonly
+                               name="bill_id">
+                    </td>
+                    <td class="thirdTd">金额</td>
+                    <td><input type="number" style="width: 80px" required lay-verify="required" name="bill_amount">元（保留两位小数）
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">公司</td>
+                    <td><select id="company" name="bill_company">
+                        <option>
+                        </option>
+                    </select></td>
+                    <td class="thirdTd">产生日期</td>
+                    <td><input type="date" required lay-verify="required" name="bill_produce_date"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">部门</td>
+                    <td><select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">
+
+                    </select></td>
+                    <td class="thirdTd">登记日期</td>
+                    <td><input type="date" required lay-verify="required" name="bill_registrant_date"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">类别</td>
+                    <td>
+                        <input type="radio" name="bill_type" title="收入" value="收入">
+                        <input type="radio" name="bill_type" title="支出" value="支出" checked>
+                    </td>
+                    <td rowspan="3" class="thirdTd">摘要
+                        (费用产生原由）
+                    </td>
+                    <td rowspan="3">
+                            <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" required
+                                      lay-verify="required"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">科目</td>
+                    <td>
+                        <input type="text" id="subject" required lay-verify="required" name="bill_subject">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">业务所属公司</td>
+                    <td>
+                        <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required
+                                lay-verify="required">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">报销人</td>
+                    <td>
+                        <input type="text" id="reiPerson" required lay-verify="required"
+                               name="bill_reimbursement_person">
+                    </td>
+                    <td class="thirdTd">发票</td>
+                    <td>
+                        <select id="selectInvoiceStatus" required lay-verify="required"
+                                name="bill_invoice_status_name"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">经办人</td>
+                    <td>
+                        <input type="text" id="chargePerson" required lay-verify="required"
+                               name="bill_charge_person">
+                    <td class="thirdTd">发票金额</td>
+                    <td><input type="number" style="width: 80px" required lay-verify="required"
+                               name="bill_invoice_amount">元（保留两位小数）
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">登记人</td>
+                    <td>
+                        <input type="text" readonly
+                               name="bill_registrant_person"> *系统登陆账号不能修改
+                    </td>
+                    <td class="thirdTd">合同</td>
+                    <td><select id="selectContractStatus" required lay-verify="required"
+                                name="bill_contract_status_name"></select></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">属性</td>
+                    <td>
+                        <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
+                        <input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">
+                    </td>
+                    <td class="thirdTd"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="firstTd"></td>
+                    <td>
+                        <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
+                    </td>
+                    <td class="thirdTd"></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
