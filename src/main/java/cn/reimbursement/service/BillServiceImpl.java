@@ -1,6 +1,7 @@
 package cn.reimbursement.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +70,12 @@ public class BillServiceImpl implements BillService {
 		billMap.put("bill_registrant_person", request.getParameter("bill_registrant_person"));
 		billMap.put("bill_contract_status_name", request.getParameter("bill_contract_status_name"));
 		billMap.put("bill_attribute", request.getParameter("bill_attribute"));
-		int count = billDao.selectBillById(billId);
+		int count = billDao.selectBillCountById(billId);
 		if (count > 0) {
 			return new ServerResult(1, InfoEnum.FAIL.toString());
 		}
 		billDao.insertBill(billMap);
-		count = billDao.selectBillById(billId);
+		count = billDao.selectBillCountById(billId);
 		if (count > 0) {
 			return new ServerResult(0, InfoEnum.SUCCESS.toString());
 		}
@@ -129,6 +130,20 @@ public class BillServiceImpl implements BillService {
 	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException {
 		String date=request.getParameter("date");
 		List<Bill> billList=billDao.selectBillByMonth(date.split("-")[0],date.split("-")[1]);
+		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(),billList,0,billList.size());
+	}
+
+	public LayuiResult<List<Bill>> selectBillByAuditor(HttpServletRequest request) {
+		Staff staff = (Staff) request.getSession().getAttribute("staff");
+		if(staff==null)
+			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.toString(),null,1,0);
+		String processStatusCompany=staff.getCompanyName();
+		String processStatusProcessName=staff.getDepName()+"-"+staff.getDutyName();
+		List<String> billIdList= processStatusDao.selectProcessStatusBillIds(processStatusCompany, processStatusProcessName);
+		List<Bill> billList=new ArrayList<Bill>();
+		for (String billId : billIdList) {
+			billList.add(billDao.selectBillById(billId));
+		}
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.toString(),billList,0,billList.size());
 	}
 

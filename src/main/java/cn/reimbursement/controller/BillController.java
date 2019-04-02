@@ -41,5 +41,8 @@ public class BillController {
 		return billService.selectBillByMonth(request);
 	}
 	
-	
+	@PostMapping("/selectBillByAuditor")
+	LayuiResult<List<Bill>> selectBillByAuditor (HttpServletRequest request){
+		return billService.selectBillByAuditor(request);
+	}
 }

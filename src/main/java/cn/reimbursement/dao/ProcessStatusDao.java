@@ -1,5 +1,7 @@
 package cn.reimbursement.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +12,6 @@ public interface ProcessStatusDao {
 			@Param("processStatusState") String processStatusState,
 			@Param("processStatusStep") int processStatusStep,
 			@Param("processStatusBCompany") String processStatusCompany);
+	
+	List<String> selectProcessStatusBillIds(@Param("processStatusCompany")String processStatusCompany,@Param("processStatusProcessName")String processStatusProcessName);
 }
