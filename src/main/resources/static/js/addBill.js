@@ -240,6 +240,8 @@ function chooseReiPersonAndCloseTip() {
     var data = $("#childSelectPerson").val();
     var arr = data.split("|");
     $("#reiPerson").val(arr[0]);
+    $("#staffCompany").val($("#childSelectCompany").val());
+    $("#staffDep").val($("#childSelectDep").val());
     layer.close(reiPersonIndex);
 }
 
