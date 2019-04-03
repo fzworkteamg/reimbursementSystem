@@ -205,22 +205,18 @@ function openBillDetail(data) {
 
 //弹出当前账单流程页面
 function openBillProcess(id) {
-    // $.ajax({
-    //     url:'/bill/selectProcessByBillId',
-    //     data:{
-    //         billId:id
-    //     },
-    //     method: 'post',
-    //     success:function (result) {
-    //         layer.msg(result.data,{
-    //             time: 6000,
-    //             offset: '126px',
-    //         })
-    //     }
-    // })
-    layer.msg('result.data', {
-        time: 6000,
-        offset: '126px',
-    })
+     $.ajax({
+         url:'/process/selectProcessContentByBillId',
+         data:{
+             billId:id
+         },
+         method: 'post',
+         success:function (result) {
+             layer.msg(result.data,{
+                 time: 6000,
+                 offset: '126px',
+             })
+         }
+     })
 }
 

@@ -32,6 +32,6 @@
 		VALUES(#{processStatusBillId},#{processStatusName},#{processStatusState},#{processStatusStep},#{processStatusBCompany})
 	</insert>
 	<select id="selectProcessStatusBillIds" resultType="java.lang.String">
-		SELECT process_status_bill_id FROM process_status WHERE process_status_company=#{processStatusCompany} AND process_status_process_name=processStatusProcessName AND process_status_state='待审核'
+		SELECT process_status_bill_id FROM process_status WHERE process_status_company=#{processStatusCompany} AND process_status_process_name=#{processStatusProcessName} AND process_status_state='待审核'
 	</select>
 </mapper>

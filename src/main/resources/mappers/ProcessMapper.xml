@@ -16,14 +16,12 @@
 	<sql id="processColums">
 		process_id,process_company,process_department,process_content,process_count
 	</sql>
-	<select id="selectProcessById" resultMap="processMap">
-		SELECT
-		<include refid="processColums" />
-		FROM process WHERE process_id=#{processId}
-	</select>
-	<select id="selectProcessByCompanyAndDepartment" resultType="java.lang.String">
+	<select id="selectProcessByCompanyAndDepartment"
+		resultType="java.lang.String">
 		SELECT
 		process_content
-		FROM process WHERE process_company=#{processCompany} AND process_department=#{processDepartment}
+		FROM process WHERE
+		process_company=#{processCompany} AND
+		process_department=#{processDepartment}
 	</select>
 </mapper>

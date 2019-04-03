@@ -17,7 +17,7 @@ public class ReimbursementProcessTests {
 	
 	@Test
 	public void testSelectProcessById() {
-		System.out.println(processService.selectProcessById(1));
+//		System.out.println(processService.selectProcessById(1));
 	}
 
 }

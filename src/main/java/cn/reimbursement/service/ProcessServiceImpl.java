@@ -3,9 +3,11 @@ package cn.reimbursement.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.reimbursement.dao.BillDao;
+import cn.reimbursement.dao.CurrentStepDao;
 import cn.reimbursement.dao.ProcessDao;
 import cn.reimbursement.enums.InfoEnum;
-import cn.reimbursement.pojo.Process;
+import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.util.ServerResult;
 
 @Service
@@ -13,13 +15,22 @@ public class ProcessServiceImpl implements ProcessService {
 
 	@Autowired
 	private ProcessDao processDao;
+	
+	@Autowired
+	private BillDao billDao;
+	
+	@Autowired
+	private CurrentStepDao currentStepDao;
 
-	public ServerResult<Process> selectProcessById(Integer processId) {
-		System.out.println("zero");
-		Process process=processDao.selectProcessById(processId);
-		if(process!=null) {
-			return new ServerResult<Process>(0,InfoEnum.SUCCESS.getName(),process);
-		}
-		return new ServerResult<Process>(1,InfoEnum.FAIL.toString());
+	public ServerResult<String> selectProcessContentByBillId(String billId) {
+		Bill bill=billDao.selectBillById(billId);
+		if(bill==null)
+			return new ServerResult<String>(1,InfoEnum.FAIL.toString());
+		String processContent=processDao.selectProcessByCompanyAndDepartment(bill.getBillCompany(), bill.getBillReimbursementDep());
+		int currentStep=currentStepDao.selectCurrentStepByBillId(billId);
+		String resultString="审核流程："+processContent+"		待审核："+processContent.split("\\|")[currentStep];
+		return new ServerResult<String>(0,InfoEnum.SUCCESS.toString(),resultString);
 	}
+
+	
 }
