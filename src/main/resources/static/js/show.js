@@ -45,9 +45,6 @@ $(document).ready(function () {
                     break;
                 case 'done'://本人已审核账单的查询
                     billTable.reload({
-                        // where: {
-                        //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
-                        // },
                         page: {
                             curr: 1
                         }
@@ -194,8 +191,8 @@ function openBillDetail(data) {
         maxmin: true,
         offset: '20px',
         shadeClose: true, //点击遮罩关闭层
-        area: ['850px', '550px'],
-        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')+"&billId="+data.billId//转换编码格式
+        area: ['850px', '600px'],
+        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
     });
 }
 

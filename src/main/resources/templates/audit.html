@@ -20,7 +20,7 @@
         td {
             border-left: 1px solid #9F9F9F;
             border-top: 1px solid #9F9F9F;
-            padding-top: 8px;
+            padding-top: 3px;
             padding-bottom: 8px;
         }
 
@@ -42,14 +42,15 @@
         <div class="layui-col-xs-10">
             <form id="selectForm" enctype="multipart/form-data" class="layui-form">
                 <table class="table-c">
-                    <caption>支出（报销）新增</caption>
+                    <caption>账单审核</caption>
                     <tr>
                         <td class="firstTd">报销单号</td>
                         <td><input type="text" style="width: 123px" th:value="${session.bill.billId}" readonly
                                    name="bill_id">
                         </td>
                         <td class="thirdTd">金额</td>
-                        <td><input type="number" style="width: 80px" readonly lay-verify="required" name="bill_amount">元（保留两位小数）
+                        <td><input type="number" style="width: 80px" readonly lay-verify="required" name="bill_amount"
+                        th:value="${session.bill.billAmount}">元（保留两位小数）
                         </td>
                     </tr>
                     <tr>
@@ -146,16 +147,21 @@
                             <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
                             <input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">
                         </td>
-                        <td class="thirdTd"></td>
-                        <td></td>
+                        <!--<td class="thirdTd"></td>-->
+                        <!--<td></td>-->
+                        <td class="thirdTd">审核意见</td>
+                        <td>
+                             <textarea name="audit_summary" placeholder="请输入内容" class="layui-textarea"
+                                       lay-verify="required"></textarea>
+                        </td>
                     </tr>
                     <tr>
                         <td class="firstTd"></td>
-                        <td>
-                            <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
+                        <td style="text-align: center">
+                            <button class="layui-btn" lay-filter="auditPast" lay-submit>审核通过</button>
                         </td>
                         <td class="thirdTd"></td>
-                        <td></td>
+                        <td><button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit>驳回</button></td>
                     </tr>
                 </table>
             </form>
@@ -166,6 +172,25 @@
     layui.use('form', function () {
         form = layui.form;
         form.render();
+        form.on('submit(auditPast)',function (data) {
+            layer.confirm('您确定要驳回吗？', {
+                btn: ['确定','取消'] //按钮
+            })
+            return false;
+        })
+        form.on('submit(auditPass)',function (data) {
+            //询问框
+
+            layer.confirm('您确定要驳回吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function() {
+                parent.layer.msg('已驳回', {icon: 2},{
+                    time:1000,
+                    offset: '200px',
+                });
+            })
+            return false;
+        })
     })
 </script>
 </body>
