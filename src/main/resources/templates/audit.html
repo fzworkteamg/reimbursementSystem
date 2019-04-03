@@ -58,7 +58,7 @@
                         <td><input type="text" name="bill_company" readonly th:value="${session.bill.billCompany}"></td>
                         <td class="thirdTd">产生日期</td>
                         <td><input type="date" readonly name="bill_produce_date"
-                                   th:text="${session.bill.billProduceDate}"></td>
+                                   th:value="${session.bill.billProduceDate}"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">部门</td>
@@ -85,7 +85,7 @@
                     <tr>
                         <td class="firstTd">科目</td>
                         <td>
-                            <input type="text" id="subject" required lay-verify="required" name="bill_subject"
+                            <input type="text" id="subject" readonly lay-verify="required" name="bill_subject"
                                    th:value="${session.bill.billSubject}">
                         </td>
                     </tr>
@@ -102,7 +102,7 @@
                         </td>
                         <td class="thirdTd">发票</td>
                         <td><input type="text" readonly lay-verify="required"
-                                   th:text="${session.bill.billInvoiceStatusName}" name="bill_invoice_status_name"></td>
+                                   th:value="${session.bill.billInvoiceStatusName}" name="bill_invoice_status_name"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">经办人</td>
