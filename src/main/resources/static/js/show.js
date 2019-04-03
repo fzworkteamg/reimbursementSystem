@@ -199,7 +199,7 @@ function openBillDetail(data) {
         offset: '20px',
         shadeClose: true, //点击遮罩关闭层
         area: ['850px', '550px'],
-        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
+        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8') +"&billId="+data.billId//转换编码格式
     });
 }
 

@@ -21,4 +21,7 @@
 	<select id="selectCurrentStepByBillId" resultType="java.lang.Integer">
 		SELECT current_step_number FROM current_step WHERE current_step_bill_id=#{billId}
 	</select>
+	<update id="updateCurrentStepNumberByBillId">
+		UPDATE current_step SET current_step_number=#{currentStepNumber} WHERE current_step_bill_id=#{billId}
+	</update>
 </mapper>

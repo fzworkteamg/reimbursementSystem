@@ -14,4 +14,6 @@ public interface ProcessStatusDao {
 			@Param("processStatusBCompany") String processStatusCompany);
 	
 	List<String> selectProcessStatusBillIds(@Param("processStatusCompany")String processStatusCompany,@Param("processStatusProcessName")String processStatusProcessName);
+	Integer selectCountByBillId(@Param("billId")String billId);
+	Integer updateStateByStep(@Param("billId")String billId,@Param("step")Integer step,@Param("audit")String audit);
 }

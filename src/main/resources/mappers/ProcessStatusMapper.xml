@@ -34,4 +34,10 @@
 	<select id="selectProcessStatusBillIds" resultType="java.lang.String">
 		SELECT process_status_bill_id FROM process_status WHERE process_status_company=#{processStatusCompany} AND process_status_process_name=#{processStatusProcessName} AND process_status_state='待审核'
 	</select>
+	<select id="selectCountByBillId" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM process_status WHERE process_status_bill_id=#{billId}
+	</select>
+	<update id="updateStateByStep">
+		UPDATE process_status SET process_status_state=#{audit} WHERE process_status_step=#{step} AND process_status_bill_id=#{billId}
+	</update>
 </mapper>

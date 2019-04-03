@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.reimbursement.service.StaffService;
+import cn.reimbursement.service.ViewService;
 import cn.reimbursement.util.Util;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +20,9 @@ public class ViewController {
 	
 	@Autowired
 	private StaffService staffService;
+	
+	@Autowired
+	private ViewService viewService;
 
 	@RequestMapping("/toLogin")
 	public String toLigin() {
@@ -49,10 +53,7 @@ public class ViewController {
 	@RequestMapping("/toBillDetail")
 	public String toBillDetail(String data, HttpServletRequest request){
 		if(Util.isLogin(request)){
-			JSONObject object = JSONObject.fromObject(data);
-			HttpSession session = (HttpSession) request.getSession();
-			session.setAttribute("bill",object);
-			System.out.println(object);
+			viewService.toBillDetail(data, request);
 			return "audit";
 		}
 		return "login";
