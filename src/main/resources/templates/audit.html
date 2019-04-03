@@ -75,8 +75,9 @@
                     <tr>
                         <td class="firstTd">类别</td>
                         <td>
-                            <input type="radio" name="bill_type" title="收入" value="收入">
-                            <input type="radio" name="bill_type" title="支出" value="支出">
+                            <input type="text" readonly name="bill_type" th:value="${session.bill.billType}">
+                            <!--<input type="radio" name="bill_type" title="收入" value="收入"  th:field="${session.bill.billType}">-->
+                            <!--<input type="radio" name="bill_type" title="支出" value="支出" th:field="${session.bill.billType}">-->
                         </td>
                         <td rowspan="3" class="thirdTd">摘要
                             (费用产生原由）
@@ -144,8 +145,9 @@
                     <tr>
                         <td class="firstTd">属性</td>
                         <td>
-                            <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
-                            <input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">
+                            <input type="text" name="bill_attribute" th:value="${session.bill.billAttribute}">
+                            <!--<input type="radio" name="bill_attribute" title="需要报备" value="需要报备">-->
+                            <!--<input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">-->
                         </td>
                         <!--<td class="thirdTd"></td>-->
                         <!--<td></td>-->
@@ -158,10 +160,12 @@
                     <tr>
                         <td class="firstTd"></td>
                         <td style="text-align: center">
-                            <button class="layui-btn" lay-filter="auditPast" lay-submit>审核通过</button>
+                            <button class="layui-btn" lay-filter="auditPast" lay-submit
+                            th:if="${session.status==1}">审核通过</button>
                         </td>
                         <td class="thirdTd"></td>
-                        <td><button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit>驳回</button></td>
+                        <td><button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit
+                                    th:if="${session.status==1}">驳回</button></td>
                     </tr>
                 </table>
             </form>
@@ -173,20 +177,28 @@
         form = layui.form;
         form.render();
         form.on('submit(auditPast)',function (data) {
-            layer.confirm('您确定要驳回吗？', {
+            var index = layer.confirm('您确定要通过审核吗？', {
                 btn: ['确定','取消'] //按钮
+            }, function() {
+                layer.close(index);
+                parent.layer.msg('审核已通过', {
+                    icon: 1,
+                    offset: '300px',
+                    time:1000
+                });
             })
             return false;
         })
         form.on('submit(auditPass)',function (data) {
             //询问框
-
-            layer.confirm('您确定要驳回吗？', {
+            var index = layer.confirm('您确定要驳回吗？', {
                 btn: ['确定','取消'] //按钮
             }, function() {
-                parent.layer.msg('已驳回', {icon: 2},{
-                    time:1000,
-                    offset: '200px',
+                layer.close(index);
+                parent.layer.msg('已驳回', {
+                    icon: 2,
+                    offset: '300px',
+                    time:1000
                 });
             })
             return false;
