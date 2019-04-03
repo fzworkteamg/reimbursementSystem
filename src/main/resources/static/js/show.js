@@ -128,8 +128,8 @@ function remoceBillTable() {
         page: true,
         limit: 10,
         cols: [[
-            {field: 'xuhao', width: 80, title: '序号', templet: '#xuhao'},
-            {field: 'billId', width: 180, title: '单号'},
+            {field: 'xuhao', width: 80, title: '序号', templet: '#xuhao',fixed: 'left'},
+            {field: 'billId', width: 180, title: '单号',fixed: 'left'},
             {field: 'billAttribute', width: 80, title: '属性'},
             {field: 'billType', width: 80, title: '类型'},
             {field: 'billReimbursementDep', width: 100, title: '报销部门'},
