@@ -50,25 +50,19 @@
                         </td>
                         <td class="thirdTd">金额</td>
                         <td><input type="number" style="width: 80px" readonly lay-verify="required" name="bill_amount"
-                        th:value="${session.bill.billAmount}">元（保留两位小数）
+                                   th:value="${session.bill.billAmount}">元（保留两位小数）
                         </td>
                     </tr>
                     <tr>
                         <td class="firstTd">公司</td>
-                        <td><select id="company" name="bill_company" readonly>
-                            <option th:text="${session.bill.billCompany}">
-
-                            </option>
-                        </select></td>
+                        <td><input type="text" name="bill_company" readonly th:value="${session.bill.billCompany}"></td>
                         <td class="thirdTd">产生日期</td>
-                        <td><input type="date" readonly name="bill_produce_date" th:text="${session.bill.billProduceDate}"></td>
+                        <td><input type="date" readonly name="bill_produce_date"
+                                   th:text="${session.bill.billProduceDate}"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">部门</td>
-                        <td><select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">
-                            <option th:text="${session.bill.billReimbursementDep}">
-                            </option>
-                        </select></td>
+                        <td><input type="text" readonly lay-verify="required" name="bill_reimbursement_dep" th:value="${session.bill.billReimbursementDep}"></td>
                         <td class="thirdTd">登记日期</td>
                         <td><input type="date" readonly lay-verify="required" name="bill_registrant_date" th:value="${session.bill.billRegistrantDate}"></td>
                     </tr>
@@ -76,33 +70,26 @@
                         <td class="firstTd">类别</td>
                         <td>
                             <input type="text" readonly name="bill_type" th:value="${session.bill.billType}">
-                            <!--<input type="radio" name="bill_type" title="收入" value="收入"  th:field="${session.bill.billType}">-->
-                            <!--<input type="radio" name="bill_type" title="支出" value="支出" th:field="${session.bill.billType}">-->
                         </td>
                         <td rowspan="3" class="thirdTd">摘要
                             (费用产生原由）
                         </td>
                         <td rowspan="3">
-                            <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" readonly th:text="${session.bill.billSummary}"
+                            <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" readonly
+                                      th:text="${session.bill.billSummary}"
                                       lay-verify="required"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td class="firstTd">科目</td>
                         <td>
-                            <input type="text" id="subject" required lay-verify="required" name="bill_subject" th:value="${session.bill.billSubject}">
+                            <input type="text" id="subject" required lay-verify="required" name="bill_subject"
+                                   th:value="${session.bill.billSubject}">
                         </td>
                     </tr>
                     <tr>
                         <td class="firstTd">业务所属公司</td>
-                        <td>
-                            <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' readonly=""
-                                    lay-verify="required">
-                                <option th:text="${session.bill.billBelongCompany}" >
-
-                                </option>
-                            </select>
-                        </td>
+                        <td><input type="text" name="bill_belong_company" lay-filter='selectCompany' readonly th:value="${session.bill.billBelongCompany}"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">报销人</td>
@@ -111,12 +98,7 @@
                                    name="bill_reimbursement_person" th:value="${session.bill.billReimbursementPerson}">
                         </td>
                         <td class="thirdTd">发票</td>
-                        <td>
-                            <select id="selectInvoiceStatus" readonly lay-verify="required"
-                                    name="bill_invoice_status_name">
-                                <option th:text="${session.bill.billInvoiceStatusName}"></option>
-                            </select>
-                        </td>
+                        <td><input type="text" readonly lay-verify="required" th:text="${session.bill.billInvoiceStatusName}" name="bill_invoice_status_name"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">经办人</td>
@@ -135,19 +117,14 @@
                                    name="bill_registrant_person" th:value="${session.bill.billRegistrantPerson}">
                         </td>
                         <td class="thirdTd">合同</td>
-                        <td><select id="selectContractStatus" required lay-verify="required"
-                                    name="bill_contract_status_name">
-                            <option th:text="${session.bill.billContractStatusName}">
-
-                            </option>
-                        </select></td>
+                        <td><input type="text" readonly lay-verify="required" name="bill_contract_status_name"
+                                   th:value="${session.bill.billContractStatusName}">
+                        </td>
                     </tr>
                     <tr>
                         <td class="firstTd">属性</td>
                         <td>
                             <input type="text" name="bill_attribute" th:value="${session.bill.billAttribute}">
-                            <!--<input type="radio" name="bill_attribute" title="需要报备" value="需要报备">-->
-                            <!--<input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">-->
                         </td>
                         <!--<td class="thirdTd"></td>-->
                         <!--<td></td>-->
@@ -161,11 +138,15 @@
                         <td class="firstTd"></td>
                         <td style="text-align: center">
                             <button class="layui-btn" lay-filter="auditPast" lay-submit
-                            th:if="${session.status==1}">审核通过</button>
+                                    th:if="${session.status==0}">审核通过
+                            </button>
                         </td>
                         <td class="thirdTd"></td>
-                        <td><button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit
-                                    th:if="${session.status==1}">驳回</button></td>
+                        <td>
+                            <button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit
+                                    th:if="${session.status==1}">驳回
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </form>
@@ -176,29 +157,29 @@
     layui.use('form', function () {
         form = layui.form;
         form.render();
-        form.on('submit(auditPast)',function (data) {
+        form.on('submit(auditPast)', function (data) {
             var index = layer.confirm('您确定要通过审核吗？', {
-                btn: ['确定','取消'] //按钮
-            }, function() {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 layer.close(index);
                 parent.layer.msg('审核已通过', {
                     icon: 1,
                     offset: '300px',
-                    time:1000
+                    time: 1000
                 });
             })
             return false;
         })
-        form.on('submit(auditPass)',function (data) {
+        form.on('submit(auditPass)', function (data) {
             //询问框
             var index = layer.confirm('您确定要驳回吗？', {
-                btn: ['确定','取消'] //按钮
-            }, function() {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 layer.close(index);
                 parent.layer.msg('已驳回', {
                     icon: 2,
                     offset: '300px',
-                    time:1000
+                    time: 1000
                 });
             })
             return false;
