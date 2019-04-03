@@ -1,5 +1,6 @@
 var formData;
 var billTable;
+var processTip;
 $(document).ready(function () {
     layui.use('layer', function () {
         var layer = layui.layer;
@@ -184,6 +185,7 @@ function reloadBillTable() {
 
 //弹出账单详情页面
 function openBillDetail(data) {
+    layer.close(processTip);
     data = JSON.stringify(data);
     layer.open({
         type: 2,
@@ -205,7 +207,7 @@ function openBillProcess(id) {
          },
          method: 'post',
          success:function (result) {
-             layer.msg(result.data,{
+             processTip = layer.msg(result.data,{
                  time: 6000,
                  offset: '126px',
              })
