@@ -62,9 +62,11 @@
                     </tr>
                     <tr>
                         <td class="firstTd">部门</td>
-                        <td><input type="text" readonly lay-verify="required" name="bill_reimbursement_dep" th:value="${session.bill.billReimbursementDep}"></td>
+                        <td><input type="text" readonly lay-verify="required" name="bill_reimbursement_dep"
+                                   th:value="${session.bill.billReimbursementDep}"></td>
                         <td class="thirdTd">登记日期</td>
-                        <td><input type="date" readonly lay-verify="required" name="bill_registrant_date" th:value="${session.bill.billRegistrantDate}"></td>
+                        <td><input type="date" readonly lay-verify="required" name="bill_registrant_date"
+                                   th:value="${session.bill.billRegistrantDate}"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">类别</td>
@@ -89,7 +91,8 @@
                     </tr>
                     <tr>
                         <td class="firstTd">业务所属公司</td>
-                        <td><input type="text" name="bill_belong_company" lay-filter='selectCompany' readonly th:value="${session.bill.billBelongCompany}"></td>
+                        <td><input type="text" name="bill_belong_company" lay-filter='selectCompany' readonly
+                                   th:value="${session.bill.billBelongCompany}"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">报销人</td>
@@ -98,7 +101,8 @@
                                    name="bill_reimbursement_person" th:value="${session.bill.billReimbursementPerson}">
                         </td>
                         <td class="thirdTd">发票</td>
-                        <td><input type="text" readonly lay-verify="required" th:text="${session.bill.billInvoiceStatusName}" name="bill_invoice_status_name"></td>
+                        <td><input type="text" readonly lay-verify="required"
+                                   th:text="${session.bill.billInvoiceStatusName}" name="bill_invoice_status_name"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">经办人</td>
@@ -137,14 +141,13 @@
                     <tr>
                         <td class="firstTd"></td>
                         <td style="text-align: center">
-                            <button class="layui-btn" lay-filter="auditPast" lay-submit
-                                    th:if="${session.status==0}">审核通过
-                            </button>
+                            <button class="layui-btn" lay-filter="auditPast" lay-submit id="auditPast">审核通过
+                            </button>'
+                            <h3 style="color: red" id="tip">您无权审核！</h3>
                         </td>
                         <td class="thirdTd"></td>
                         <td>
-                            <button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit
-                                    th:if="${session.status==1}">驳回
+                            <button class="layui-btn layui-btn-danger" lay-filter="auditPass" lay-submit id="auditPass">驳回
                             </button>
                         </td>
                     </tr>
@@ -185,6 +188,19 @@
             return false;
         })
     })
+    $(document).ready(function () {
+        isAudit();
+    })
+
+    function isAudit() {
+        var msg  = [[${session.status}]];
+        if (msg==1){
+            $("#auditPass").hide();
+            $("#auditPast").hide();
+        }else{
+            $("#tip").hide();
+        }
+    }
 </script>
 </body>
 </html>
