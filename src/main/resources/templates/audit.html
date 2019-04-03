@@ -9,120 +9,164 @@
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/layui-v2.4.5/layui/layui.js"></script>
+    <style type="text/css">
+        .table-c {
+            border-right: 1px solid #9F9F9F;
+            border-bottom: 1px solid #9F9F9F;
+            width: 100%;
+            background-color: #f2fafe;
+        }
+
+        td {
+            border-left: 1px solid #9F9F9F;
+            border-top: 1px solid #9F9F9F;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .firstTd {
+            width: 90px;
+            text-align: right;
+        }
+
+        .thirdTd {
+            width: 80px;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-container">
     <div class="layui-row">
         <div class="layui-col-xs-1"></div>
         <div class="layui-col-xs-10">
-            <table class="table-c">
-                <caption>支出（报销）新增</caption>
-                <tr>
-                    <td class="firstTd">报销单号</td>
-                    <td><input type="text" style="width: 120px" th:value="${session.bill.billId}" readonly
-                               name="bill_id">
-                    </td>
-                    <td class="thirdTd">金额</td>
-                    <td><input type="number" style="width: 80px" required lay-verify="required" name="bill_amount">元（保留两位小数）
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">公司</td>
-                    <td><select id="company" name="bill_company">
-                        <option>
-                        </option>
-                    </select></td>
-                    <td class="thirdTd">产生日期</td>
-                    <td><input type="date" required lay-verify="required" name="bill_produce_date"></td>
-                </tr>
-                <tr>
-                    <td class="firstTd">部门</td>
-                    <td><select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">
+            <form id="selectForm" enctype="multipart/form-data" class="layui-form">
+                <table class="table-c">
+                    <caption>支出（报销）新增</caption>
+                    <tr>
+                        <td class="firstTd">报销单号</td>
+                        <td><input type="text" style="width: 123px" th:value="${session.bill.billId}" readonly
+                                   name="bill_id">
+                        </td>
+                        <td class="thirdTd">金额</td>
+                        <td><input type="number" style="width: 80px" readonly lay-verify="required" name="bill_amount">元（保留两位小数）
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">公司</td>
+                        <td><select id="company" name="bill_company" readonly>
+                            <option th:text="${session.bill.billCompany}">
 
-                    </select></td>
-                    <td class="thirdTd">登记日期</td>
-                    <td><input type="date" required lay-verify="required" name="bill_registrant_date"></td>
-                </tr>
-                <tr>
-                    <td class="firstTd">类别</td>
-                    <td>
-                        <input type="radio" name="bill_type" title="收入" value="收入">
-                        <input type="radio" name="bill_type" title="支出" value="支出" checked>
-                    </td>
-                    <td rowspan="3" class="thirdTd">摘要
-                        (费用产生原由）
-                    </td>
-                    <td rowspan="3">
-                            <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" required
+                            </option>
+                        </select></td>
+                        <td class="thirdTd">产生日期</td>
+                        <td><input type="date" readonly name="bill_produce_date" th:text="${session.bill.billProduceDate}"></td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">部门</td>
+                        <td><select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">
+                            <option th:text="${session.bill.billReimbursementDep}">
+                            </option>
+                        </select></td>
+                        <td class="thirdTd">登记日期</td>
+                        <td><input type="date" readonly lay-verify="required" name="bill_registrant_date" th:value="${session.bill.billRegistrantDate}"></td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">类别</td>
+                        <td>
+                            <input type="radio" name="bill_type" title="收入" value="收入">
+                            <input type="radio" name="bill_type" title="支出" value="支出">
+                        </td>
+                        <td rowspan="3" class="thirdTd">摘要
+                            (费用产生原由）
+                        </td>
+                        <td rowspan="3">
+                            <textarea name="bill_summary" placeholder="请输入内容" class="layui-textarea" readonly th:text="${session.bill.billSummary}"
                                       lay-verify="required"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">科目</td>
-                    <td>
-                        <input type="text" id="subject" required lay-verify="required" name="bill_subject">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">业务所属公司</td>
-                    <td>
-                        <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required
-                                lay-verify="required">
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">报销人</td>
-                    <td>
-                        <input type="text" id="reiPerson" required lay-verify="required"
-                               name="bill_reimbursement_person">
-                    </td>
-                    <td class="thirdTd">发票</td>
-                    <td>
-                        <select id="selectInvoiceStatus" required lay-verify="required"
-                                name="bill_invoice_status_name"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">经办人</td>
-                    <td>
-                        <input type="text" id="chargePerson" required lay-verify="required"
-                               name="bill_charge_person">
-                    <td class="thirdTd">发票金额</td>
-                    <td><input type="number" style="width: 80px" required lay-verify="required"
-                               name="bill_invoice_amount">元（保留两位小数）
-                    </td>
-                </tr>
-                <tr>
-                    <td class="firstTd">登记人</td>
-                    <td>
-                        <input type="text" readonly
-                               name="bill_registrant_person"> *系统登陆账号不能修改
-                    </td>
-                    <td class="thirdTd">合同</td>
-                    <td><select id="selectContractStatus" required lay-verify="required"
-                                name="bill_contract_status_name"></select></td>
-                </tr>
-                <tr>
-                    <td class="firstTd">属性</td>
-                    <td>
-                        <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
-                        <input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">
-                    </td>
-                    <td class="thirdTd"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="firstTd"></td>
-                    <td>
-                        <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
-                    </td>
-                    <td class="thirdTd"></td>
-                    <td></td>
-                </tr>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">科目</td>
+                        <td>
+                            <input type="text" id="subject" required lay-verify="required" name="bill_subject" th:value="${session.bill.billSubject}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">业务所属公司</td>
+                        <td>
+                            <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' readonly=""
+                                    lay-verify="required">
+                                <option th:text="${session.bill.billBelongCompany}">
+
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">报销人</td>
+                        <td>
+                            <input type="text" id="reiPerson" readonly lay-verify="required"
+                                   name="bill_reimbursement_person" th:value="${session.bill.billReimbursementPerson}">
+                        </td>
+                        <td class="thirdTd">发票</td>
+                        <td>
+                            <select id="selectInvoiceStatus" readonly lay-verify="required"
+                                    name="bill_invoice_status_name">
+                                <option th:text="${session.bill.billInvoiceStatusName}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">经办人</td>
+                        <td>
+                            <input type="text" id="chargePerson" readonly lay-verify="required"
+                                   name="bill_charge_person" th:value="${session.bill.billChargePerson}">
+                        <td class="thirdTd">发票金额</td>
+                        <td><input type="number" style="width: 80px" readonly lay-verify="required"
+                                   name="bill_invoice_amount" th:value="${session.bill.billInvoiceAmount}">元（保留两位小数）
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">登记人</td>
+                        <td>
+                            <input type="text" readonly
+                                   name="bill_registrant_person" th:value="${session.bill.billRegistrantPerson}">
+                        </td>
+                        <td class="thirdTd">合同</td>
+                        <td><select id="selectContractStatus" required lay-verify="required"
+                                    name="bill_contract_status_name">
+                            <option th:text="${session.bill.billContractStatusName}">
+
+                            </option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd">属性</td>
+                        <td>
+                            <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
+                            <input type="radio" name="bill_attribute" title="不需要报备" checked value="正常">
+                        </td>
+                        <td class="thirdTd"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="firstTd"></td>
+                        <td>
+                            <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
+                        </td>
+                        <td class="thirdTd"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
 </div>
+<script>
+    layui.use('form', function () {
+        form = layui.form;
+        form.render();
+    })
+</script>
 </body>
 </html>

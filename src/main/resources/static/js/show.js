@@ -24,10 +24,6 @@ $(document).ready(function () {
         });
 
         table.on('rowDouble(billTable)', function (obj) {
-            // console.log(obj.tr) //得到当前行元素对象
-            // console.log(obj.data) //得到当前行数据
-            //obj.del(); //删除当前行
-            //obj.update(fields) //修改当前行数据
             openBillDetail(obj.data);
         });
         //顶部工具栏
@@ -157,7 +153,7 @@ function remoceBillTable() {
             // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo',title:'确定'}
         ]],
         done: function (res) {
-            console.log(res);
+            // console.log(res);
         }
     })
 }
@@ -199,7 +195,7 @@ function openBillDetail(data) {
         offset: '20px',
         shadeClose: true, //点击遮罩关闭层
         area: ['850px', '550px'],
-        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
+        content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')+"&billId="+data.billId//转换编码格式
     });
 }
 
