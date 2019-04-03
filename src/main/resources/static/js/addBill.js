@@ -87,14 +87,12 @@ layui.use('form', function () {
             contentType: false,
             processData: false,
             success : function(data) {
-                if(data.code==1){
+                if(data.msg=="SUCCESS"){
                     parent.layer.msg("新增报销保存成功");
                 }
             }
         })
-        return false;
     })
-
 });
 //载入jquery模块
 layui.use('jquery'), function () {
@@ -234,7 +232,7 @@ function romanceTable() {
             // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo',title:'确定'}
         ]],
         done: function (res) {
-            console.log(res);
+            // console.log(res);
         }
     })
 }

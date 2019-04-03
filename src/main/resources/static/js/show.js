@@ -1,5 +1,6 @@
 var formData;
 var billTable;
+var processTip;
 $(document).ready(function () {
     layui.use('layer', function () {
         var layer = layui.layer;
@@ -24,10 +25,6 @@ $(document).ready(function () {
         });
 
         table.on('rowDouble(billTable)', function (obj) {
-            // console.log(obj.tr) //得到当前行元素对象
-            // console.log(obj.data) //得到当前行数据
-            //obj.del(); //删除当前行
-            //obj.update(fields) //修改当前行数据
             openBillDetail(obj.data);
         });
         //顶部工具栏
@@ -49,9 +46,6 @@ $(document).ready(function () {
                     break;
                 case 'done'://本人已审核账单的查询
                     billTable.reload({
-                        // where: {
-                        //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
-                        // },
                         page: {
                             curr: 1
                         }
@@ -157,7 +151,7 @@ function remoceBillTable() {
             // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo',title:'确定'}
         ]],
         done: function (res) {
-            console.log(res);
+            // console.log(res);
         }
     })
 }
@@ -191,6 +185,7 @@ function reloadBillTable() {
 
 //弹出账单详情页面
 function openBillDetail(data) {
+    layer.close(processTip);
     data = JSON.stringify(data);
     layer.open({
         type: 2,
@@ -212,7 +207,7 @@ function openBillProcess(id) {
          },
          method: 'post',
          success:function (result) {
-             layer.msg(result.data,{
+             processTip = layer.msg(result.data,{
                  time: 6000,
                  offset: '126px',
              })
