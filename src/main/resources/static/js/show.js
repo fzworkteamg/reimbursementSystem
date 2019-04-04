@@ -45,6 +45,7 @@ $(document).ready(function () {
                     });
                     break;
                 case 'done'://本人已审核账单的查询
+                    url:'/bill/selectBillAudited'
                     billTable.reload({
                         page: {
                             curr: 1
@@ -53,9 +54,6 @@ $(document).ready(function () {
                     break;
                 case 'toAudit'://本人待审核账单的查询
                     billTable.reload({
-                        // where: {
-                        //     date: myDate.getFullYear() + "-" + (myDate.getMonth() + 1)
-                        // },
                         url:'/bill/selectBillByAuditor',
                         where: { //设定异步数据接口的额外参数，任意设
                             date: date.getFullYear() + "-" + (date.getMonth() + 1)
@@ -191,9 +189,9 @@ function openBillDetail(data) {
         type: 2,
         title: '账单详情',
         maxmin: true,
-        offset: '20px',
+        offset: '1px',
         shadeClose: true, //点击遮罩关闭层
-        area: ['850px', '550px'],
+        area: ['850px', '600px'],
         content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8') +"&billId="+data.billId//转换编码格式
     });
 }
