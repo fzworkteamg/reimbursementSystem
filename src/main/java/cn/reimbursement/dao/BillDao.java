@@ -17,4 +17,5 @@ public interface BillDao {
 	List<Bill> selectBillByMonth(@Param("year") String year,@Param("month") String month);
 	Bill selectBillById(@Param("billId")String billId);
 	Integer updateBillStatusById(@Param("billId")String billId,@Param("contractStatus")String contractStatus,@Param("invoiceStatus")String invoiceStatus);
+	Integer updateBillEnd(@Param("billId")String billId);
 }

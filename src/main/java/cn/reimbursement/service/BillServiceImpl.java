@@ -156,13 +156,21 @@ public class BillServiceImpl implements BillService {
 	public ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
 			String invoiceStatus) {
 		int currentStepNumber = currentStepDao.selectCurrentStepByBillId(billId);
+		int processStatusCount = processStatusDao.selectCountByBillId(billId);
+		int num = 0;
+		if (currentStepNumber == processStatusCount) {
+			num = billDao.updateBillEnd(billId);
+			if (num == 0)
+				return new ServerResult(1);
+		}
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
-		int num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
+		num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
 				staff.getStaffName(), auditSummary);
-		if (num == 0)
+		if (num == 0) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult(1);
-		currentStepNumber = currentStepNumber + 1;
-		num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(), "", "");
+		}
+		num = processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(), "", "");
 		if (num == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult(1);

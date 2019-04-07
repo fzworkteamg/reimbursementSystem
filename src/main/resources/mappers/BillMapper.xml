@@ -119,4 +119,7 @@
 	<update id="updateBillStatusById">
 		UPDATE bill SET bill_contract_status_name=#{contractStatus},bill_invoice_status_name=#{invoiceStatus} WHERE bill_id=#{billId}
 	</update>
+	<update id="updateBillEnd">
+		UPDATE bill SET bill_is_end=1,bill_end_date=now() WHERE bill_id=#{billId}
+	</update>
 </mapper>

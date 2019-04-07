@@ -28,7 +28,7 @@ public class ProcessServiceImpl implements ProcessService {
 			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
 		String processContent = processDao.selectProcessByCompanyAndDepartment(bill.getBillCompany(),
 				bill.getBillReimbursementDep());
-		int currentStep = currentStepDao.selectCurrentStepByBillId(billId);
+		int currentStep = currentStepDao.selectCurrentStepByBillId(billId)-1;
 		String resultString = "审核流程：" + processContent + "		待审核：" + processContent.split("\\|")[currentStep];
 		return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue(), resultString);
 	}

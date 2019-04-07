@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.StaffDao;
 import cn.reimbursement.enums.InfoEnum;
+import cn.reimbursement.enums.SessionEnum;
 import cn.reimbursement.pojo.Staff;
 import cn.reimbursement.util.ServerResult;
 
@@ -26,7 +27,7 @@ public class StaffServiceImpl implements StaffService {
 			return new ServerResult(1,InfoEnum.FAIL.toString());
 		HttpSession session=request.getSession();
 		staff.setStaffPassword("");
-		session.setAttribute("staff", staff);
+		session.setAttribute(SessionEnum.STAFF.getValue(), staff);
 		return new ServerResult(0,InfoEnum.SUCCESS.getValue());
 	}
 
@@ -42,9 +43,9 @@ public class StaffServiceImpl implements StaffService {
 
 	public void loginOut(HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		Staff staff=(Staff) session.getAttribute("staff");
+		Staff staff=(Staff) session.getAttribute(SessionEnum.STAFF.getValue());
 		if(staff!=null)
-			session.setAttribute("staff", "");
+			session.setAttribute(SessionEnum.STAFF.getValue(), "");
 	}
 
 }
