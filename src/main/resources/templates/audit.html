@@ -149,15 +149,15 @@
                 <tr>
                     <td class="firstTd"></td>
                     <td style="text-align: center">
-                        <button class="layui-btn" lay-filter="auditPast" lay-submit
-                                id="auditPast">审核通过
+                        <button class="layui-btn" lay-filter="auditPass" lay-submit
+                                id="auditPass">审核通过
                         </button>
                         <h3 style="color: red" id="tip">您无权审核！</h3>
                     </td>
                     <td class="thirdTd"></td>
                     <td>
                         <button class="layui-btn layui-btn-danger"
-                                lay-filter="auditPass" lay-submit id="auditPass">驳回
+                                lay-filter="auditPast" lay-submit id="auditPast">驳回
                         </button>
                     </td>
                 </tr>
@@ -173,7 +173,7 @@
     layui.use('form', function () {
         form = layui.form;
         form.render();
-        form.on('submit(auditPast)', function (data) {
+        form.on('submit(auditPass)', function (data) {
             var index = layer.confirm('您确定要通过审核吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
@@ -184,8 +184,9 @@
                         billId: $('#bill_id').val(),
                         audit_summary: $('#audit_summary').val(),
                         selectContractStatus: $('#selectContractStatus').val(),
-                        selectInvoiceStatus: $('#bill_invoice_amount').val()
+                        selectInvoiceStatus: $('#selectInvoiceStatus').val()
                     },
+                    async: false,
                     method: 'post',
                     success: function (result) {
                         if (result.status == 0) {
@@ -204,9 +205,9 @@
                     }
                 })
             })
-            return false;
+            // return false;
         })
-        form.on('submit(auditPass)', function (data) {
+        form.on('submit(auditPast)', function (data) {
             //询问框
             var index = layer.confirm('您确定要驳回吗？', {
                 btn: ['确定', '取消'] //按钮
@@ -218,8 +219,9 @@
                         billId: $('#bill_id').val(),
                         audit_summary: $('#audit_summary').val(),
                         selectContractStatus: $('#selectContractStatus').val(),
-                        selectInvoiceStatus: $('#bill_invoice_amount').val()
+                        selectInvoiceStatus: $('#selectInvoiceStatus').val()
                     },
+                    async: false,
                     method: 'post',
                     success: function (result) {
                         if (result.status == 0) {
@@ -238,7 +240,7 @@
                     }
                 })
             })
-            return false;
+            // return false;
         })
     })
     $(document).ready(function () {
