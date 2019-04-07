@@ -137,53 +137,60 @@ public class BillServiceImpl implements BillService {
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billList.size());
 	}
 
-	public LayuiResult<List<Bill>> selectBillByAuditor(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBillByAudit(HttpServletRequest request,String processStatusState) {
 		Staff staff = (Staff) request.getSession().getAttribute("staff");
+		String staffName=InfoEnum.AUDITED.getValue().equals(processStatusState)?staff.getStaffName():"";
 		if (staff == null)
 			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.getValue(), null, 1, 0);
 		String processStatusCompany = staff.getCompanyName();
 		String processStatusProcessName = staff.getDepName() + "-" + staff.getDutyName();
 		List<String> billIdList = processStatusDao.selectProcessStatusBillIds(processStatusCompany,
-				processStatusProcessName);
+				processStatusProcessName,processStatusState,staffName);
 		List<Bill> billList = new ArrayList<Bill>();
 		for (String billId : billIdList) {
 			billList.add(billDao.selectBillById(billId));
 		}
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billList.size());
 	}
-
 	@Transactional
 	public ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
 			String invoiceStatus) {
 		int currentStepNumber = currentStepDao.selectCurrentStepByBillId(billId);
 		int processStatusCount = processStatusDao.selectCountByBillId(billId);
 		int num = 0;
-		if (currentStepNumber == processStatusCount) {
-			num = billDao.updateBillEnd(billId);
-			if (num == 0)
-				return new ServerResult(1);
-		}
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
-		num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
-				staff.getStaffName(), auditSummary);
-		if (num == 0) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
-		}
-		num = processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(), "", "");
-		if (num == 0) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
-		}
-		num = currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber);
-		if (num == 0) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
-		}
-		num = billDao.updateBillStatusById(billId, contractStatus, invoiceStatus);
-		if (num == 0) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
+		if (currentStepNumber < processStatusCount) {
+			num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
+					staff.getStaffName(), auditSummary);
+			if (num == 0) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult(1);
+			}
+			num = processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(), "",
+					"");
+			if (num == 0) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult(1);
+			}
+			num = currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber);
+			if (num == 0) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult(1);
+			}
+
+		} else if (currentStepNumber == processStatusCount) {
+			num = billDao.updateBillEnd(billId);
+			if (num == 0) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult(1);
+			}
+			num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
+					staff.getStaffName(), auditSummary);
+			num = billDao.updateBillStatusById(billId, contractStatus, invoiceStatus);
+			if (num == 0) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult(1);
+			}
 		}
 		return new ServerResult(0);
 	}

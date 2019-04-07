@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
@@ -43,11 +44,16 @@ public class BillController {
 		return billService.selectBillByMonth(request);
 	}
 
-	@PostMapping("/selectBillByAuditor")
-	LayuiResult<List<Bill>> selectBillByAuditor(HttpServletRequest request) {
-		return billService.selectBillByAuditor(request);
+	@PostMapping("/selectBillWaitAudit")
+	LayuiResult<List<Bill>> selectBillWaitAudit(HttpServletRequest request) {
+		return billService.selectBillByAudit(request,"待审核");
 	}
-
+	
+	@PostMapping("/selectBillAudited")
+	LayuiResult<List<Bill>> selectBillAudited(HttpServletRequest request) {
+		return billService.selectBillByAudit(request,"已审核");
+	}
+	
 	@PostMapping("/auditBill")
 	ServerResult auditBill(HttpServletRequest request, @RequestParam("billId")String billId, @RequestParam("audit_summary")String auditSummary, @RequestParam("selectContractStatus")String contractStatus,
 			@RequestParam("selectInvoiceStatus")String invoiceStatus) {

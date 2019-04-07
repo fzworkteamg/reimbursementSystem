@@ -28,7 +28,7 @@ public class ViewServiceImpl implements ViewService {
 		String billId = (String) object.get(SessionEnum.BILL_ID.getValue());
 		int billCount = processStatusDao.selectCountByBillId(billId);
 		int currentStep = currentStepDao.selectCurrentStepByBillId(billId);
-		if (billCount <= currentStep) {
+		if (billCount < currentStep) {
 			session.setAttribute(SessionEnum.STATUS.getValue(), NumberEnum.ONE.getValue());
 			return;
 		}
