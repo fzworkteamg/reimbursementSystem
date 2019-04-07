@@ -180,11 +180,27 @@
                 btn: ['确定', '取消'] //按钮
             }, function () {
                 layer.close(index);
-                parent.layer.msg('审核已通过', {
-                    icon: 1,
-                    offset: '300px',
-                    time: 1000
-                });
+                $.ajax({
+                    url:'/bill/auditBill',
+                    data:{
+                        billId:$('#bill_id').val()
+                    },
+                    success:function (result) {
+                        if(result.status == 0){
+                            parent.layer.msg('审核已通过', {
+                                icon: 1,
+                                offset: '300px',
+                                time: 1000
+                            });
+                        }else {
+                            parent.layer.msg('审核失败，请联系系统管理员', {
+                                icon: 3,
+                                offset: '300px',
+                                time: 1000
+                            });
+                        }
+                    }
+                })
             })
             return false;
         })
