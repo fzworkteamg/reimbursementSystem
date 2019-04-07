@@ -155,7 +155,6 @@ public class BillServiceImpl implements BillService {
 	@Transactional
 	public ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
 			String invoiceStatus) {
-		System.out.println("billId:"+billId+"\tauditSummary:"+auditSummary+"\tcontractStatus:"+contractStatus+"\tinvoiceStatus:"+invoiceStatus);
 		int currentStepNumber = currentStepDao.selectCurrentStepByBillId(billId);
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
 		int num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
