@@ -274,30 +274,32 @@
     //动态生成流程图
     function buildProcess() {
         $.ajax({
-            url: '/process/selectProcessStatus',
+            url: '/processStatus/selectNameStateOptionById',
             data: {
                 billId: $('#bill_id').val()
             },
             type: 'post',
+            dataType:'json',
             success: function (result) {
-                var list = result.data;
+                var list = result;
                 for (var i = 0; i < list.length; i++) {
-                    var processStatus = list[i];
+                    var processStatus = JSON.stringify(list[i]);
                     console.log(processStatus);
-                    if (processStatus.processStatusState == "待审核") {
-                        var content = "<h4 style='color: orange'>" + processStatus.processStatusProcessName +
-                            " " + processStatus.processStatusState + "   </h4>"
-                    } else if (processStatus.processStatusState == "已审核") {
-                        var content = "<h4 style='color: green'>" + processStatus.processStatusProcessName +
-                            " " + processStatus.processStatusState + "   </h4>"
-                    } else if (processStatus.processStatusState == "已驳回") {
-                        var content = "<h4 style='color: red'>" + processStatus.processStatusProcessName +
-                            " " + processStatus.processStatusState + "   </h4>"
-                    } else if (processStatus.processStatusState == "") {
-                        var content = "<h4>" + processStatus.processStatusProcessName +
-                            " " + processStatus.processStatusState + "   </h4>"
-                    }
-                    $("#process").after(content);
+                    console.log(processStatus.process_status_state);
+                    // if (processStatus.get("process_status_state") == "待审核") {
+                    //     var content = "<h4 style='color: orange'>" + processStatus.process_status_processName +
+                    //         " " + processStatus.process_status_state + "   </h4>"
+                    // } else if ((processStatus.get("process_status_state") == "已审核")) {
+                    //     var content = "<h4 style='color: green'>" + processStatus.process_status_processName +
+                    //         " " + processStatus.process_status_state + "   </h4>"
+                    // } else if (processStatus.get("process_status_state") == "已驳回") {
+                    //     var content = "<h4 style='color: red'>" + processStatus.process_status_processName +
+                    //         " " + processStatus.process_status_state + "   </h4>"
+                    // } else if (processStatus.get("process_status_state") == "") {
+                    //     var content = "<h4>" + processStatus.process_status_processName +
+                    //         " " + process_status_state + "   </h4>"
+                    // }
+                    // $("#process").after(content);
                 }
             }
         })
