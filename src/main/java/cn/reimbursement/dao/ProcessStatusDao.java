@@ -1,6 +1,7 @@
 package cn.reimbursement.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,6 @@ public interface ProcessStatusDao {
 	Integer selectProcessStatusByBillIdProcessName(@Param("billId") String billId,
 			@Param("processStatusCompany") String processStatusCompany,
 			@Param("processStatusProcessName") String processStatusProcessName);
+
+	List<Map<String, String>> selectNameStateOptionById(@Param("billId") String billId);
 }

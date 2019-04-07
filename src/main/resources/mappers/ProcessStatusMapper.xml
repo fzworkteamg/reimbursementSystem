@@ -57,4 +57,7 @@
 		process_status_process_name=#{processStatusProcessName} AND
 		process_status_state='待审核'
 	</select>
+	<select id="selectNameStateOptionById" resultType="java.util.Map">
+		SELECT process_status_process_name,process_status_state,process_status_opinion FROM process_status WHERE process_status_bill_id=#{billId}
+	</select>
 </mapper>
