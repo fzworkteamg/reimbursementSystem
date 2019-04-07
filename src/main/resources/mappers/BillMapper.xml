@@ -116,4 +116,7 @@
 		SELECT <include refid="billColums"/>
 		FROM bill WHERE #{billId} = bill_id
 	</select>
+	<update id="updateBillStatusById">
+		UPDATE bill SET bill_contract_status_name=#{contractStatus},bill_invoice_status_name=#{invoiceStatus} WHERE bill_id=#{billId}
+	</update>
 </mapper>

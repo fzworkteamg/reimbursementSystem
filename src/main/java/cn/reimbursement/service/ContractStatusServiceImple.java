@@ -16,7 +16,7 @@ public class ContractStatusServiceImple implements ContractStatusService{
 	private ContractStatusDao contractStatusDao;
 	
 	public ServerResult<List<String>> selectContractStatusName() {
-		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),contractStatusDao.selectContractStatusName());
+		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.getValue(),contractStatusDao.selectContractStatusName());
 	}
 	
 }

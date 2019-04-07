@@ -31,13 +31,30 @@
 		process_status(process_status_bill_id,process_status_process_name,process_status_state,process_status_step,process_status_company)
 		VALUES(#{processStatusBillId},#{processStatusName},#{processStatusState},#{processStatusStep},#{processStatusBCompany})
 	</insert>
-	<select id="selectProcessStatusBillIds" resultType="java.lang.String">
-		SELECT process_status_bill_id FROM process_status WHERE process_status_company=#{processStatusCompany} AND process_status_process_name=#{processStatusProcessName} AND process_status_state='待审核'
+	<select id="selectProcessStatusBillIds"
+		resultType="java.lang.String">
+		SELECT process_status_bill_id FROM process_status WHERE
+		process_status_company=#{processStatusCompany} AND
+		process_status_process_name=#{processStatusProcessName} AND
+		process_status_state='待审核'
 	</select>
 	<select id="selectCountByBillId" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM process_status WHERE process_status_bill_id=#{billId}
+		SELECT COUNT(*) FROM
+		process_status WHERE process_status_bill_id=#{billId}
 	</select>
 	<update id="updateStateByStep">
-		UPDATE process_status SET process_status_state=#{audit} WHERE process_status_step=#{step} AND process_status_bill_id=#{billId}
+		UPDATE process_status SET
+		process_status_state=#{audit},process_status_auditor=#{StaffName},process_status_opinion=#{auditSummary}
+		,process_satus_last_upload=now()
+		WHERE process_status_step=#{step} AND
+		process_status_bill_id=#{billId}
 	</update>
+	<select id="selectProcessStatusByBillIdProcessName"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM process_status WHERE
+		process_status_bill_id=#{billId} AND
+		process_status_company=#{processStatusCompany} AND
+		process_status_process_name=#{processStatusProcessName} AND
+		process_status_state='待审核'
+	</select>
 </mapper>

@@ -25,7 +25,7 @@ public class ReiSubjectServiceImpl implements ReiSubjectService {
 //        PageHelper.startPage(pageNum, limitSize);
 		List<Map<String, String>> subjectOMapList=reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep);
 //		PageInfo pageInfo = new PageInfo(subjectOMapList);
-		return new LayuiResult(InfoEnum.SUCCESS.toString(),subjectOMapList,0,subjectOMapList.size());
+		return new LayuiResult(InfoEnum.SUCCESS.getValue(),subjectOMapList,0,subjectOMapList.size());
 	}
 
 }

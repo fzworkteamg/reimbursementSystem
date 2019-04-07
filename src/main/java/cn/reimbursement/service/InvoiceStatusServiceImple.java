@@ -16,7 +16,7 @@ public class InvoiceStatusServiceImple implements InvoiceStatusService{
 	private InvoiceStatusDao invoiceStatusDao;
 	
 	public ServerResult<List<String>> selectInvoiceStatusName() {
-		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),invoiceStatusDao.selectInvoiceStatusName());
+		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.getValue(),invoiceStatusDao.selectInvoiceStatusName());
 	}
 	
 }

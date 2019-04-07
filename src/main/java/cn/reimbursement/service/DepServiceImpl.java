@@ -16,7 +16,7 @@ public class DepServiceImpl implements DepService {
 	private DepDao depDao;
 	
 	public ServerResult<List<String>> selectDepByCompany(String companyName) {
-		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),depDao.selectDepByCompany(companyName));
+		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.getValue(),depDao.selectDepByCompany(companyName));
 	}
 
 }

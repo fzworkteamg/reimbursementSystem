@@ -51,11 +51,9 @@ public class ViewController {
 	public String toBillDetail(String data, HttpServletRequest request){
 		if(Util.isLogin(request)){
 			viewService.toBillDetail(data, request);
-			System.out.println("status:"+request.getSession().getAttribute("status"));
 			JSONObject object = JSONObject.fromObject(data);
 			HttpSession session = (HttpSession) request.getSession();
 			session.setAttribute("bill",object);
-			System.out.println(object);
 			return "audit";
 		}
 		return "login";

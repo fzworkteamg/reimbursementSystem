@@ -17,7 +17,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	public ServerResult<List<String>> selectCompany() {
 		List<String> companyList=companyDao.selectCompany();
-		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),companyList);
+		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.getValue(),companyList);
 	}
 
 }

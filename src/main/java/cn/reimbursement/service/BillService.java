@@ -15,4 +15,5 @@ public interface BillService {
 	LayuiResult<List<Bill>> selectBill(HttpServletRequest request);
 	LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException ;
 	LayuiResult<List<Bill>> selectBillByAuditor (HttpServletRequest request);
+	ServerResult auditBill(HttpServletRequest request,String billId,String auditSummary,String contractStatus,String invoiceStatus);
 }

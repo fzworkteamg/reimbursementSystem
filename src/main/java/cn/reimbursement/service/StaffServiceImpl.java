@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.StaffDao;
@@ -28,7 +27,7 @@ public class StaffServiceImpl implements StaffService {
 		HttpSession session=request.getSession();
 		staff.setStaffPassword("");
 		session.setAttribute("staff", staff);
-		return new ServerResult(0,InfoEnum.SUCCESS.toString());
+		return new ServerResult(0,InfoEnum.SUCCESS.getValue());
 	}
 
 	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
@@ -38,7 +37,7 @@ public class StaffServiceImpl implements StaffService {
 		for(int i=0;i<staffList.size();i++) 
 			staffDutyList.add(staffList.get(i).getStaffName()+"|"+staffList.get(i).getDutyName());
 		
-		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.toString(),staffDutyList);
+		return new ServerResult<List<String>>(0,InfoEnum.SUCCESS.getValue(),staffDutyList);
 	}
 
 	public void loginOut(HttpServletRequest request) {
