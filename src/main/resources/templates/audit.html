@@ -142,8 +142,6 @@
                         <td class="firstTd">属性</td>
                         <td><input type="text" name="bill_attribute"
                                    th:value="${session.bill.billAttribute}"></td>
-                        <!--<td class="thirdTd"></td>-->
-                        <!--<td></td>-->
                         <td class="thirdTd">审核意见</td>
                         <td><textarea name="audit_summary" placeholder="请输入内容"
                                       class="layui-textarea" lay-verify="required"></textarea></td>
@@ -210,11 +208,27 @@
                 btn: ['确定', '取消'] //按钮
             }, function () {
                 layer.close(index);
-                parent.layer.msg('已驳回', {
-                    icon: 2,
-                    offset: '300px',
-                    time: 1000
-                });
+                $.ajax({
+                    url:'/bill/auditPast',
+                    data:{
+                        billId:$('#bill_id').val()
+                    },
+                    success:function (result) {
+                        if(result.status == 0){
+                            parent.layer.msg('已驳回', {
+                                icon: 2,
+                                offset: '300px',
+                                time: 1000
+                            });
+                        }else {
+                            parent.layer.msg('驳回失败，请联系系统管理员', {
+                                icon: 3,
+                                offset: '300px',
+                                time: 1000
+                            });
+                        }
+                    }
+                })
             })
             return false;
         })
