@@ -21,7 +21,7 @@ $(document).ready(function () {
             //obj.del(); //删除当前行
             //obj.update(fields) //修改当前行数据
             // openBillDetail(obj.data);
-            openBillProcess(obj.data.billId);
+            // openBillProcess(obj.data.billId);
         });
 
         table.on('rowDouble(billTable)', function (obj) {
@@ -45,8 +45,8 @@ $(document).ready(function () {
                     });
                     break;
                 case 'done'://本人已审核账单的查询
-                    url:'/bill/selectBillAudited'
                     billTable.reload({
+                        url:'/bill/selectBillAudited',
                         page: {
                             curr: 1
                         }
@@ -55,9 +55,6 @@ $(document).ready(function () {
                 case 'toAudit'://本人待审核账单的查询
                     billTable.reload({
                         url:'/bill/selectBillWaitAudit',
-                        where: { //设定异步数据接口的额外参数，任意设
-                            date: date.getFullYear() + "-" + (date.getMonth() + 1)
-                        },
                         page: {
                             curr: 1
                         }
