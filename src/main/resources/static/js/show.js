@@ -54,7 +54,7 @@ $(document).ready(function () {
                     break;
                 case 'toAudit'://本人待审核账单的查询
                     billTable.reload({
-                        url:'/bill/selectBillByAuditor',
+                        url:'/bill/selectBillWaitAudit',
                         where: { //设定异步数据接口的额外参数，任意设
                             date: date.getFullYear() + "-" + (date.getMonth() + 1)
                         },

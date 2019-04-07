@@ -41,7 +41,7 @@
 <body>
 <div class="layui-container">
     <div class="layui-row">
-        <h3 id="process">流程图：</h3>
+        <font id="process"></font>
     </div>
 </div>
 <div class="layui-row">
@@ -282,24 +282,23 @@
             dataType:'json',
             success: function (result) {
                 var list = result;
+                $("#process").before("<font>流程图:</font>");
                 for (var i = 0; i < list.length; i++) {
-                    var processStatus = JSON.stringify(list[i]);
-                    console.log(processStatus);
-                    console.log(processStatus.process_status_state);
-                    // if (processStatus.get("process_status_state") == "待审核") {
-                    //     var content = "<h4 style='color: orange'>" + processStatus.process_status_processName +
-                    //         " " + processStatus.process_status_state + "   </h4>"
-                    // } else if ((processStatus.get("process_status_state") == "已审核")) {
-                    //     var content = "<h4 style='color: green'>" + processStatus.process_status_processName +
-                    //         " " + processStatus.process_status_state + "   </h4>"
-                    // } else if (processStatus.get("process_status_state") == "已驳回") {
-                    //     var content = "<h4 style='color: red'>" + processStatus.process_status_processName +
-                    //         " " + processStatus.process_status_state + "   </h4>"
-                    // } else if (processStatus.get("process_status_state") == "") {
-                    //     var content = "<h4>" + processStatus.process_status_processName +
-                    //         " " + process_status_state + "   </h4>"
-                    // }
-                    // $("#process").after(content);
+                    var processStatus = list[i];
+                    if (processStatus.process_status_state == "待审核") {
+                        var content = "<font style='color: orange;border-style: solid'>" + processStatus.process_status_process_name +
+                            " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + " </font>&nbsp;&nbsp;"
+                    } else if ((processStatus.process_status_state == "已审核")) {
+                        var content = "<font style='color: green;border-style: solid'>" + processStatus.process_status_process_name +
+                            " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
+                    } else if (processStatus.process_status_state == "已驳回") {
+                        var content = "<font style='color: red;border-style: solid'>" + processStatus.process_status_process_name +
+                            " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
+                    } else if (processStatus.process_status_state == "") {
+                        var content = "<font style='border-style: solid'>" + processStatus.process_status_process_name +
+                            " " + processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
+                    }
+                    $("#process").before(content);
                 }
             }
         })
