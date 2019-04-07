@@ -43,131 +43,131 @@
     <div class="layui-row">
         <h3 id="process">流程图：</h3>
     </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-col-xs-1"></div>
-        <div class="layui-col-xs-10">
-            <form id="selectForm" enctype="multipart/form-data"
-                  class="layui-form">
-                <table class="table-c">
-                    <caption>账单审核</caption>
-                    <tr>
-                        <td class="firstTd">报销单号</td>
-                        <td><input type="text" style="width: 123px"
-                                   th:value="${session.bill.billId}" readonly name="bill_id" id="bill_id">
-                        </td>
-                        <td class="thirdTd">金额</td>
-                        <td><input type="number" style="width: 80px" readonly
-                                   lay-verify="required" name="bill_amount"
-                                   th:value="${session.bill.billAmount}">元（保留两位小数）
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">公司</td>
-                        <td><input type="text" name="bill_company" readonly
-                                   th:value="${session.bill.billCompany}"></td>
-                        <td class="thirdTd">产生日期</td>
-                        <td><input type="date" readonly name="bill_produce_date"
-                                   th:value="${session.bill.billProduceDate}"></td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">部门</td>
-                        <td><input type="text" readonly lay-verify="required"
-                                   name="bill_reimbursement_dep"
-                                   th:value="${session.bill.billReimbursementDep}"></td>
-                        <td class="thirdTd">登记日期</td>
-                        <td><input type="date" readonly lay-verify="required"
-                                   name="bill_registrant_date"
-                                   th:value="${session.bill.billRegistrantDate}"></td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">类别</td>
-                        <td><input type="text" readonly name="bill_type"
-                                   th:value="${session.bill.billType}"></td>
-                        <td rowspan="3" class="thirdTd">摘要 (费用产生原由）</td>
-                        <td rowspan="3"><textarea name="bill_summary"
-                                                  placeholder="请输入内容" class="layui-textarea" readonly
-                                                  th:text="${session.bill.billSummary}"
-                                                  lay-verify="required"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">科目</td>
-                        <td><input type="text" id="subject" readonly
-                                   lay-verify="required" name="bill_subject"
-                                   th:value="${session.bill.billSubject}"></td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">业务所属公司</td>
-                        <td><input type="text" name="bill_belong_company"
-                                   lay-filter='selectCompany' readonly
-                                   th:value="${session.bill.billBelongCompany}"></td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">报销人</td>
-                        <td><input type="text" id="reiPerson" readonly
-                                   lay-verify="required" name="bill_reimbursement_person"
-                                   th:value="${session.bill.billReimbursementPerson}"></td>
-                        <td class="thirdTd">发票</td>
-                        <td><select id="selectInvoiceStatus" required lay-verify="required"
-                                    name="bill_invoice_status_name">
-                                <option th:text="${session.bill.billInvoiceStatusName}"></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">经办人</td>
-                        <td><input type="text" id="chargePerson" readonly
-                                   lay-verify="required" name="bill_charge_person"
-                                   th:value="${session.bill.billChargePerson}">
-                        <td class="thirdTd">发票金额</td>
-                        <td><input type="number" style="width: 80px" readonly
-                                   lay-verify="required" name="bill_invoice_amount"
-                                   th:value="${session.bill.billInvoiceAmount}">元（保留两位小数）
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">登记人</td>
-                        <td><input type="text" readonly
-                                   name="bill_registrant_person"
-                                   th:value="${session.bill.billRegistrantPerson}"></td>
-                        <td class="thirdTd">合同</td>
-                        <td><select id="selectContractStatus" required lay-verify="required"
-                                    name="bill_contract_status_name">
-                                <option th:text="${session.bill.billContractStatusName}"></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd">属性</td>
-                        <td><input type="text" name="bill_attribute"
-                                   th:value="${session.bill.billAttribute}"></td>
-                        <td class="thirdTd">审核意见</td>
-                        <td><textarea name="audit_summary" placeholder="请输入内容"
-                                      class="layui-textarea" lay-verify="required"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td class="firstTd"></td>
-                        <td style="text-align: center">
-                            <button class="layui-btn" lay-filter="auditPast" lay-submit
-                                    id="auditPast">审核通过
-                            </button>
-                            <h3 style="color: red" id="tip">您无权审核！</h3>
-                        </td>
-                        <td class="thirdTd"></td>
-                        <td>
-                            <button class="layui-btn layui-btn-danger"
-                                    lay-filter="auditPass" lay-submit id="auditPass">驳回
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs-1"></div>
+    <div class="layui-col-xs-10">
+        <form id="selectForm" enctype="multipart/form-data"
+              class="layui-form">
+            <table class="table-c">
+                <caption>账单审核</caption>
+                <tr>
+                    <td class="firstTd">报销单号</td>
+                    <td><input type="text" style="width: 123px"
+                               th:value="${session.bill.billId}" readonly name="bill_id" id="bill_id">
+                    </td>
+                    <td class="thirdTd">金额</td>
+                    <td><input type="number" style="width: 80px" readonly
+                               lay-verify="required" name="bill_amount"
+                               th:value="${session.bill.billAmount}">元（保留两位小数）
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">公司</td>
+                    <td><input type="text" name="bill_company" readonly
+                               th:value="${session.bill.billCompany}"></td>
+                    <td class="thirdTd">产生日期</td>
+                    <td><input type="date" readonly name="bill_produce_date"
+                               th:value="${session.bill.billProduceDate}"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">部门</td>
+                    <td><input type="text" readonly lay-verify="required"
+                               name="bill_reimbursement_dep"
+                               th:value="${session.bill.billReimbursementDep}"></td>
+                    <td class="thirdTd">登记日期</td>
+                    <td><input type="date" readonly lay-verify="required"
+                               name="bill_registrant_date"
+                               th:value="${session.bill.billRegistrantDate}"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">类别</td>
+                    <td><input type="text" readonly name="bill_type"
+                               th:value="${session.bill.billType}"></td>
+                    <td rowspan="3" class="thirdTd">摘要 (费用产生原由）</td>
+                    <td rowspan="3"><textarea name="bill_summary"
+                                              placeholder="请输入内容" class="layui-textarea" readonly
+                                              th:text="${session.bill.billSummary}"
+                                              lay-verify="required"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">科目</td>
+                    <td><input type="text" id="subject" readonly
+                               lay-verify="required" name="bill_subject"
+                               th:value="${session.bill.billSubject}"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">业务所属公司</td>
+                    <td><input type="text" name="bill_belong_company"
+                               lay-filter='selectCompany' readonly
+                               th:value="${session.bill.billBelongCompany}"></td>
+                </tr>
+                <tr>
+                    <td class="firstTd">报销人</td>
+                    <td><input type="text" id="reiPerson" readonly
+                               lay-verify="required" name="bill_reimbursement_person"
+                               th:value="${session.bill.billReimbursementPerson}"></td>
+                    <td class="thirdTd">发票</td>
+                    <td><select id="selectInvoiceStatus" required lay-verify="required"
+                                name="bill_invoice_status_name">
+                        <option th:text="${session.bill.billInvoiceStatusName}"></option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">经办人</td>
+                    <td><input type="text" id="chargePerson" readonly
+                               lay-verify="required" name="bill_charge_person"
+                               th:value="${session.bill.billChargePerson}">
+                    <td class="thirdTd">发票金额</td>
+                    <td><input type="number" style="width: 80px" readonly
+                               lay-verify="required" name="bill_invoice_amount"
+                               th:value="${session.bill.billInvoiceAmount}" id="bill_invoice_amount">元（保留两位小数）
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">登记人</td>
+                    <td><input type="text" readonly
+                               name="bill_registrant_person"
+                               th:value="${session.bill.billRegistrantPerson}"></td>
+                    <td class="thirdTd">合同</td>
+                    <td><select id="selectContractStatus" required lay-verify="required"
+                                name="bill_contract_status_name">
+                        <option th:text="${session.bill.billContractStatusName}"></option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="firstTd">属性</td>
+                    <td><input type="text" name="bill_attribute"
+                               th:value="${session.bill.billAttribute}"></td>
+                    <td class="thirdTd">审核意见</td>
+                    <td><textarea name="audit_summary" placeholder="请输入内容"
+                                  class="layui-textarea" lay-verify="required" id="audit_summary"></textarea></td>
+                </tr>
+                <tr>
+                    <td class="firstTd"></td>
+                    <td style="text-align: center">
+                        <button class="layui-btn" lay-filter="auditPast" lay-submit
+                                id="auditPast">审核通过
+                        </button>
+                        <h3 style="color: red" id="tip">您无权审核！</h3>
+                    </td>
+                    <td class="thirdTd"></td>
+                    <td>
+                        <button class="layui-btn layui-btn-danger"
+                                lay-filter="auditPass" lay-submit id="auditPass">驳回
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>
+</div>
 <script>
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
     });
     layui.use('form', function () {
@@ -179,18 +179,22 @@
             }, function () {
                 layer.close(index);
                 $.ajax({
-                    url:'/bill/auditBill',
-                    data:{
-                        billId:$('#bill_id').val()
+                    url: '/bill/auditBill',
+                    data: {
+                        billId: $('#bill_id').val(),
+                        audit_summary: $('#audit_summary').val(),
+                        selectContractStatus: $('#selectContractStatus').val(),
+                        selectInvoiceStatus: $('#bill_invoice_amount').val()
                     },
-                    success:function (result) {
-                        if(result.status == 0){
+                    method: 'post',
+                    success: function (result) {
+                        if (result.status == 0) {
                             parent.layer.msg('审核已通过', {
                                 icon: 1,
                                 offset: '300px',
                                 time: 1000
                             });
-                        }else {
+                        } else {
                             parent.layer.msg('审核失败，请联系系统管理员', {
                                 icon: 3,
                                 offset: '300px',
@@ -209,18 +213,22 @@
             }, function () {
                 layer.close(index);
                 $.ajax({
-                    url:'/bill/auditPast',
-                    data:{
-                        billId:$('#bill_id').val()
+                    url: '/bill/auditBill',
+                    data: {
+                        billId: $('#bill_id').val(),
+                        audit_summary: $('#audit_summary').val(),
+                        selectContractStatus: $('#selectContractStatus').val(),
+                        selectInvoiceStatus: $('#bill_invoice_amount').val()
                     },
-                    success:function (result) {
-                        if(result.status == 0){
+                    method: 'post',
+                    success: function (result) {
+                        if (result.status == 0) {
                             parent.layer.msg('已驳回', {
                                 icon: 2,
                                 offset: '300px',
                                 time: 1000
                             });
-                        }else {
+                        } else {
                             parent.layer.msg('驳回失败，请联系系统管理员', {
                                 icon: 3,
                                 offset: '300px',
@@ -238,11 +246,11 @@
         isAudit();
         //填充合同状态
         var contractStatus = selectContractStatus();
-        romance(contractStatus,"selectContractStatus");
+        romance(contractStatus, "selectContractStatus");
 
         //填充发票状态
         var invoiceStatus = selectInvoiceStatus();
-        romance(invoiceStatus,"selectInvoiceStatus")
+        romance(invoiceStatus, "selectInvoiceStatus")
 
     })
 
@@ -255,34 +263,35 @@
             $("#tip").hide();
         }
     }
+
     //动态生成流程图
     function buildProcess() {
         $.ajax({
-            url:'/process/selectProcessStatus',
-            data:{
-                billId:$('#bill_id').val()
+            url: '/process/selectProcessStatus',
+            data: {
+                billId: $('#bill_id').val()
             },
-            type:'post',
-            success:function (result) {
+            type: 'post',
+            success: function (result) {
                 var list = result.data;
-                for (var i=0;i<list.length;i++){
+                for (var i = 0; i < list.length; i++) {
                     var processStatus = list[i];
                     console.log(processStatus);
-                    if (processStatus.processStatusState == "待审核" ) {
-                        var content = "<h4 style='color: orange'>"+processStatus.processStatusProcessName+
-                            " "+processStatus.processStatusState+"   </h4>"
-                    }else if (processStatus.processStatusState == "已审核" ) {
-                        var content = "<h4 style='color: green'>"+processStatus.processStatusProcessName+
-                            " "+processStatus.processStatusState+"   </h4>"
-                    }else if (processStatus.processStatusState == "已驳回") {
-                        var content = "<h4 style='color: red'>"+processStatus.processStatusProcessName+
-                            " "+processStatus.processStatusState+"   </h4>"
-                    }else if (processStatus.processStatusState == "") {
-                        var content = "<h4>"+processStatus.processStatusProcessName+
-                            " "+processStatus.processStatusState+"   </h4>"
+                    if (processStatus.processStatusState == "待审核") {
+                        var content = "<h4 style='color: orange'>" + processStatus.processStatusProcessName +
+                            " " + processStatus.processStatusState + "   </h4>"
+                    } else if (processStatus.processStatusState == "已审核") {
+                        var content = "<h4 style='color: green'>" + processStatus.processStatusProcessName +
+                            " " + processStatus.processStatusState + "   </h4>"
+                    } else if (processStatus.processStatusState == "已驳回") {
+                        var content = "<h4 style='color: red'>" + processStatus.processStatusProcessName +
+                            " " + processStatus.processStatusState + "   </h4>"
+                    } else if (processStatus.processStatusState == "") {
+                        var content = "<h4>" + processStatus.processStatusProcessName +
+                            " " + processStatus.processStatusState + "   </h4>"
                     }
                     $("#process").after(content);
-                } 
+                }
             }
         })
     }
