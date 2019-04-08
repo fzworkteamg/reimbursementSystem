@@ -113,7 +113,7 @@
                         <td>
                             <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required
                                     lay-verify="required">
-                                <option th:value="${session.bill.billBelongCompany}"></option>
+                                <option th:text="${session.bill.billBelongCompany}"></option>
                             </select>
                         </td>
                     </tr>

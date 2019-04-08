@@ -2,10 +2,10 @@ var layer;
 layui.use('layer', function () {
     layer = layui.layer;
 });
-layer.use('form', function () {
+layui.use('form', function () {
     form = layui.form;
     form.render();
-    form.on('submit(auditPass)', function (data) {
+    form.on('submit(alter)', function (data) {
         var formData = new FormData($("#selectForm")[0]);
         var index = layer.confirm('您确定要修改吗？', {
             btn: ['确定', '取消'] //按钮
@@ -13,10 +13,14 @@ layer.use('form', function () {
             layer.close(index);
             $.ajax({
                 url: '/bill/updateBill',
-                data: formData,
+                type : 'post',
                 async: false,
-                method: 'post',
+                data : formData,
+                cache:false,
+                contentType: false,
+                processData: false,
                 success: function (result) {
+                    console.log(result)
                     if (result.status == 0) {
                         parent.layer.msg('已修改', {
                             icon: 1,
@@ -74,13 +78,13 @@ layer.use('form', function () {
 $(document).ready(function () {
     buildProcess();
 
-    //填充合同状态
-    var contractStatus = selectContractStatus();
-    romance(contractStatus, "selectContractStatus");
-
-    //填充发票状态
-    var invoiceStatus = selectInvoiceStatus();
-    romance(invoiceStatus, "selectInvoiceStatus")
+    // //填充合同状态
+    // var contractStatus = selectContractStatus();
+    // romance(contractStatus, "selectContractStatus");
+    //
+    // //填充发票状态
+    // var invoiceStatus = selectInvoiceStatus();
+    // romance(invoiceStatus, "selectInvoiceStatus")
 
 })
 
