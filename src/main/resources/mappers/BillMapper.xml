@@ -3,26 +3,33 @@
 
 <mapper namespace="cn.reimbursement.dao.BillDao">
 
-	<resultMap id="billMap"
-		type="cn.reimbursement.pojo.Bill">
+	<resultMap id="billMap" type="cn.reimbursement.pojo.Bill">
 		<id property="billId" column="bill_id" />
 		<result property="billAttribute" column="bill_attribute" />
-		<result property="billCompany"
-			column="bill_company" />
+		<result property="billCompany" column="bill_company" />
 		<result property="billType" column="bill_type" />
-		<result property="billReimbursementDep" column="bill_reimbursement_dep" />
+		<result property="billReimbursementDep"
+			column="bill_reimbursement_dep" />
 		<result property="billSubject" column="bill_subject" />
-		<result property="billBelongCompany" column="bill_belong_company" />
-		<result property="billReimbursementPerson" column="bill_reimbursement_person" />
+		<result property="billBelongCompany"
+			column="bill_belong_company" />
+		<result property="billReimbursementPerson"
+			column="bill_reimbursement_person" />
 		<result property="billSummary" column="bill_summary" />
 		<result property="billAmount" column="bill_amount" />
-		<result property="billContractStatusName" column="bill_contract_status_name" />
-		<result property="billInvoiceStatusName" column="bill_invoice_status_name" />
-		<result property="billInvoiceAmount" column="bill_invoice_amount" />
-		<result property="billReimbursementPersonConfirm" column="bill_reimbursement_person_confirm" />
+		<result property="billContractStatusName"
+			column="bill_contract_status_name" />
+		<result property="billInvoiceStatusName"
+			column="bill_invoice_status_name" />
+		<result property="billInvoiceAmount"
+			column="bill_invoice_amount" />
+		<result property="billReimbursementPersonConfirm"
+			column="bill_reimbursement_person_confirm" />
 		<result property="billChargePerson" column="bill_charge_person" />
-		<result property="billRegistrantPerson" column="bill_registrant_person" />
-		<result property="billRegistrantDate" column="bill_registrant_date" />
+		<result property="billRegistrantPerson"
+			column="bill_registrant_person" />
+		<result property="billRegistrantDate"
+			column="bill_registrant_date" />
 		<result property="billProduceDate" column="bill_produce_date" />
 		<result property="billIsEnd" column="bill_is_end" />
 		<result property="billEndDate" column="bill_end_date" />
@@ -34,98 +41,150 @@
 		bill_charge_person,bill_registrant_person,bill_registrant_date,bill_produce_date,bill_is_end,bill_end_date
 	</sql>
 	<select id="selectBillByCompany" resultMap="billMap">
-		select <include refid="billColums"/> from bill where bill_company =#{billCompany} order by bill_registrant_date desc
+		select
+		<include refid="billColums" />
+		from bill where bill_company =#{billCompany} order by
+		bill_registrant_date desc
 	</select>
 	<select id="selectBillCountById" resultType="int">
-		select count(*) from bill where bill_id =#{billId}
+		select count(*) from
+		bill where bill_id =#{billId}
 	</select>
-	
+
 	<insert id="insertBill">
-		insert into bill 
-		<foreach collection="billMap.keys" separator="," item="key" open="(" close=")">
-            ${key}
-        </foreach>
-        values
-        <foreach collection="billMap.keys" item="key" separator="," open="(" close=")">
-            #{billMap[${key}]}
-        </foreach>
+		insert into bill
+		<foreach collection="billMap.keys" separator="," item="key"
+			open="(" close=")">
+			${key}
+		</foreach>
+		values
+		<foreach collection="billMap.keys" item="key" separator=","
+			open="(" close=")">
+			#{billMap[${key}]}
+		</foreach>
 	</insert>
-	
+
 	<select id="selectBill" resultMap="billMap">
-		select <include refid="billColums"/> from bill where 1=1
-		<if test="billMap.billCompany != null and billMap.billCompany != ''">
+		select
+		<include refid="billColums" />
+		from bill where 1=1
+		<if
+			test="billMap.billCompany != null and billMap.billCompany != ''">
 			and bill_company = #{billMap.billCompany}
 		</if>
 		<if test="billMap.billDep != null and billMap.billDep != ''">
 			and bill_dep = #{billMap.billDep}
 		</if>
-		<if test="billMap.billAttribute != null and billMap.billAttribute != ''">
+		<if
+			test="billMap.billAttribute != null and billMap.billAttribute != ''">
 			and bill_attribute = #{billMap.billAttribute}
 		</if>
 		<if test="billMap.billType != null and billMap.billType != ''">
 			and bill_type=#{billMap.billType}
 		</if>
-		<if test="billMap.billInvoiceStatusName != null and billMap.billInvoiceStatusName != ''">
+		<if
+			test="billMap.billInvoiceStatusName != null and billMap.billInvoiceStatusName != ''">
 			and bill_invoice_status_name = #{billMap.billInvoiceStatusName}
 		</if>
-		<if test="billMap.billContractStatusName != null and billMap.billContractStatusName != ''">
-			and bill_contract_status_name = #{billMap.billContractStatusName}
+		<if
+			test="billMap.billContractStatusName != null and billMap.billContractStatusName != ''">
+			and bill_contract_status_name =
+			#{billMap.billContractStatusName}
 		</if>
-		<if test="billMap.billContractStatusName != null and billMap.billContractStatusName != ''">
-			and bill_contract_status_name = #{billMap.billContractStatusName}
+		<if
+			test="billMap.billContractStatusName != null and billMap.billContractStatusName != ''">
+			and bill_contract_status_name =
+			#{billMap.billContractStatusName}
 		</if>
 		<if test="billMap.billId != null and billMap.billId != ''">
 			and bill_id = #{billMap.billId}
 		</if>
-		<if test="billMap.billChargePerson != null and billMap.billChargePerson != ''">
+		<if
+			test="billMap.billChargePerson != null and billMap.billChargePerson != ''">
 			and bill_charge_person = #{billMap.billChargePerson}
 		</if>
-		<if test="billMap.billRegistrantPerson != null and billMap.billRegistrantPerson != ''">
+		<if
+			test="billMap.billRegistrantPerson != null and billMap.billRegistrantPerson != ''">
 			and bill_registrant_person = #{billMap.billRegistrantPerson}
 		</if>
-		<if test="billMap.billSummary != null and billMap.billSummary != ''">
+		<if
+			test="billMap.billSummary != null and billMap.billSummary != ''">
 			and bill_summary = #{billMap.billSummary}
 		</if>
-		<if test="billMap.billSubject != null and billMap.billSubject != ''">
+		<if
+			test="billMap.billSubject != null and billMap.billSubject != ''">
 			and bill_subject = #{billMap.billSubject}
 		</if>
-		<if test="billMap.billProduceDate != null and billMap.billProduceDate != ''">
+		<if
+			test="billMap.billProduceDate != null and billMap.billProduceDate != ''">
 			and bill_produce_date = #{billMap.billProduceDate}
 		</if>
-		<if test="billMap.billRegistrantDate != null and billMap.billRegistrantDate != ''">
+		<if
+			test="billMap.billRegistrantDate != null and billMap.billRegistrantDate != ''">
 			and bill_registrant_date = #{billMap.billRegistrantDate}
 		</if>
-		<if test="billMap.billEndDate != null and billMap.billEndDate != ''">
+		<if
+			test="billMap.billEndDate != null and billMap.billEndDate != ''">
 			and bill_end_date = #{billMap.billEndDate}
 		</if>
-		<if test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh != null and billMap.amountHigh != '')">
-			and bill_amount<![CDATA[<=]]>#{billMap.amountHigh} and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
+		<if
+			test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh != null and billMap.amountHigh != '')">
+			and bill_amount<![CDATA[<=]]>#{billMap.amountHigh}
+			and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
 		</if>
-		<if test="(billMap.amountLow == null or billMap.amountLow == '') and (billMap.amountHigh != null and billMap.amountHigh != '')">
+		<if
+			test="(billMap.amountLow == null or billMap.amountLow == '') and (billMap.amountHigh != null and billMap.amountHigh != '')">
 			and bill_amount<![CDATA[<=]]>#{billMap.amountHigh}
 		</if>
-		<if test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
+		<if
+			test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
 			and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
 		</if>
 	</select>
 	<select id="selectBillByMonth" resultMap="billMap">
-		SELECT <include refid="billColums"/>
-		FROM bill WHERE #{year} = YEAR(bill_registrant_date) AND #{month} = MONTH(bill_registrant_date) ORDER BY bill_registrant_date DESC
+		SELECT
+		<include refid="billColums" />
+		FROM bill WHERE #{year} = YEAR(bill_registrant_date) AND #{month} =
+		MONTH(bill_registrant_date) ORDER BY bill_registrant_date DESC
 	</select>
 	<select id="selectBillById" resultMap="billMap">
-		SELECT <include refid="billColums"/>
+		SELECT
+		<include refid="billColums" />
 		FROM bill WHERE #{billId} = bill_id
 	</select>
 	<update id="updateBillStatusById">
-		UPDATE bill SET bill_contract_status_name=#{contractStatus},bill_invoice_status_name=#{invoiceStatus} WHERE bill_id=#{billId}
+		UPDATE bill SET
+		bill_contract_status_name=#{contractStatus},bill_invoice_status_name=#{invoiceStatus}
+		WHERE bill_id=#{billId}
 	</update>
 	<update id="updateBillEnd">
-		UPDATE bill SET bill_is_end=1,bill_end_date=now() WHERE bill_id=#{billId}
+		UPDATE bill SET bill_is_end=1,bill_end_date=now()
+		WHERE bill_id=#{billId}
 	</update>
 	<select id="selectIsEndById" resultType="java.lang.Integer">
-		SELECT bill_is_end FROM bill WHERE bill_id=#{billId}
+		SELECT bill_is_end FROM
+		bill WHERE bill_id=#{billId}
 	</select>
 	<select id="selectRegist" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM bill WHERE bill_id=#{billId} AND bill_company=#{staffCompany} AND bill_registrant_person=#{staffName}
+		SELECT COUNT(*) FROM bill
+		WHERE bill_id=#{billId} AND bill_company=#{staffCompany} AND
+		bill_registrant_person=#{staffName}
 	</select>
+	<update id="updateBill" parameterType="java.util.Map">
+			UPDATE bill
+			SET
+			<foreach item="value" index="key" collection="params"
+				separator=",">
+				<if test="key != 'bill_id'">
+					${key} = #{value}
+				</if>
+			</foreach>
+			WHERE
+			<foreach item="value" index="key" collection="params"
+				separator=",">
+				<if test="key == 'bill_id'">
+					bill_id = #{value}
+				</if>
+			</foreach>
+		</update>
 </mapper>

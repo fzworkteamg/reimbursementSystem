@@ -211,4 +211,30 @@ public class BillServiceImpl implements BillService {
 		return new ServerResult(0);
 	}
 
+	
+	public ServerResult updateBill(HttpServletRequest request) {
+		Map<String, String> billMap = new HashMap<String, String>();
+		billMap.put("bill_id", request.getParameter("bill_id"));
+		billMap.put("bill_amount", request.getParameter("bill_amount"));
+		billMap.put("bill_company", request.getParameter("bill_company"));
+		billMap.put("bill_produce_date", request.getParameter("bill_produce_date"));
+		billMap.put("bill_reimbursement_dep", request.getParameter("bill_reimbursement_dep"));
+		billMap.put("bill_registrant_date", request.getParameter("bill_registrant_date"));
+		billMap.put("bill_type", request.getParameter("bill_type"));
+		billMap.put("bill_summary", request.getParameter("bill_summary"));
+		billMap.put("bill_subject", request.getParameter("bill_subject"));
+		billMap.put("bill_belong_company", request.getParameter("bill_belong_company"));
+		billMap.put("bill_reimbursement_person", request.getParameter("bill_reimbursement_person"));
+		billMap.put("bill_invoice_status_name", request.getParameter("bill_invoice_status_name"));
+		billMap.put("bill_charge_person", request.getParameter("bill_charge_person"));
+		billMap.put("bill_invoice_amount", request.getParameter("bill_invoice_amount"));
+		billMap.put("bill_registrant_person", request.getParameter("bill_registrant_person"));
+		billMap.put("bill_contract_status_name", request.getParameter("bill_contract_status_name"));
+		billMap.put("bill_attribute", request.getParameter("bill_attribute"));
+		int num=billDao.updateBill(billMap);
+		if(num==0) 
+			return new ServerResult(1,InfoEnum.FAIL.getValue());
+		return new ServerResult(0,InfoEnum.SUCCESS.getValue());
+	}
+
 }

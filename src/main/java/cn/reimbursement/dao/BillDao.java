@@ -20,4 +20,5 @@ public interface BillDao {
 	Integer updateBillEnd(@Param("billId")String billId);
 	Integer selectIsEndById(@Param("billId")String billId);
 	Integer selectRegist(@Param("billId")String billId,@Param("staffCompany")String staffCompany,@Param("staffName")String staffName);
+	Integer updateBill(@Param("billMap")Map<String,String> billMap);
 }

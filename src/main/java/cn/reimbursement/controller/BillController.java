@@ -45,28 +45,34 @@ public class BillController {
 	}
 
 	@PostMapping("/selectBillWaitAudit")
-	LayuiResult<List<Bill>> selectBillWaitAudit(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBillWaitAudit(HttpServletRequest request) {
 		return billService.selectBillByAudit(request,"待审核");
 	}
 	
 	@PostMapping("/selectBillAudited")
-	LayuiResult<List<Bill>> selectBillAudited(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBillAudited(HttpServletRequest request) {
 		return billService.selectBillByAudit(request,"已审核");
 	}
 	
 	@PostMapping("/selectBillWriteAndPast")
-	LayuiResult<List<Bill>> selectBillWriteAndPast(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBillWriteAndPast(HttpServletRequest request) {
 		return billService.selectBillByAudit(request,"驳回");
 	}
 	
 	@PostMapping("/auditBill")
-	ServerResult auditBill(HttpServletRequest request, @RequestParam("billId")String billId, @RequestParam("audit_summary")String auditSummary, @RequestParam("selectContractStatus")String contractStatus,
+	public ServerResult auditBill(HttpServletRequest request, @RequestParam("billId")String billId, @RequestParam("audit_summary")String auditSummary, @RequestParam("selectContractStatus")String contractStatus,
 			@RequestParam("selectInvoiceStatus")String invoiceStatus) {
 		return billService.auditBill(request, billId, auditSummary, contractStatus, invoiceStatus);
 	}
 	
 	@PostMapping("/rejectBill")
-	ServerResult rejectBill(HttpServletRequest request,@RequestParam("billId")String billId,@RequestParam("audit_summary")String opinion) {
+	public ServerResult rejectBill(HttpServletRequest request,@RequestParam("billId")String billId,@RequestParam("audit_summary")String opinion) {
 		return billService.rejectBill(request, billId, opinion);
 	}
+	
+	@PostMapping("/updateBill")
+	public ServerResult updateBill(HttpServletRequest request) {
+		return billService.updateBill(request);
+	}
+	
 }
