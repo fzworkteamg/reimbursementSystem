@@ -47,7 +47,7 @@ layui.use('form', function () {
         }, function () {
             layer.close(index);
             $.ajax({
-                url: '/bill/auditBill',
+                url: '/bill/rejectBill',
                 data: {
                     billId: $('#bill_id').val(),
                     audit_summary: $('#audit_summary').val()
