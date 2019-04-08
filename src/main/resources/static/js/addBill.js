@@ -23,6 +23,7 @@ $(document).ready(function () {
 
     $("#reiPerson").attr("readOnly",true);
     $("#chargePerson").attr("readOnly",true);
+    $("#subject").attr("readOnly",true);
 
 })
 
@@ -38,6 +39,7 @@ layui.use('table', function () {
         // console.log(obj.data) //得到当前行数据
         //obj.del(); //删除当前行
         //obj.update(fields) //修改当前行数据
+        $("#subject").attr("readOnly",false);
         $("#subject").val(obj.data.rei_subject_content);
         layer.close(subjectIndex);
     });

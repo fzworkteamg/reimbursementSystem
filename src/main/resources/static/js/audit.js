@@ -134,6 +134,7 @@ function buildProcess() {
         }
     })
 }
+
 function summaryTip(content,i) {
     //小tips
     layer.tips(content, "#"+i, {
