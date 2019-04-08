@@ -122,7 +122,7 @@ function buildProcess() {
                 } else if ((processStatus.process_status_state == "已审核")) {
                     var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
-                } else if (processStatus.process_status_state == "已驳回") {
+                } else if (processStatus.process_status_state == "驳回") {
                     var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "") {
