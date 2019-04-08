@@ -173,16 +173,14 @@ public class BillServiceImpl implements BillService {
 					staff.getStaffName(), auditSummary) == 0
 					|| processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(),
 							"", "") == 0
-					|| currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber) == 0) {
+					|| currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber) == 0
+					||  billDao.updateBillStatusById(billId, contractStatus, invoiceStatus) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult(1);
 			}
 			return new ServerResult(0);
 
 		}
-		//
-		System.out.println("currentStepNumber:"+currentStepNumber);
-		System.out.println("processStatusCount:"+processStatusCount);
 		if (currentStepNumber == processStatusCount) {
 			if (billDao.updateBillEnd(billId) == 0
 					|| processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),

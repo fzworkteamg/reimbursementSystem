@@ -33,9 +33,12 @@
 	<select id="selectProcessStatusBillIds"
 		resultType="java.lang.String">
 		SELECT process_status_bill_id FROM process_status WHERE
-		process_status_company=#{processStatusCompany} AND
-		process_status_process_name=#{processStatusProcessName} AND
+		process_status_company=#{processStatusCompany} 
+		AND process_status_process_name=#{processStatusProcessName}
+		<if test="processStatusState!='已审核'">
+		AND
 		process_status_state=#{processStatusState}
+		</if>
 		<if test="staffName!='' and staffName!=null ">
 			AND process_status_auditor=#{staffName}
 		</if>

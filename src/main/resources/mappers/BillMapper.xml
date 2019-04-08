@@ -125,4 +125,7 @@
 	<select id="selectIsEndById" resultType="java.lang.Integer">
 		SELECT bill_is_end FROM bill WHERE bill_id=#{billId}
 	</select>
+	<select id="selectRegist" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM bill WHERE bill_id=#{billId} AND bill_company=#{staffCompany} AND bill_registrant_person=#{staffName}
+	</select>
 </mapper>
