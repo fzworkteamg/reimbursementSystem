@@ -83,8 +83,11 @@
                     <tr>
                         <td class="firstTd">类别</td>
                         <td>
-                            <input type="radio" name="bill_type" title="收入" value="收入">
-                            <input type="radio" name="bill_type" title="支出" value="支出" checked>
+                            <select name="bill_type" required lay-verify="required">
+                                <option th:text="${session.bill.billType}"></option>
+                                <option>支出</option>
+                                <option>收入</option>
+                            </select>
                         </td>
                         <td rowspan="3" class="thirdTd">摘要
                             (说明费用产生原由）
@@ -99,7 +102,7 @@
                     <tr>
                         <td class="firstTd">科目</td>
                         <td>
-                            <input type="text" id="subject" required lay-verify="required" name="bill_subject"><span
+                            <input type="text" id="subject" required lay-verify="required" name="bill_subject" readonly><span
                                 style="cursor: pointer"
                                 onclick="openAddSubjet()">点击选择</span>
                         </td>
@@ -157,9 +160,11 @@
                     <tr>
                         <td class="firstTd">属性</td>
                         <td>
-                            <input type="radio" name="bill_attribute" title="需要报备" value="需要报备"
-                                   th:checked="${session.bill.billAttribute}">
-                            <input type="radio" name="bill_attribute" title="不需要报备" value="正常">
+                            <select name="bill_attribute" required lay-verify="required">
+                                <option th:text="${session.bill.billAttribute}"></option>
+                                <option>正常</option>
+                                <option>需要报备</option>
+                            </select>
                         </td>
                         <td class="thirdTd"></td>
                         <td></td>
@@ -183,10 +188,13 @@
         </div>
     </div>
 </div>
-<!--<td class="firstTd">类别</td>-->
-<!--<td><input type="text" name="bill_type"-->
-<!--th:value="${session.bill.billType}"></td>-->
 <script>
+    //载入layer模块
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
     $(document).ready(function () {
         buildProcess();
     })

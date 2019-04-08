@@ -1,6 +1,10 @@
 // layui.use('element', function () {
 //     var element = layui.element;
 // });
+var layer;
+layui.use('layer', function () {
+     layer = layui.layer;
+});
 layui.use('form', function () {
     form = layui.form;
     form.render();
@@ -120,10 +124,10 @@ function buildProcess() {
                         + processStatus.process_status_process_name + " " +" "+processStatus.process_status_auditor+" "+
                         processStatus.process_status_state + " </font>&nbsp;&nbsp;"
                 } else if ((processStatus.process_status_state == "已审核")) {
-                    var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
+                    var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip('"+processStatus.process_status_opinion+"',"+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "驳回") {
-                    var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
+                    var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip('"+processStatus.process_status_opinion+"',"+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "") {
                     var content = "<font style='border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
