@@ -54,10 +54,11 @@ public class ViewController {
 		if(Util.isLogin(request)){
 			viewService.toBillDetail(data, request);
 			HttpSession session = (HttpSession) request.getSession();
+			JSONObject object = JSONObject.fromObject(data);
 			if(session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
+				session.setAttribute(SessionEnum.BILL.getValue(),object);
 				return "billAlter";
 			}
-			JSONObject object = JSONObject.fromObject(data);
 			session.setAttribute(SessionEnum.BILL.getValue(),object);
 			return "audit";
 		}
