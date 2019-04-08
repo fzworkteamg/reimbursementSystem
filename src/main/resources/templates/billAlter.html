@@ -11,7 +11,7 @@
     <script src="/layui-v2.4.5/layui/layui.js"></script>
     <script th:inline="none" src="/js/addBill.js"></script>
     <script src="/js/tools.js"></script>
-    <script src="/js/audit.js"></script>
+    <script src="/js/billAlter.js"></script>
     <style type="text/css">
         .table-c {
             border-right: 1px solid #9F9F9F;
@@ -102,7 +102,8 @@
                     <tr>
                         <td class="firstTd">科目</td>
                         <td>
-                            <input type="text" id="subject" required lay-verify="required" name="bill_subject" readonly><span
+                            <input type="text" id="subject" required lay-verify="required" name="bill_subject" readonly
+                            th:value="${session.bill.billSubject}"><span
                                 style="cursor: pointer"
                                 onclick="openAddSubjet()">点击选择</span>
                         </td>
@@ -188,87 +189,5 @@
         </div>
     </div>
 </div>
-<script>
-    //载入layer模块
-    var layer;
-    layui.use('layer', function () {
-        layer = layui.layer;
-    });
-
-    $(document).ready(function () {
-        buildProcess();
-    })
-    layui.use('element', function () {
-        var element = layui.element;
-    });
-    layer.use('form', function () {
-        form = layui.form;
-        form.render();
-        form.on('submit(auditPass)', function (data) {
-            var formData = new FormData($("#selectForm")[0]);
-            var index = layer.confirm('您确定要修改吗？', {
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                layer.close(index);
-                $.ajax({
-                    url: '/bill/billAlter',
-                    data: formData,
-                    async: false,
-                    method: 'post',
-                    success: function (result) {
-                        if (result.status == 0) {
-                            parent.layer.msg('已修改', {
-                                icon: 1,
-                                offset: '300px',
-                                time: 1000
-                            });
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);//关闭当前页
-                        } else {
-                            parent.layer.msg('修改失败，请联系系统管理员', {
-                                icon: 3,
-                                offset: '300px',
-                                time: 1000
-                            });
-                        }
-                    }
-                })
-            })
-            return false;
-        });
-        $("#delBill").click(function () {
-            var index = layer.confirm('你确定要删除此账单吗', {
-                btn: ['确定', '取消']
-            }, function () {
-                layer.close(index);
-                $.ajax({
-                    url: '/bill/delBill',
-                    data: {
-                        billId: $('#bill_id').val()
-                    },
-                    async: false,
-                    method: 'post',
-                    success: function (result) {
-                        if (result.status == 0) {
-                            parent.layer.msg('账单已删除', {
-                                icon: 1,
-                                offset: '300px',
-                                time: 1000
-                            });
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);//关闭当前页
-                        } else {
-                            parent.layer.msg('删除失败，请联系系统管理员', {
-                                icon: 3,
-                                offset: '300px',
-                                time: 1000
-                            });
-                        }
-                    }
-                })
-            })
-        })
-    })
-</script>
 </body>
 </html>
