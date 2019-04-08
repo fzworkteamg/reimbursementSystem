@@ -23,7 +23,7 @@ $(document).ready(function () {
 
     $("#reiPerson").attr("readOnly",true);
     $("#chargePerson").attr("readOnly",true);
-    $("#subject").attr("readOnly",true);
+    // $("#subject").attr("readOnly",true);
 
 })
 

@@ -1,6 +1,10 @@
 // layui.use('element', function () {
 //     var element = layui.element;
 // });
+var layer;
+layui.use('layer', function () {
+     layer = layui.layer;
+});
 layui.use('form', function () {
     form = layui.form;
     form.render();
