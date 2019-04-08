@@ -27,5 +27,7 @@ public interface ProcessStatusDao {
 			@Param("processStatusProcessName") String processStatusProcessName);
 
 	List<Map<String, String>> selectNameStateOptionById(@Param("billId") String billId);
-
+	
+	Integer selectRejectByBillIdAndStep(@Param("billId") String billId,@Param("step")Integer step);
+	
 }

@@ -54,9 +54,19 @@ public class BillController {
 		return billService.selectBillByAudit(request,"已审核");
 	}
 	
+	@PostMapping("/selectBillWriteAndPast")
+	LayuiResult<List<Bill>> selectBillWriteAndPast(HttpServletRequest request) {
+		return billService.selectBillByAudit(request,"驳回");
+	}
+	
 	@PostMapping("/auditBill")
 	ServerResult auditBill(HttpServletRequest request, @RequestParam("billId")String billId, @RequestParam("audit_summary")String auditSummary, @RequestParam("selectContractStatus")String contractStatus,
 			@RequestParam("selectInvoiceStatus")String invoiceStatus) {
 		return billService.auditBill(request, billId, auditSummary, contractStatus, invoiceStatus);
+	}
+	
+	@PostMapping("/rejectBill")
+	ServerResult rejectBill(HttpServletRequest request,@RequestParam("billId")String billId,@RequestParam("audit_summary")String opinion) {
+		return billService.rejectBill(request, billId, opinion);
 	}
 }

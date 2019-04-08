@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.reimbursement.enums.NumberEnum;
+import cn.reimbursement.enums.SessionEnum;
 import cn.reimbursement.service.StaffService;
 import cn.reimbursement.service.ViewService;
 import cn.reimbursement.util.Util;
@@ -51,9 +53,12 @@ public class ViewController {
 	public String toBillDetail(String data, HttpServletRequest request){
 		if(Util.isLogin(request)){
 			viewService.toBillDetail(data, request);
-			JSONObject object = JSONObject.fromObject(data);
 			HttpSession session = (HttpSession) request.getSession();
-			session.setAttribute("bill",object);
+			if(session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
+				return "billAlter";
+			}
+			JSONObject object = JSONObject.fromObject(data);
+			session.setAttribute(SessionEnum.BILL.getValue(),object);
 			return "audit";
 		}
 		return "login";

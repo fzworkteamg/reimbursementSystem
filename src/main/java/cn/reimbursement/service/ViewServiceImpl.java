@@ -26,8 +26,14 @@ public class ViewServiceImpl implements ViewService {
 		HttpSession session = (HttpSession) request.getSession();
 		session.setAttribute(SessionEnum.BILL_ID.getValue(), object);
 		String billId = (String) object.get(SessionEnum.BILL_ID.getValue());
-		int billCount = processStatusDao.selectCountByBillId(billId);
 		int currentStep = currentStepDao.selectCurrentStepByBillId(billId);
+		if(currentStep==1) {
+			if(processStatusDao.selectRejectByBillIdAndStep(billId,currentStep)==1) {
+				session.setAttribute(SessionEnum.STATUS.getValue(), NumberEnum.TWO.getValue());
+				return;
+			}
+		}
+		int billCount = processStatusDao.selectCountByBillId(billId);
 		if (billCount < currentStep) {
 			session.setAttribute(SessionEnum.STATUS.getValue(), NumberEnum.ONE.getValue());
 			return;

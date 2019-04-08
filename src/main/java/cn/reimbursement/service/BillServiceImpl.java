@@ -137,57 +137,75 @@ public class BillServiceImpl implements BillService {
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billList.size());
 	}
 
-	public LayuiResult<List<Bill>> selectBillByAudit(HttpServletRequest request,String processStatusState) {
+	public LayuiResult<List<Bill>> selectBillByAudit(HttpServletRequest request, String processStatusState) {
 		Staff staff = (Staff) request.getSession().getAttribute("staff");
-		String staffName=InfoEnum.AUDITED.getValue().equals(processStatusState)?staff.getStaffName():"";
 		if (staff == null)
 			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.getValue(), null, 1, 0);
+		String staffName = (InfoEnum.AUDITED.getValue().equals(processStatusState) || InfoEnum.REJECT.getValue().equals(processStatusState))  ? staff.getStaffName() : "";
 		String processStatusCompany = staff.getCompanyName();
 		String processStatusProcessName = staff.getDepName() + "-" + staff.getDutyName();
 		List<String> billIdList = processStatusDao.selectProcessStatusBillIds(processStatusCompany,
-				processStatusProcessName,processStatusState,staffName);
-		List<Bill> billList = new ArrayList<Bill>();
-		for (String billId : billIdList) {
-			billList.add(billDao.selectBillById(billId));
+				processStatusProcessName, processStatusState, staffName);
+		List<Bill> billList = new ArrayList<>();
+		if (staffName != "") {
+			for (String billId : billIdList) {
+				billList.add(billDao.selectBillById(billId));
+			}
+		} else {
+			for (String billId : billIdList) {
+				if (1 != billDao.selectIsEndById(billId)) {
+					billList.add(billDao.selectBillById(billId));
+				}
+			}
 		}
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billList.size());
 	}
+
 	@Transactional
 	public ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
 			String invoiceStatus) {
+		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
 		int currentStepNumber = currentStepDao.selectCurrentStepByBillId(billId);
 		int processStatusCount = processStatusDao.selectCountByBillId(billId);
-		int num = 0;
-		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
+		
 		if (currentStepNumber < processStatusCount) {
-			num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
-					staff.getStaffName(), auditSummary);
-			if (num == 0) {
+			if (processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
+					staff.getStaffName(), auditSummary) == 0
+					|| processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(),
+							"", "") == 0
+					|| currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult(1);
 			}
-			num = processStatusDao.updateStateByStep(billId, ++currentStepNumber, InfoEnum.WAIT_AUDIT.getValue(), "",
-					"");
-			if (num == 0) {
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
-			}
-			num = currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber);
-			if (num == 0) {
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
-			}
+			return new ServerResult(0);
 
-		} else if (currentStepNumber == processStatusCount) {
-			num = billDao.updateBillEnd(billId);
-			if (num == 0) {
+		}
+		//
+		System.out.println("currentStepNumber:"+currentStepNumber);
+		System.out.println("processStatusCount:"+processStatusCount);
+		if (currentStepNumber == processStatusCount) {
+			if (billDao.updateBillEnd(billId) == 0
+					|| processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
+							staff.getStaffName(), auditSummary) == 0
+					|| billDao.updateBillStatusById(billId, contractStatus, invoiceStatus) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult(1);
 			}
-			num = processStatusDao.updateStateByStep(billId, currentStepNumber, InfoEnum.AUDITED.getValue(),
-					staff.getStaffName(), auditSummary);
-			num = billDao.updateBillStatusById(billId, contractStatus, invoiceStatus);
-			if (num == 0) {
+		}
+		return new ServerResult(0);
+	}
+	
+	@Transactional
+	public ServerResult rejectBill(HttpServletRequest request, String billId,String opinion) {
+		int currentStep=currentStepDao.selectCurrentStepByBillId(billId);
+		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
+		if(processStatusDao.updateStateByStep(billId, currentStep, InfoEnum.REJECT.getValue(), staff.getStaffName(), opinion)==0) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return new ServerResult(1);
+		}
+		if(currentStep!=1) {
+			if(currentStepDao.updateCurrentStepNumberByBillId(billId,--currentStep)==0
+			|| processStatusDao.updateStateByStep(billId, currentStep, InfoEnum.WAIT_AUDIT.getValue(), "", "")==0){
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult(1);
 			}

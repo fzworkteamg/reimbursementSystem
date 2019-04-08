@@ -122,4 +122,7 @@
 	<update id="updateBillEnd">
 		UPDATE bill SET bill_is_end=1,bill_end_date=now() WHERE bill_id=#{billId}
 	</update>
+	<select id="selectIsEndById" resultType="java.lang.Integer">
+		SELECT bill_is_end FROM bill WHERE bill_id=#{billId}
+	</select>
 </mapper>

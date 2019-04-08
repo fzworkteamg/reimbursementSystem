@@ -18,4 +18,5 @@ public interface BillDao {
 	Bill selectBillById(@Param("billId")String billId);
 	Integer updateBillStatusById(@Param("billId")String billId,@Param("contractStatus")String contractStatus,@Param("invoiceStatus")String invoiceStatus);
 	Integer updateBillEnd(@Param("billId")String billId);
+	Integer selectIsEndById(@Param("billId")String billId);
 }

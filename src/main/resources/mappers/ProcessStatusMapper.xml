@@ -39,6 +39,9 @@
 		<if test="staffName!='' and staffName!=null ">
 			AND process_status_auditor=#{staffName}
 		</if>
+		<if test="processStatusState == '驳回'">
+			AND process_status_step=1
+		</if>
 	</select>
 	<select id="selectCountByBillId" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM
@@ -64,5 +67,8 @@
 		SELECT
 		process_status_process_name,process_status_state,process_status_opinion,process_status_auditor
 		FROM process_status WHERE process_status_bill_id=#{billId}
+	</select>
+	<select id="selectRejectByBillIdAndStep" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM process_status WHERE process_status_bill_id=#{billId} AND process_status_step=#{step} AND process_status_state='驳回'
 	</select>
 </mapper>
