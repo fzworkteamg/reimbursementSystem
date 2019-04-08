@@ -60,8 +60,15 @@ $(document).ready(function () {
                         }
                     });
                     break;
-            }
-            ;
+                case 'writeAndPast'://本人登记被驳回
+                    billTable.reload({
+                        url:'/bill/selectBillWriteAndPast',
+                        page: {
+                            curr: 1
+                        }
+                    });
+                    break;
+            };
         });
     });
     //获取公司填充下拉列表
@@ -188,25 +195,25 @@ function openBillDetail(data) {
         maxmin: true,
         offset: '1px',
         shadeClose: true, //点击遮罩关闭层
-        area: ['850px', '600px'],
+        area: ['950px', '600px'],
         content: '/view/toBillDetail?data=' +encodeURIComponent(data, 'utf-8')//转换编码格式
     });
 }
 
 //弹出当前账单流程页面
 function openBillProcess(id) {
-     // $.ajax({
-     //     url:'/process/selectProcessContentByBillId',
-     //     data:{
-     //         billId:id
-     //     },
-     //     method: 'post',
-     //     success:function (result) {
-     //         processTip = layer.msg(result.data,{
-     //             time: 6000,
-     //             offset: '126px',
-     //         })
-     //     }
-     // })
+     $.ajax({
+         url:'/process/selectProcessContentByBillId',
+         data:{
+             billId:id
+         },
+         method: 'post',
+         success:function (result) {
+             processTip = layer.msg(result.data,{
+                 time: 6000,
+                 offset: '126px',
+             })
+         }
+     })
 }
 

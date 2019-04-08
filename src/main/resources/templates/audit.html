@@ -282,17 +282,18 @@
             dataType:'json',
             success: function (result) {
                 var list = result;
-                $("#process").before("<font>流程图:</font>");
+                $("#process").before("<font style='margin-left: -100px'>（单击流程查看审核意见）流程:</font>");
                 for (var i = 0; i < list.length; i++) {
                     var processStatus = list[i];
                     if (processStatus.process_status_state == "待审核") {
-                        var content = "<font style='color: orange;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
-                        " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + " </font>&nbsp;&nbsp;"
+                        var content = "<font style='color: orange;border-style: solid;cursor: pointer' id='"+i+"'>"
+                            + processStatus.process_status_process_name + " " +" "+processStatus.process_status_auditor+" "+
+                            processStatus.process_status_state + " </font>&nbsp;&nbsp;"
                     } else if ((processStatus.process_status_state == "已审核")) {
-                        var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
+                        var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
                             " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                     } else if (processStatus.process_status_state == "已驳回") {
-                        var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
+                        var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+processStatus.process_status_opinion+","+i+")'>" + processStatus.process_status_process_name +
                             " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                     } else if (processStatus.process_status_state == "") {
                         var content = "<font style='border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
@@ -305,9 +306,10 @@
     }
     function summaryTip(content,i) {
         //小tips
-        layer.tips(content, '#i', {
-            tips: [1, '#3595CC'],
-            time: 4000
+        console.log(content+"----"+i);
+        layer.tips(content, "#"+i, {
+            tips: [3, '#3595CC'],
+            time: 5000
         });
     }
 </script>
