@@ -161,13 +161,14 @@ function remoceBillTable() {
 //查询按钮刷新表格
 function reloadBillTable() {
     billTable.reload({
+        url: '/bill/selectBill',
         where: { //设定异步数据接口的额外参数，任意设
             company: $('#selectCompany').val(),
             dep: $('#selectDep').val(),
             attribute: $('#attribute').val(),
             type: $('#type').val(),
             invoice: $('#invoice').val(),
-            contract: $('#contract').val(),
+            contract: $('#con   tract').val(),
             billId: $('#billId').val(),
             chargePerson: $('#chargePerson').val(),
             registrantPerson: $('#registrantPerson').val(),

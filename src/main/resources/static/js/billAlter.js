@@ -117,7 +117,7 @@ function buildProcess() {
 
 function summaryTip(content,i) {
     //小tips
-    layer.tips(content, "#"+i, {
+    layer.tips("'"+content+"'", "#"+i, {
         tips: [3, '#3595CC'],
         time: 5000
     });
