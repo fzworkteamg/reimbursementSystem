@@ -6,7 +6,8 @@ layui.use('form', function () {
     form = layui.form;
     form.render();
     form.on('submit(alter)', function (data) {
-        var formData = new FormData($("#selectForm")[0]);
+        var formData = new FormData($("#form")[0]);
+        console.log(formData);
         var index = layer.confirm('您确定要修改吗？', {
             btn: ['确定', '取消'] //按钮
         }, function () {
@@ -77,15 +78,6 @@ layui.use('form', function () {
 
 $(document).ready(function () {
     buildProcess();
-
-    // //填充合同状态
-    // var contractStatus = selectContractStatus();
-    // romance(contractStatus, "selectContractStatus");
-    //
-    // //填充发票状态
-    // var invoiceStatus = selectInvoiceStatus();
-    // romance(invoiceStatus, "selectInvoiceStatus")
-
 })
 
 //动态生成流程图
@@ -112,6 +104,7 @@ function buildProcess() {
                 } else if (processStatus.process_status_state == "驳回") {
                     var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip('"+processStatus.process_status_opinion+"',"+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
+                    console.log(content);
                 } else if (processStatus.process_status_state == "") {
                     var content = "<font style='border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
                         " " + processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
