@@ -25,5 +25,18 @@
 		<if test="dep != null and dep !=''">
 			AND rei_subject_dep_name=#{dep}
 		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<select id="selectDepContentCommentByCompanyDepCount" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM rei_subject WHERE 1=1
+		<if test="company != null and company !=''">
+		 	AND rei_subject_company_name=#{company}
+		</if>
+		<if test="dep != null and dep !=''">
+			AND rei_subject_dep_name=#{dep}
+		</if>
 	</select>
 </mapper>

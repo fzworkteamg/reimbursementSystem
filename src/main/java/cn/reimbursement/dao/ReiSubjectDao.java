@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReiSubjectDao {
-	List<Map<String, String>> selectDepContentCommentByCompanyDep(@Param("company")String company,@Param("dep")String dep);
+	List<Map<String, String>> selectDepContentCommentByCompanyDep(@Param("company")String company,@Param("dep")String dep,@Param("limit")Integer limit,@Param("start")Integer start);
+	Integer selectDepContentCommentByCompanyDepCount(@Param("company")String company,@Param("dep")String dep);
 }

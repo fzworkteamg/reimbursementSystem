@@ -19,13 +19,12 @@ public class ReiSubjectServiceImpl implements ReiSubjectService {
 	@Autowired
 	private ReiSubjectDao reiSubjectDao;
 	
-	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(HttpServletRequest request,String page,String limit,String company,String dep) {
-//		int pageNum = (page == null ? 1 : Integer.valueOf(page));
-//		int limitSize = (limit == null ? 10 : Integer.valueOf(limit));
-//        PageHelper.startPage(pageNum, limitSize);
-		List<Map<String, String>> subjectOMapList=reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep);
-//		PageInfo pageInfo = new PageInfo(subjectOMapList);
-		return new LayuiResult(InfoEnum.SUCCESS.getValue(),subjectOMapList,0,subjectOMapList.size());
+	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(HttpServletRequest request,String company,String dep) {
+		int limit = Integer.parseInt(request.getParameter("limit"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		int start=limit*(page-1);
+		List<Map<String, String>> subjectOMapList=reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep,limit,start);
+		return new LayuiResult(InfoEnum.SUCCESS.getValue(),subjectOMapList,0,reiSubjectDao.selectDepContentCommentByCompanyDepCount(company, dep));
 	}
 
 }
