@@ -212,7 +212,8 @@ public class BillServiceImpl implements BillService {
 	}
 
 	
-	public ServerResult updateBill(HttpServletRequest request) {
+	public ServerResult updateBill(HttpServletRequest httpServletRequest) {
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String> billMap = new HashMap<String,String>();
 		billMap.put("bill_id", request.getParameter("bill_id"));
 		billMap.put("bill_amount", request.getParameter("bill_amount"));
