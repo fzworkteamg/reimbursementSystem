@@ -213,7 +213,7 @@ public class BillServiceImpl implements BillService {
 
 	
 	public ServerResult updateBill(HttpServletRequest request) {
-		Map<String, String> billMap = new HashMap<String, String>();
+		Map<String, String> billMap = new HashMap<String,String>();
 		billMap.put("bill_id", request.getParameter("bill_id"));
 		billMap.put("bill_amount", request.getParameter("bill_amount"));
 		billMap.put("bill_company", request.getParameter("bill_company"));
@@ -231,6 +231,7 @@ public class BillServiceImpl implements BillService {
 		billMap.put("bill_registrant_person", request.getParameter("bill_registrant_person"));
 		billMap.put("bill_contract_status_name", request.getParameter("bill_contract_status_name"));
 		billMap.put("bill_attribute", request.getParameter("bill_attribute"));
+		System.out.println(billMap.toString());
 		int num=billDao.updateBill(billMap);
 		if(num==0) 
 			return new ServerResult(1,InfoEnum.FAIL.getValue());
