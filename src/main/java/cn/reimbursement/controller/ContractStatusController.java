@@ -17,6 +17,8 @@ public class ContractStatusController {
 	@Autowired
 	private ContractStatusService contractStatusService;
 	
+	
+	//查询所有合同状态名
 	@PostMapping("/selectContractStatus")
 	public ServerResult<List<String>> selectInvoiceStatusName(){
 		return contractStatusService.selectContractStatusName();

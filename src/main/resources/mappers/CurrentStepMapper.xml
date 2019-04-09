@@ -24,4 +24,7 @@
 	<update id="updateCurrentStepNumberByBillId">
 		UPDATE current_step SET current_step_number=#{currentStepNumber} WHERE current_step_bill_id=#{billId}
 	</update>
+	<delete id="deleteCurrentStepByBillId">
+		DELETE FROM current_step WHERE current_step_bill_id=#{billId}
+	</delete>
 </mapper>

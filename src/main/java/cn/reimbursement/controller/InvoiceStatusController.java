@@ -17,6 +17,7 @@ public class InvoiceStatusController {
 	@Autowired
 	private InvoiceStatusService invoiceStatusService;
 	
+	//查询所有发票状态名
 	@PostMapping("/selectInvoiceStatus")
 	public ServerResult<List<String>> selectInvoiceStatusName(){
 		return invoiceStatusService.selectInvoiceStatusName();

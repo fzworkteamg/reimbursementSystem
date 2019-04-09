@@ -17,6 +17,7 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
+	//查询所有公司
 	@PostMapping("/selectCompany")
 	public ServerResult<List<String>> selectCompany() {
 		return companyService.selectCompany();

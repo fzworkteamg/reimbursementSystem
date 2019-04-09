@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CurrentStepDao {
-	void insertCurrentStep(@Param("currentStepBillId")String currentStepBillId);
+	Integer insertCurrentStep(@Param("currentStepBillId")String currentStepBillId);
 	Integer selectCurrentStepByBillId(@Param("billId")String billId);
 	Integer updateCurrentStepNumberByBillId(@Param("billId")String billId,@Param("currentStepNumber")Integer currentStepNumber);
+	Integer deleteCurrentStepByBillId(@Param("billId")String billId);
 }

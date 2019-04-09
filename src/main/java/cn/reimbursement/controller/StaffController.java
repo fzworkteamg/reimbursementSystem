@@ -20,12 +20,14 @@ public class StaffController {
 	
 	@Autowired
 	private StaffService staffService;
-
+	
+	//登陆
 	@PostMapping("/loginByIdAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
 		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));
 	}
 	
+	//通过公司部门查询员工
 	@PostMapping("/selectStaffByCompanyAndDep")
 	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
 		return staffService.selectStaffByCompanyAndDep(company, dep);

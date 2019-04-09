@@ -16,6 +16,7 @@ public class ProcessStatusController {
 	@Autowired
 	private ProcessStatusService processStatusService;
 	
+	//通过billId查询流程状态表的流程名，审核状态，意见
 	@RequestMapping("/selectNameStateOptionById")
 	public List<Map<String,String>> selectNameStateOptionById(String billId){
 		return processStatusService.selectNameStateOptionById(billId);

@@ -20,7 +20,8 @@ public class DepController {
 
 	@Autowired
 	private DepService depService;
-
+	
+	//通过公司查询部门
 	@PostMapping("/selectDepByCompany")
 	public ServerResult<List<String>> selectDepByCompany(HttpServletRequest request) {
 		return depService.selectDepByCompany(request.getParameter("company"));

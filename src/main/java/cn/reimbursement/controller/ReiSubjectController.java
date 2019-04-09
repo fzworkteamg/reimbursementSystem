@@ -20,6 +20,7 @@ public class ReiSubjectController {
 	@Autowired
 	private ReiSubjectService reiSubjectService;
 	
+	//通过公司名和部门查询部门，内容，注释
 	@GetMapping("/selectDepContentCommentByCompanyDep")
 	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(HttpServletRequest request,String page,String limit,String company,String dep) {
 		return reiSubjectService.selectDepContentCommentByCompanyDep(request,page,limit,company,dep);

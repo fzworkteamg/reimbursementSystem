@@ -8,15 +8,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProcessStatusDao {
-	void insertProcessStatus(@Param("processStatusBillId") String processStatusBillId,
+	Integer insertProcessStatus(@Param("processStatusBillId") String processStatusBillId,
 			@Param("processStatusName") String processStatusName,
 			@Param("processStatusState") String processStatusState, @Param("processStatusStep") int processStatusStep,
 			@Param("processStatusBCompany") String processStatusCompany);
 
 	List<String> selectProcessStatusBillIds(@Param("processStatusCompany") String processStatusCompany,
 			@Param("processStatusProcessName") String processStatusProcessName,
+			@Param("processStatusState") String processStatusState, @Param("staffName") String staffName,@Param("limit")Integer limit,@Param("start")Integer start);
+	Integer selectProcessStatusBillIdsCount(@Param("processStatusCompany") String processStatusCompany,
+			@Param("processStatusProcessName") String processStatusProcessName,
 			@Param("processStatusState") String processStatusState, @Param("staffName") String staffName);
-
 	Integer selectCountByBillId(@Param("billId") String billId);
 
 	Integer updateStateByStep(@Param("billId") String billId, @Param("step") Integer step, @Param("audit") String audit,
@@ -30,4 +32,5 @@ public interface ProcessStatusDao {
 	
 	Integer selectRejectByBillIdAndStep(@Param("billId") String billId,@Param("step")Integer step);
 	
+	Integer deleteProcessStatusByBillId(@Param("billId") String billId);
 }
