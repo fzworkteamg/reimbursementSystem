@@ -97,7 +97,7 @@ function buildProcess() {
                 var processStatus = list[i];
                 if (processStatus.process_status_state == "待审核") {
                     var content = "<font style='color: orange;border-style: solid;cursor: pointer' id='"+i+"'>"
-                        + processStatus.process_status_process_name + " " +" "+processStatus.process_status_auditor+" "+
+                        + processStatus.process_status_process_name + " " +" "+
                         processStatus.process_status_state + " </font>&nbsp;&nbsp;"
                 } else if ((processStatus.process_status_state == "已审核")) {
                     object['i'] = processStatus.process_status_opinion;
