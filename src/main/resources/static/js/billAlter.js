@@ -1,4 +1,5 @@
 var layer;
+var object = {};
 layui.use('layer', function () {
     layer = layui.layer;
 });
@@ -80,7 +81,7 @@ $(document).ready(function () {
     buildProcess();
 })
 
-//动态生成流程图
+// //动态生成流程图
 function buildProcess() {
     $.ajax({
         url: '/processStatus/selectNameStateOptionById',
@@ -99,12 +100,13 @@ function buildProcess() {
                         + processStatus.process_status_process_name + " " +" "+processStatus.process_status_auditor+" "+
                         processStatus.process_status_state + " </font>&nbsp;&nbsp;"
                 } else if ((processStatus.process_status_state == "已审核")) {
-                    var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip('"+processStatus.process_status_opinion+"',"+i+")'>" + processStatus.process_status_process_name +
+                    object['i'] = processStatus.process_status_opinion;
+                    var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "驳回") {
-                    var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip('"+processStatus.process_status_opinion+"',"+i+")'>" + processStatus.process_status_process_name +
+                    object['i'] = processStatus.process_status_opinion;
+                    var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
-                    console.log(content);
                 } else if (processStatus.process_status_state == "") {
                     var content = "<font style='border-style: solid;cursor: pointer' id='"+i+"'>" + processStatus.process_status_process_name +
                         " " + processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
@@ -114,10 +116,10 @@ function buildProcess() {
         }
     })
 }
-
-function summaryTip(content,i) {
+window.summaryTip = function(i) {
     //小tips
-    layer.tips("'"+content+"'", "#"+i, {
+    let temp = object.i;
+    layer.tips(temp, "#"+i, {
         tips: [3, '#3595CC'],
         time: 5000
     });
