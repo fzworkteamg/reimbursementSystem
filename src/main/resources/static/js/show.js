@@ -168,7 +168,7 @@ function reloadBillTable() {
             attribute: $('#attribute').val(),
             type: $('#type').val(),
             invoice: $('#invoice').val(),
-            contract: $('#con   tract').val(),
+            contract: $('#contract').val(),
             billId: $('#billId').val(),
             chargePerson: $('#chargePerson').val(),
             registrantPerson: $('#registrantPerson').val(),

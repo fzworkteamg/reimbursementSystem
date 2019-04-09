@@ -138,7 +138,7 @@ public class BillServiceImpl implements BillService {
 	}
 
 	public LayuiResult<List<Bill>> selectBillByAudit(HttpServletRequest request, String processStatusState) {
-		Staff staff = (Staff) request.getSession().getAttribute("staff");
+		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
 		if (staff == null)
 			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.getValue(), null, 1, 0);
 		String staffName = (InfoEnum.AUDITED.getValue().equals(processStatusState) || InfoEnum.REJECT.getValue().equals(processStatusState))  ? staff.getStaffName() : "";
@@ -215,7 +215,8 @@ public class BillServiceImpl implements BillService {
 	public ServerResult updateBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String> billMap = new HashMap<String,String>();
-		billMap.put("bill_id", request.getParameter("bill_id"));
+		String billId=request.getParameter("bill_id");
+		billMap.put("bill_id", billId);
 		billMap.put("bill_amount", request.getParameter("bill_amount"));
 		billMap.put("bill_company", request.getParameter("bill_company"));
 		billMap.put("bill_produce_date", request.getParameter("bill_produce_date"));
@@ -232,10 +233,13 @@ public class BillServiceImpl implements BillService {
 		billMap.put("bill_registrant_person", request.getParameter("bill_registrant_person"));
 		billMap.put("bill_contract_status_name", request.getParameter("bill_contract_status_name"));
 		billMap.put("bill_attribute", request.getParameter("bill_attribute"));
-		System.out.println(billMap.toString());
-		int num=billDao.updateBill(billMap);
-		if(num==0) 
+		if(billDao.updateBill(billMap)==0) 
 			return new ServerResult(1,InfoEnum.FAIL.getValue());
+		Staff staff=(Staff)(request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
+		System.out.println(staff.toString());
+		if(staff==null)
+			return new ServerResult(1,InfoEnum.FAIL.getValue());
+		processStatusDao.updateStateByStep(billId, 1, InfoEnum.WAIT_AUDIT.getValue(), staff.getStaffName(), "");
 		return new ServerResult(0,InfoEnum.SUCCESS.getValue());
 	}
 

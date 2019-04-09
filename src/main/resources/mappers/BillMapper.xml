@@ -73,7 +73,7 @@
 			and bill_company = #{billMap.billCompany}
 		</if>
 		<if test="billMap.billDep != null and billMap.billDep != ''">
-			and bill_dep = #{billMap.billDep}
+			and bill_reimbursement_dep = #{billMap.billDep}
 		</if>
 		<if
 			test="billMap.billAttribute != null and billMap.billAttribute != ''">
