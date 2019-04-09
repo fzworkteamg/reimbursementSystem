@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
+
 	@ExceptionHandler(value = Exception.class)
 	public String jsonErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-		System.out.println(e.toString());
-		return null;
+		return "error";
 	}
 }

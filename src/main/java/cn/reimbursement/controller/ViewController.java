@@ -29,40 +29,31 @@ public class ViewController {
 	}
 	
 	@RequestMapping("/toIndex")
-	public String toIndex(HttpServletRequest request) {
-		if(Util.isLogin(request))
-			return "index";
-		return "login";
+	public String toIndex() {
+		return "index";
 	}
 
 	@RequestMapping("/toShow")
-	public String toShow(HttpServletRequest request){
-		if(Util.isLogin(request))
-			return "show";
-		return "login";
+	public String toShow(){
+		return "show";
 	}
 
 	@RequestMapping("/toAddBill")
-	public String toAddBill(HttpServletRequest request){
-		if(Util.isLogin(request))
-			return "addBill";
-		return "login";
+	public String toAddBill(){
+		return "addBill";
 	}
 
 	@RequestMapping("/toBillDetail")
 	public String toBillDetail(String data, HttpServletRequest request){
-		if(Util.isLogin(request)){
-			viewService.toBillDetail(data, request);
-			HttpSession session = (HttpSession) request.getSession();
-			JSONObject object = JSONObject.fromObject(data);
-			if(session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
-				session.setAttribute(SessionEnum.BILL.getValue(),object);
-				return "billAlter";
-			}
+		viewService.toBillDetail(data, request);
+		HttpSession session = (HttpSession) request.getSession();
+		JSONObject object = JSONObject.fromObject(data);
+		if(session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
 			session.setAttribute(SessionEnum.BILL.getValue(),object);
-			return "audit";
+			return "billAlter";
 		}
-		return "login";
+		session.setAttribute(SessionEnum.BILL.getValue(),object);
+		return "audit";
 	}
 
 	@RequestMapping("loginOut")

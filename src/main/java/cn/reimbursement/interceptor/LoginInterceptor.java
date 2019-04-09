@@ -25,12 +25,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (user == null) {
 			// 这个方法返回false表示忽略当前请求，如果一个用户调用了需要登陆才能使用的接口，如果他没有登陆这里会直接忽略掉
 			// //当然你可以利用response给用户返回一些提示信息，告诉他没登陆
-			System.out.println("123");
-			response.encodeRedirectURL("/view/toLogin");
+			response.sendRedirect(request.getContextPath()+"/view/toLogin");
 			return false;
 		} else {
-			return true;
 			// 如果session里有user，表示该用户已经登陆，放行，用户即可继续调用自己需要的接口
+			return true;
 		}
 	}
 
