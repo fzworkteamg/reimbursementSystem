@@ -80,20 +80,38 @@ layui.use('form', function () {
     //新增报销提交按钮
     form.on('submit(insertBill)', function (data) {
         var formData = new FormData($( "#form1" )[0]);
-        $.ajax({
-            url:'/bill/insertBill',
-            type : 'post',
-            async: false,
-            data : formData,
-            cache:false,
-            contentType: false,
-            processData: false,
-            success : function(data) {
-                if(data.msg=="SUCCESS"){
-                    parent.layer.msg("新增报销保存成功");
+        var index = layer.confirm('您确定新增吗',{
+            btn:['确定','取消']
+        },function () {
+            layer.close(index);
+            $.ajax({
+                url:'/bill/insertBill',
+                type : 'post',
+                async: false,
+                data : formData,
+                cache:false,
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    if (data.status == 0) {
+                        parent.layer.msg('新增成功',{
+                            icon: 1,
+                            offset: '300px',
+                            time: 1000
+                        });
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);//关闭当前页
+                    }else{
+                        parent.layer.msg('新增失败，请联系系统管理员', {
+                            icon: 3,
+                            offset: '300px',
+                            time: 1000
+                        });
+                    }
                 }
-            }
+            })
         })
+        return false;
     })
 });
 //载入jquery模块
