@@ -24,7 +24,7 @@ public class ViewController {
 	private ViewService viewService;
 
 	@RequestMapping("/toLogin")
-	public String toLigin() {
+	public String toLogin() {
 		return "login";
 	}
 	
