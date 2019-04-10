@@ -59,14 +59,14 @@ public class BillServiceImpl implements BillService {
         Map<String, String> billMap = new HashMap<String, String>();
         while (keyEnumeration.hasMoreElements()) {
             String key = keyEnumeration.nextElement();
-            if (!"bill_id_pre".equals(key) && !"bill_id_suff".equals(key))
+            if (!"bill_id_pre".equals(key) && !"bill_id_suff".equals(key) && !"staffCompany".equals(key) && !"staffDep".equals(key))
                 billMap.put(key, requestMap.get(key)[0]);
         }
         String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
         billMap.put("bill_id", billId);
         String[] processContents = processContent.split("\\|");
         for (int i = 0; i < processContents.length; )
-            if (processStatusDao.insertProcessStatus(billId, processContents[i], i == 0 ? "待审核" : "", ++i,
+            if (processStatusDao.insertProcessStatus(billId, processContents[i], i == 0 ? InfoEnum.WAIT_AUDIT.getValue() : "", ++i,
                     request.getParameter("bill_belong_company")) == 0) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return new ServerResult(1, InfoEnum.FAIL.getValue());
