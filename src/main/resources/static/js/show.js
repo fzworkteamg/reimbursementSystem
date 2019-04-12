@@ -104,7 +104,7 @@ function remoceBillTable() {
     billTable = table.render({
         id: 'billTable',
         elem: '#billTable',
-        height: '470', //高度最大化减去差值
+        height: '670', //高度最大化减去差值
         toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'print', 'exports'],
         where: {

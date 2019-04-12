@@ -1,5 +1,6 @@
 package cn.reimbursement;
 
+import cn.reimbursement.util.AddressListTool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,4 +14,8 @@ public class ReimbursementApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void test(){
+		AddressListTool.getAccessToken();
+	}
 }

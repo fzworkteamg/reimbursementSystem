@@ -41,10 +41,14 @@
 <body>
 <div class="layui-container">
     <div class="layui-row">
-        <font id="process"></font>
+
     </div>
     <div class="layui-row">
-        <div class="layui-col-xs-1"></div>
+        <div class="layui-col-xs-1">
+            <button class="layui-btn layui-btn-danger"
+                    id="delBill">撤销账单
+            </button><font id="process"></font>
+        </div>
         <div class="layui-col-xs-10">
             <form class="layui-form" id="form" enctype="multipart/form-data">
                <!--  <input type="hidden" id="staffCompany" name="staffCompany">
@@ -179,9 +183,6 @@
                         </td>
                         <td class="thirdTd"></td>
                         <td>
-                            <button class="layui-btn layui-btn-danger"
-                                    id="delBill">撤销账单
-                            </button>
                         </td>
                     </tr>
                 </table>

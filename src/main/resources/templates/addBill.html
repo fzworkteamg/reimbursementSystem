@@ -35,12 +35,18 @@
             width: 80px;
             text-align: right;
         }
+
+        .warn {
+            color: red;
+        }
     </style>
 </head>
 <body>
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-xs-1"></div>
+        <div class="layui-col-xs-1">
+            <h4 style="color: red">*表示系统登录账号无法修改</h4>
+        </div>
         <div class="layui-col-xs-10">
             <form class="layui-form" id="form1" enctype="multipart/form-data">
                 <!--<input type="hidden" id="staffId" name="staffId">-->
@@ -52,7 +58,8 @@
                         <td class="firstTd">报销单号</td>
                         <td><input type="text" style="width: 50px" value="hbf" required lay-verify="required"
                                    name="bill_id_pre">+<input type="text"
-                                style="width: 120px;background-color: #9F9F9F" name="bill_id_suff" id="bill_id_suff">*自动生成
+                                                              style="width: 120px;background-color: #9F9F9F"
+                                                              name="bill_id_suff" id="bill_id_suff">*自动生成
                         </td>
                         <td class="thirdTd">金额</td>
                         <td><input type="number" style="width: 80px" required lay-verify="required" name="bill_amount">元（保留两位小数）
@@ -60,18 +67,26 @@
                     </tr>
                     <tr>
                         <td class="firstTd">公司</td>
-                        <td><select id="company" name="bill_company">
-                            <option th:text="${session.staff.companyName}">
-                            </option>
-                        </select></td>
+                        <td>
+                            <!--<select id="company" name="bill_company">-->
+                            <!--<option th:text="${session.staff.companyName}">-->
+                            <!--</option>-->
+                            <!--</select>-->
+                            <input type="text" readonly th:value="${session.staff.companyName}" id="company"
+                                   name="bill_company">
+                            <font class="warn">*</font>
+                        </td>
                         <td class="thirdTd">产生日期</td>
                         <td><input type="date" required lay-verify="required" name="bill_produce_date"></td>
                     </tr>
                     <tr>
                         <td class="firstTd">部门</td>
-                        <td><select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">
-
-                        </select></td>
+                        <td>
+                            <!--<select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">-->
+                            <!--</select>-->
+                            <input type="text" readonly th:value="${session.staff.depName}"
+                                   name="bill_reimbursement_dep" id="selectDep"> <font class="warn">*</font>
+                        </td>
                         <td class="thirdTd">登记日期</td>
                         <td><input type="date" required lay-verify="required" name="bill_registrant_date"></td>
                     </tr>
@@ -100,9 +115,11 @@
                     <tr>
                         <td class="firstTd">业务所属公司</td>
                         <td>
-                            <select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required
-                                    lay-verify="required">
-                            </select>
+                            <!--<select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required-->
+                            <!--lay-verify="required">-->
+                            <!--</select>-->
+                            <input type="text" id="selectCompany" name="bill_belong_company"
+                                   th:value="${session.staff.companyName}" readonly> <font class="warn">*</font>
                         </td>
                     </tr>
                     <tr>
@@ -134,7 +151,7 @@
                         <td class="firstTd">登记人</td>
                         <td>
                             <input type="text" readonly th:value="${session.staff.staffName}"
-                                   name="bill_registrant_person"> *系统登陆账号不能修改
+                                   name="bill_registrant_person"> <font class="warn">*</font>
                         </td>
                         <td class="thirdTd">合同</td>
                         <td><select id="selectContractStatus" required lay-verify="required"

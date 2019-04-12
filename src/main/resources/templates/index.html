@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/layui-v2.4.5/layui/layui.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -48,12 +49,21 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">台账查看</a></dd>
                         <dd><a href="javascript:openAddBill();">新增报销</a></dd>
+                        <dd><a href="javascript:addressList();">通讯录同步</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
+                <li class="layui-nav-item" layui-nav-itemed>
+                    <a class="" href="javascript:;">解决方案</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" layui-nav-itemed>
+                    <a class="" href="javascript:;">信息同步</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:addressList();">通讯录同步</a></dd>
                         <dd><a href="javascript:;">列表二</a></dd>
                         <dd><a href="">超链接</a></dd>
                     </dl>
@@ -64,7 +74,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;" class="layui-row">
+        <div style="padding: 15px;margin-left: -80px" class="layui-row" >
             <iframe style="border: none;width: 100%;height: 1000px;" th:src="@{/view/toShow}">
             </iframe>
         </div>
@@ -92,6 +102,35 @@
             content: '/view/toAddBill'
         });
     }
+    
+    function addressList() {
+        var key = "";
+        $.ajax({
+            url:'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=wxdc2a7022949cf052'+'&corpsecret=DDM3QsH6EY-7xanGo1h4PN5ZhVh9Ep6fAxF9elT7qGY',
+            method:'get',
+            success:function (result) {
+                console.log(result);
+                key = result.access_token;
+                // $.ajax({
+                //     url:'https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token=ACCESS_TOKEN',
+                //     method:'post',
+                //     success:function (result) {
+                //         console.log(result);
+                //     }
+                //
+                // })
+            }
+        })
+    }
+    // wx.config({
+    //     beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+    //     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    //     appId: 'wxdc2a7022949cf052', // 必填，企业微信的corpID
+    //     timestamp: , // 必填，生成签名的时间戳
+    //     nonceStr: '', // 必填，生成签名的随机串
+    //     signature: '',// 必填，签名，见 附录-JS-SDK使用权限签名算法
+    //     jsApiList: [] // 必填，需要使用的JS接口列表，凡是要调用的接口都需要传进来
+    // });
 </script>
 </body>
 </html>

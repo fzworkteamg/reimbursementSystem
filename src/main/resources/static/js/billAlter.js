@@ -92,7 +92,7 @@ function buildProcess() {
         dataType:'json',
         success: function (result) {
             var list = result;
-            $("#process").before("<font style='margin-left: -100px'>（单击流程查看审核意见）流程:</font>");
+            $("#process").before("<font style='margin-left: 20px'>（单击流程查看审核意见）流程:</font>");
             for (var i = 0; i < list.length; i++) {
                 var processStatus = list[i];
                 if (processStatus.process_status_state == "待审核") {
@@ -118,7 +118,7 @@ function buildProcess() {
 }
 window.summaryTip = function(i) {
     //小tips
-    let temp = object.i;
+    var temp = object.i;
     layer.tips(temp, "#"+i, {
         tips: [3, '#3595CC'],
         time: 5000
