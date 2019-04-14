@@ -14,17 +14,6 @@
     <div class="layui-header">
         <div class="layui-logo">台账系统</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -63,7 +52,7 @@
                 <li class="layui-nav-item" layui-nav-itemed>
                     <a class="" href="javascript:;">信息同步</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:addressList();">通讯录同步</a></dd>
+                        <dd><a href="javascript:;">通讯录同步</a></dd>
                         <dd><a href="javascript:;">列表二</a></dd>
                         <dd><a href="">超链接</a></dd>
                     </dl>
@@ -74,7 +63,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;margin-left: -80px" class="layui-row" >
+        <div style="padding: 15px;width: 100%" class="layui-row" >
             <iframe style="border: none;width: 100%;height: 1000px;" th:src="@{/view/toShow}">
             </iframe>
         </div>

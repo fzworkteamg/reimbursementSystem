@@ -11,20 +11,19 @@ $(document).ready(function () {
 
     //填充发票状态
     var invoiceStatus = selectInvoiceStatus();
-    romance(invoiceStatus,"selectInvoiceStatus")
+    romance(invoiceStatus, "selectInvoiceStatus")
 
 
     //填充合同状态
     var contractStatus = selectContractStatus();
-    romance(contractStatus,"selectContractStatus");
+    romance(contractStatus, "selectContractStatus");
 
     $('#bill_id_suff').val(billIdByTime());
-    $("#bill_id_suff").attr("readOnly",true);
+    $("#bill_id_suff").attr("readOnly", true);
 
-    $("#reiPerson").attr("readOnly",true);
-    $("#chargePerson").attr("readOnly",true);
+    $("#reiPerson").attr("readOnly", true);
+    $("#chargePerson").attr("readOnly", true);
     // $("#subject").attr("readOnly",true);
-
 })
 
 var subjectIndex;
@@ -39,7 +38,7 @@ layui.use('table', function () {
         // console.log(obj.data) //得到当前行数据
         //obj.del(); //删除当前行
         //obj.update(fields) //修改当前行数据
-        $("#subject").attr("readOnly",false);
+        $("#subject").attr("readOnly", false);
         $("#subject").val(obj.data.rei_subject_content);
         layer.close(subjectIndex);
     });
@@ -79,29 +78,29 @@ layui.use('form', function () {
     })
     //新增报销提交按钮
     form.on('submit(insertBill)', function (data) {
-        var formData = new FormData($( "#form1" )[0]);
-        var index = layer.confirm('您确定新增吗',{
-            btn:['确定','取消']
-        },function () {
+        var formData = new FormData($("#form1")[0]);
+        var index = layer.confirm('您确定新增吗', {
+            btn: ['确定', '取消']
+        }, function () {
             layer.close(index);
             $.ajax({
-                url:'/bill/insertBill',
-                type : 'post',
+                url: '/bill/insertBill',
+                type: 'post',
                 async: false,
-                data : formData,
-                cache:false,
+                data: formData,
+                cache: false,
                 contentType: false,
                 processData: false,
-                success : function(data) {
+                success: function (data) {
                     if (data.status == 0) {
-                        parent.layer.msg('新增成功',{
+                        parent.layer.msg('新增成功', {
                             icon: 1,
                             offset: '300px',
                             time: 1000
                         });
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);//关闭当前页
-                    }else{
+                    } else {
                         parent.layer.msg('新增失败，请联系系统管理员', {
                             icon: 3,
                             offset: '300px',
@@ -126,9 +125,10 @@ layui.use('layer', function () {
 function openAddSubjet() {
     subjectIndex = layer.open({
         type: 1,
-        area: ['500px', '550px'],
+        area: ['600px', '600px'],
         shadeClose: true, //点击遮罩关闭
-        content: "<div class=\"layui-row\">\n" +
+        content:
+            "<div class=\"layui-row\">\n" +
             "                <form class=\"layui-form\" id=\"form3\">\n" +
             "                    <div class=\"layui-form-item\">\n" +
             "                        <label class=\"layui-form-label\">公司:</label>\n" +
@@ -162,37 +162,69 @@ function openAddSubjet() {
 function openAddReiPerson() {
     reiPersonIndex = layer.open({
         type: 1,
-        area: ['400px', '300px'],
+        area: ['600px', '600px'],
         shadeClose: true, //点击遮罩关闭
-        content: "<div class='layui-row' style='text-align: center'>\n" +
-            "<form class=\"layui-form\" action=\"\">\n" +
-            "<div class=\"layui-form-item\">\n" +
-            "    <label class=\"layui-form-label\">选择公司：</label>\n" +
-            "    <div class=\"layui-input-block\">\n" +
-            "        <select id='childSelectCompany' name='childSelectCompany1' lay-filter='childSelectCompany' lay-verify=\"required\">\n" +
-            "<option></option>" +
-            "        </select>\n" +
-            "    </div>\n" +
-            "</div>\n" +
-            "<div class=\"layui-form-item\">\n" +
-            "    <label class=\"layui-form-label\">选择部门：</label>\n" +
-            "    <div class=\"layui-input-block\">\n" +
-            "        <select id='childSelectDep' lay-verify=\"required\" lay-filter='childSelectDep'>\n" +
-            "<option></option>" +
-            "        </select>\n" +
-            "    </div>\n" +
-            "</div>\n" +
-            "<div class=\"layui-form-item\">\n" +
-            "    <label class=\"layui-form-label\">选择员工：</label>\n" +
-            "    <div class=\"layui-input-block\">\n" +
-            "        <select name=\"childSelectPerson\" lay-verify=\"required\" lay-filter='childSelectPerson' id='childSelectPerson'>\n" +
-            "<option></option>" +
-            "        </select>\n" +
-            "    </div>\n" +
-            "</div>\n" +
-            "<button type='button' class='layui-btn' lay-filter='chooseReiPerson' onclick='chooseReiPersonAndCloseTip()' id='chooseReiPersonButton'>确定</button>" +
-            "</form>\n" +
+        success: function(layero, index){
+            console.log(layero, index);
+            var company = $("#company").val();
+            $("#companyInCompanyPane").append("<a style='' href='javascript:;'>"+company+"</a><br>");
+            $.ajax({
+                url:'/dep/selectDepByCompany',
+                type:'post',
+                dataType:'json',
+                data:{
+                    "company":company
+                },
+                async:false,
+                success:function (result) {
+                    deps = result.data;
+                    for (var i=0;i<deps.length;i++){
+                        $("#depPane").append("<h5 name='dep' style='cursor: pointer' onclick='selectPersonsByCompanyAndDepShowInPane(\""+company+"\",\""+deps[i]+"\")'>"+deps[i]+"</h5><br>");
+                    }
+                }
+            });
+        },
+        content:
+            "<div class='layui-row'>" +
+            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center' id='companyPane'>" +
+            "<h4 id='companyInCompanyPane'></h4>" +
+            "</div> " +
+            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center'id='depPane'>" +
+            "" +
+            "</div> " +
+            "<div id='staffPane' style='border-right-style: solid;float: left; width: 180px; text-align: center'>" +
+            "" +
+            "</div> " +
             "</div>"
+        // "<div class='layui-row' style='text-align: center'>\n" +
+        // "<form class=\"layui-form\" action=\"\">\n" +
+        // "<div class=\"layui-form-item\">\n" +
+        // "    <label class=\"layui-form-label\">选择公司：</label>\n" +
+        // "    <div class=\"layui-input-block\">\n" +
+        // "        <select id='childSelectCompany' name='childSelectCompany1' lay-filter='childSelectCompany' lay-verify=\"required\">\n" +
+        // "<option></option>" +
+        // "        </select>\n" +
+        // "    </div>\n" +
+        // "</div>\n" +
+        // "<div class=\"layui-form-item\">\n" +
+        // "    <label class=\"layui-form-label\">选择部门：</label>\n" +
+        // "    <div class=\"layui-input-block\">\n" +
+        // "        <select id='childSelectDep' lay-verify=\"required\" lay-filter='childSelectDep'>\n" +
+        // "<option></option>" +
+        // "        </select>\n" +
+        // "    </div>\n" +
+        // "</div>\n" +
+        // "<div class=\"layui-form-item\">\n" +
+        // "    <label class=\"layui-form-label\">选择员工：</label>\n" +
+        // "    <div class=\"layui-input-block\">\n" +
+        // "        <select name=\"childSelectPerson\" lay-verify=\"required\" lay-filter='childSelectPerson' id='childSelectPerson'>\n" +
+        // "<option></option>" +
+        // "        </select>\n" +
+        // "    </div>\n" +
+        // "</div>\n" +
+        // "<button type='button' class='layui-btn' lay-filter='chooseReiPerson' onclick='chooseReiPersonAndCloseTip()' id='chooseReiPersonButton'>确定</button>" +
+        // "</form>\n" +
+        // "</div>"
     });
     var companys = selectCompany();
     romance(companys, "childSelectCompany");
@@ -243,7 +275,7 @@ function romanceTable() {
     table.render({
         elem: '#subjectTable',
         page: true,
-        limit:10,
+        limit: 10,
         url: '/reiSubject/selectDepContentCommentByCompanyDep?company=' + $('#selectSubjectCompany').val() + "&dep=" + $('#selectSubjectDep').val(),
         cols: [[
             {field: 'rei_subject_dep_name', width: 100, title: '部门'},
@@ -261,7 +293,7 @@ function romanceTable() {
 function chooseReiPersonAndCloseTip() {
     var data = $("#childSelectPerson").val();
     var arr = data.split("|");
-    $("#reiPerson").attr("readOnly",false);
+    $("#reiPerson").attr("readOnly", false);
     $("#reiPerson").val(arr[0]);
     $("#staffCompany").val($("#childSelectCompany").val());
     $("#staffDep").val($("#childSelectDep").val());
@@ -272,7 +304,7 @@ function chooseReiPersonAndCloseTip() {
 function chooseChargePersonAndCloseTip() {
     var data = $("#childSelectPerson").val();
     var arr = data.split("|");
-    $("#chargePerson").attr("readOnly",false);
+    $("#chargePerson").attr("readOnly", false);
     $("#chargePerson").val(arr[0]);
     layer.close(chargePersonIndex);
 }
@@ -293,8 +325,10 @@ function billIdByTime() {
     // myDate.toLocaleDateString();     //获取当前日期
     // var mytime=myDate.toLocaleTimeString();     //获取当前时间
     // myDate.toLocaleString( );        //获取日期与时间
-    var billId = myDate.getFullYear()+""+(myDate.getMonth()+1)+""+myDate.getDate()+""+myDate.getDay()+""+myDate.getHours()+""+myDate.getMinutes()+""+myDate.getSeconds();
+    var billId = myDate.getFullYear() + "" + (myDate.getMonth() + 1) + "" + myDate.getDate() + "" + myDate.getDay() + "" + myDate.getHours() + "" + myDate.getMinutes() + "" + myDate.getSeconds();
     return billId;
 }
+
+
 
 
