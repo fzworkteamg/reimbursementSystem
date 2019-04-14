@@ -32,8 +32,8 @@ public class StaffServiceImpl implements StaffService {
 	@Autowired
 	private DepDao depDao;
 
-	public ServerResult loginByIdAndPassword(HttpServletRequest request, String staffId, String staffPassword) {
-		Staff staff = staffDao.selectStaffById(staffId);
+	public ServerResult loginByTelAndPassword(HttpServletRequest request, String staffTel, String staffPassword) {
+		Staff staff = staffDao.selectStaffByTel(staffTel);
 		if (staff == null || !staff.getStaffPassword().equals(staffPassword))
 			return new ServerResult(1, InfoEnum.FAIL.toString());
 		HttpSession session = request.getSession();

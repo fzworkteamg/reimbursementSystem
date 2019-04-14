@@ -17,26 +17,26 @@ import cn.reimbursement.util.ServerResult;
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
-	
+
 	@Autowired
 	private StaffService staffService;
-	
-	//登陆
-	@PostMapping("/loginByIdAndPassword")
-	public ServerResult loginByIdAndPassword(@RequestBody Map<String,String> map,HttpServletRequest request) {
-		return staffService.loginByIdAndPassword(request, map.get("staffId"), map.get("staffPassword"));
+
+	// 登陆
+	@PostMapping("/loginByTelAndPassword")
+	public ServerResult loginByIdAndPassword(@RequestBody Map<String, String> map, HttpServletRequest request) {
+		return staffService.loginByTelAndPassword(request, map.get("staffTel"), map.get("staffPassword"));
 	}
-	
-	//通过公司部门查询员工
+
+	// 通过公司部门查询员工
 	@PostMapping("/selectStaffByCompanyAndDep")
 	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
 		return staffService.selectStaffByCompanyAndDep(company, dep);
 	}
-	
+
 	@PostMapping("/updateOaStaff")
 	public ServerResult updateOaStaff() throws Exception {
 		System.out.println("开始更新");
 		return staffService.updateOaStaff();
 	}
-	
+
 }
