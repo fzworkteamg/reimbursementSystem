@@ -1,5 +1,5 @@
 
-var oldClick;
+
 
 
 function selectCompany() {
@@ -98,29 +98,6 @@ function selectPersonsByCompanyAndDep(company, dep) {
     })
     return persons;
 }
-var count=0;
-function selectPersonsByCompanyAndDepShowInPane(company, dep) {
-    if (count == 0) {
-        oldClick = event.currentTarget;
-        oldClick.style.color = 'red';
-        count++;
-    } else {
-        oldClick.style.color = 'black';
-        var newClick = event.currentTarget;
-        newClick.style.color = 'red';
-        oldClick = newClick;
-    }
-    var persons = selectPersonsByCompanyAndDep(company, dep);
-    $("#staffPane").empty();
-    for (var i = 0; i < persons.length; i++) {
-        $("#staffPane").append("<h5 onclick='chooseReiStaff()' style='cursor: pointer'>" + persons[i] + "</h5><br>");
-    }
-}
 
-function chooseReiStaff() {
-    var that = event.currentTarget;
-    $("#reiPerson").attr("readOnly", false);
-    console.log(that+"====="+that.text);
-    $("#reiPerson").text(that.text);
-    layer.close(reiPersonIndex);
-}
+
+

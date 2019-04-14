@@ -168,6 +168,7 @@ function openAddReiPerson() {
             console.log(layero, index);
             var company = $("#company").val();
             $("#companyInCompanyPane").append("<a style='' href='javascript:;'>"+company+"</a><br>");
+            selectPersonsByCompanyAndDepShowInPane(company,"");
             $.ajax({
                 url:'/dep/selectDepByCompany',
                 type:'post',
@@ -301,12 +302,14 @@ function chooseReiPersonAndCloseTip() {
 }
 
 //弹出层选择经办人返回
-function chooseChargePersonAndCloseTip() {
-    var data = $("#childSelectPerson").val();
-    var arr = data.split("|");
-    $("#chargePerson").attr("readOnly", false);
-    $("#chargePerson").val(arr[0]);
-    layer.close(chargePersonIndex);
+function chooseReiStaff() {
+    $("#reiPerson").attr("readOnly", false);
+    var staff  = event.target.innerHTML;
+    var temp = staff.split("|");
+    console.log(temp[0]);
+    $("#reiPerson").val(temp[0]);
+    layer.close(reiPersonIndex);
+    $("#reiPerson").attr("readOnly", true);
 }
 
 //根据时间生成单号
@@ -327,6 +330,28 @@ function billIdByTime() {
     // myDate.toLocaleString( );        //获取日期与时间
     var billId = myDate.getFullYear() + "" + (myDate.getMonth() + 1) + "" + myDate.getDate() + "" + myDate.getDay() + "" + myDate.getHours() + "" + myDate.getMinutes() + "" + myDate.getSeconds();
     return billId;
+}
+
+//弹出层根据公司部门填充职工栏
+var count=0;
+var oldClick;
+function selectPersonsByCompanyAndDepShowInPane(company, dep) {
+    if (count == 0) {
+        oldClick = event.currentTarget;
+        oldClick.style.color = 'red';
+        count++;
+    } else {
+        oldClick.style.color = 'black';
+        var newClick = event.currentTarget;
+        newClick.style.color = 'red';
+        oldClick = newClick;
+    }
+    console.log(company,dep);
+    var persons = selectPersonsByCompanyAndDep(company, dep);
+    $("#staffPane").empty();
+    for (var i = 0; i < persons.length; i++) {
+        $("#staffPane").append("<h5 onclick='chooseReiStaff()' style='cursor: pointer'>" + persons[i] + "</h5><br>");
+    }
 }
 
 
