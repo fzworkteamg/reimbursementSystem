@@ -13,48 +13,89 @@ import cn.reimbursement.service.StaffService;
 import cn.reimbursement.service.ViewService;
 import net.sf.json.JSONObject;
 
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
+
 @Controller
 @RequestMapping("/view")
 public class ViewController {
-	
+
 	@Autowired
 	private StaffService staffService;
 	@Autowired
 	private ViewService viewService;
 
+	/*
+	 * @Description: 跳转到登陆页面
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/toLogin")
 	public String toLogin() {
 		return "login";
 	}
-	
+
+	/*
+	 * @Description: 跳转到主页
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/toIndex")
 	public String toIndex() {
 		return "index";
 	}
 
+	/*
+	 * @Description: 跳转到展示页面
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/toShow")
-	public String toShow(){
+	public String toShow() {
 		return "show";
 	}
 
+	/*
+	 * @Description: 跳转到增加账单页面
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/toAddBill")
-	public String toAddBill(){
+	public String toAddBill() {
 		return "addBill";
 	}
 
+	/*
+	 * @Description: 跳转到账单详情页
+	 * 
+	 * @param data
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/toBillDetail")
-	public String toBillDetail(String data, HttpServletRequest request){
+	public String toBillDetail(String data, HttpServletRequest request) {
 		viewService.toBillDetail(data, request);
 		HttpSession session = (HttpSession) request.getSession();
 		JSONObject object = JSONObject.fromObject(data);
-		if(session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
-			session.setAttribute(SessionEnum.BILL.getValue(),object);
+		if (session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
+			session.setAttribute(SessionEnum.BILL.getValue(), object);
 			return "billAlter";
 		}
-		session.setAttribute(SessionEnum.BILL.getValue(),object);
+		session.setAttribute(SessionEnum.BILL.getValue(), object);
 		return "audit";
 	}
 
+	/*
+	 * @Description: 注销功能，返回到登陆页面
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@RequestMapping("loginOut")
 	public String loginOut(HttpServletRequest request) {
 		staffService.loginOut(request);

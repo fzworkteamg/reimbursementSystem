@@ -1,4 +1,4 @@
-package cn.reimbursement.service;
+package cn.reimbursement.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,14 @@ import cn.reimbursement.dao.StaffDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.enums.SessionEnum;
 import cn.reimbursement.pojo.Staff;
+import cn.reimbursement.service.StaffService;
 import cn.reimbursement.util.ServerResult;
 import cn.reimbursement.util.WxUtil;
+
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
 
 @Service
 public class StaffServiceImpl implements StaffService {

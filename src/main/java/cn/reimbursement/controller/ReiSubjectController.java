@@ -13,17 +13,37 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.reimbursement.service.ReiSubjectService;
 import cn.reimbursement.util.LayuiResult;
 
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
+
 @RestController
 @RequestMapping("/reiSubject")
 public class ReiSubjectController {
-	
+
 	@Autowired
 	private ReiSubjectService reiSubjectService;
-	
-	//通过公司名和部门查询部门，内容，注释
+
+	/*
+	 * @Description: 通过公司名和部门查询部门，内容，注释
+	 * 
+	 * @param request
+	 * 
+	 * @param page
+	 * 
+	 * @param limit
+	 * 
+	 * @param company
+	 * 
+	 * @param dep
+	 * 
+	 * @return
+	 */
 	@GetMapping("/selectDepContentCommentByCompanyDep")
-	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(HttpServletRequest request,String page,String limit,String company,String dep) {
-		return reiSubjectService.selectDepContentCommentByCompanyDep(request,company,dep);
+	public LayuiResult<List<Map<String, String>>> selectDepContentCommentByCompanyDep(HttpServletRequest request,
+			String page, String limit, String company, String dep) {
+		return reiSubjectService.selectDepContentCommentByCompanyDep(request, company, dep);
 	}
-	
+
 }

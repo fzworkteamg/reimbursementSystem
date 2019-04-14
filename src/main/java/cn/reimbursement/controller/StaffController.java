@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.reimbursement.service.StaffService;
 import cn.reimbursement.util.ServerResult;
 
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
+
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
@@ -21,18 +26,41 @@ public class StaffController {
 	@Autowired
 	private StaffService staffService;
 
-	// 登陆
+	/*
+	 * @Description: 员工登陆功能
+	 * 
+	 * @param map
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/loginByTelAndPassword")
 	public ServerResult loginByIdAndPassword(@RequestBody Map<String, String> map, HttpServletRequest request) {
 		return staffService.loginByTelAndPassword(request, map.get("staffTel"), map.get("staffPassword"));
 	}
 
-	// 通过公司部门查询员工
+	/*
+	 * @Description: 通过公司和部门筛选员工
+	 * 
+	 * @param company
+	 * 
+	 * @param dep
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectStaffByCompanyAndDep")
 	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
 		return staffService.selectStaffByCompanyAndDep(company, dep);
 	}
 
+	/*
+	 * @Description: 手动和OA数据同步
+	 * 
+	 * @return
+	 * 
+	 * @throws Exception
+	 */
 	@PostMapping("/updateOaStaff")
 	public ServerResult updateOaStaff() throws Exception {
 		System.out.println("开始更新");

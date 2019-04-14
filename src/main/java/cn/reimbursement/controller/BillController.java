@@ -18,79 +18,167 @@ import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
 
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
 @RestController
 @RequestMapping("/bill")
 public class BillController {
 
 	@Autowired
 	private BillService billService;
-	
-	
-	//查询登记人所属公司的所有账单
+
+	/*
+	 * @Description: 查询登记人所属公司的所有账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 * 
+	 * @throws Exception
+	 */
 	@PostMapping("/selctBillByCompany")
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		return billService.selctBillByCompany(request);
 	}
-	
-	//增加账单
+
+	/*
+	 * @Description: 增加账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/insertBill")
 	public ServerResult insertBill(HttpServletRequest request) {
 		return billService.insertBill(request);
 	}
-	
-	//通过条件查询账单
+
+	/*
+	 * @Description: 通过条件查询账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectBill")
 	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
 		return billService.selectBill(request);
 	}
-	
-	//查询本月的账单
+
+	/*
+	 * @Description: 查询本月的账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 * 
+	 * @throws ParseException
+	 */
 	@PostMapping("/selectBillByMonth")
 	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException {
 		return billService.selectBillByMonth(request);
 	}
-	
-	//查询待审核的账单
+
+	/*
+	 * @Description: 查询待审核的账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectBillWaitAudit")
 	public LayuiResult<List<Bill>> selectBillWaitAudit(HttpServletRequest request) {
-		return billService.selectBillByAudit(request,InfoEnum.WAIT_AUDIT.getValue());
+		return billService.selectBillByAudit(request, InfoEnum.WAIT_AUDIT.getValue());
 	}
-	
-	//查询已审核的账单
+
+	/*
+	 * @Description: 查询已审核的账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectBillAudited")
 	public LayuiResult<List<Bill>> selectBillAudited(HttpServletRequest request) {
-		return billService.selectBillByAudit(request,InfoEnum.AUDITED.getValue());
+		return billService.selectBillByAudit(request, InfoEnum.AUDITED.getValue());
 	}
-	
-	//查询被驳回到登记人的账单
+
+	/*
+	 * @Description: 查询被驳回到登记人的账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectBillWriteAndPast")
 	public LayuiResult<List<Bill>> selectBillWriteAndPast(HttpServletRequest request) {
-		return billService.selectBillByAudit(request,InfoEnum.REJECT.getValue());
+		return billService.selectBillByAudit(request, InfoEnum.REJECT.getValue());
 	}
-	
-	//审核账单
+
+	/*
+	 * @Description: 审核账单
+	 * 
+	 * @param request
+	 * 
+	 * @param billId
+	 * 
+	 * @param auditSummary
+	 * 
+	 * @param contractStatus
+	 * 
+	 * @param invoiceStatus
+	 * 
+	 * @return
+	 */
 	@PostMapping("/auditBill")
-	public ServerResult auditBill(HttpServletRequest request, @RequestParam("billId")String billId, @RequestParam("audit_summary")String auditSummary, @RequestParam("selectContractStatus")String contractStatus,
-			@RequestParam("selectInvoiceStatus")String invoiceStatus) {
+	public ServerResult auditBill(HttpServletRequest request, @RequestParam("billId") String billId,
+			@RequestParam("audit_summary") String auditSummary,
+			@RequestParam("selectContractStatus") String contractStatus,
+			@RequestParam("selectInvoiceStatus") String invoiceStatus) {
 		return billService.auditBill(request, billId, auditSummary, contractStatus, invoiceStatus);
 	}
-	
-	//驳回账单
+
+	/*
+	 * @Description: 驳回账单
+	 * 
+	 * @param request
+	 * 
+	 * @param billId
+	 * 
+	 * @param opinion
+	 * 
+	 * @return
+	 */
 	@PostMapping("/rejectBill")
-	public ServerResult rejectBill(HttpServletRequest request,@RequestParam("billId")String billId,@RequestParam("audit_summary")String opinion) {
+	public ServerResult rejectBill(HttpServletRequest request, @RequestParam("billId") String billId,
+			@RequestParam("audit_summary") String opinion) {
 		return billService.rejectBill(request, billId, opinion);
 	}
-	
-	//登记人重新发起账单
+
+	/*
+	 * @Description: 登记人重新发起账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/updateBill")
 	public ServerResult updateBill(HttpServletRequest request) {
 		return billService.updateBill(request);
 	}
-	
-	//撤销(删除)账单
+
+	/*
+	 * @Description: 撤销(删除)账单
+	 * 
+	 * @param billId
+	 * 
+	 * @return
+	 */
 	@PostMapping("/delBill")
 	public ServerResult deleteBill(String billId) {
 		return billService.deleteBill(billId);
 	}
-	
+
 }

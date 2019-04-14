@@ -9,17 +9,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.reimbursement.service.ProcessStatusService;
 
+/**
+ * @author linweijie
+ * @date 2019年4月14日
+ */
+
 @RestController
 @RequestMapping("/processStatus")
 public class ProcessStatusController {
-	
+
 	@Autowired
 	private ProcessStatusService processStatusService;
-	
-	//通过billId查询流程状态表的流程名，审核状态，意见
+
+	/*
+	 * @Description: 通过billId查询流程状态表的流程名，审核状态，意见
+	 * 
+	 * @param billId
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/selectNameStateOptionById")
-	public List<Map<String,String>> selectNameStateOptionById(String billId){
+	public List<Map<String, String>> selectNameStateOptionById(String billId) {
 		return processStatusService.selectNameStateOptionById(billId);
 	}
-	
+
 }
