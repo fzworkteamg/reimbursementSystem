@@ -2,7 +2,6 @@ package cn.reimbursement.service.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +9,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.reimbursement.dao.BillDao;
@@ -47,26 +46,32 @@ public class BillServiceImpl implements BillService {
 	private CurrentStepDao currentStepDao;
 
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
-		Staff staff = (Staff) request.getSession().getAttribute("staff");
-		String companyName = staff.getCompanyName();
-		List<Bill> billList = billDao.selectBillByCompany(companyName);
+		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
+		List<Bill> billList = billDao.selectBillByCompany(staff.getCompanyName());
 		return new ServerResult<List<Bill>>(0, InfoEnum.SUCCESS.getValue(), billList);
 	}
 
 	@Transactional
-	public ServerResult insertBill(HttpServletRequest httpServletRequest) {
+	public ServerResult<String> insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String[]> requestMap = request.getParameterMap();
 		String processContent = processDao.selectProcessByCompanyAndDepartment(request.getParameter("staffCompany"),
 				request.getParameter("staffDep"));
 		if (processContent == null)
-			return new ServerResult(1, InfoEnum.FAIL.toString());
+			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
 		Enumeration<String> keyEnumeration = request.getParameterNames();
 		Map<String, String> billMap = new HashMap<String, String>();
+		String[] keyArray = new String[] { "bill_id_pre", "bill_id_suff", "staffCompany", "staffDep" };
 		while (keyEnumeration.hasMoreElements()) {
 			String key = keyEnumeration.nextElement();
-			if (!"bill_id_pre".equals(key) && !"bill_id_suff".equals(key) && !"staffCompany".equals(key)
-					&& !"staffDep".equals(key))
+			boolean isPut = true;
+			for (int i = 0; i < keyArray.length; i++) {
+				if (StringUtils.equals(keyArray[i], key)) {
+					isPut = false;
+					break;
+				}
+			}
+			if (isPut == true)
 				billMap.put(key, requestMap.get(key)[0]);
 		}
 		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
@@ -77,25 +82,25 @@ public class BillServiceImpl implements BillService {
 					i == 0 ? InfoEnum.WAIT_AUDIT.getValue() : "", ++i,
 					request.getParameter("bill_belong_company")) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1, InfoEnum.FAIL.getValue());
+				return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 			}
 		if (currentStepDao.insertCurrentStep(billId) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1, InfoEnum.FAIL.getValue());
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
 		if (billDao.selectBillCountById(billId) > 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1, InfoEnum.FAIL.getValue());
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
 		if (billDao.insertBill(billMap) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1, InfoEnum.FAIL.getValue());
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
 		if (billDao.selectBillCountById(billId) > 0) {
-			return new ServerResult(0, InfoEnum.SUCCESS.getValue());
+			return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 		}
 		TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		return new ServerResult(1, InfoEnum.FAIL.getValue());
+		return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 	}
 
 	public LayuiResult<List<Bill>> selectBill(HttpServletRequest request) {
@@ -127,15 +132,15 @@ public class BillServiceImpl implements BillService {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
 		if (staff == null)
 			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.getValue(), null, 1, 0);
-		String staffName = (InfoEnum.AUDITED.getValue().equals(processStatusState)
-				|| InfoEnum.REJECT.getValue().equals(processStatusState)) ? staff.getStaffName() : "";
+		String staffName = (StringUtils.equals(InfoEnum.AUDITED.getValue(), processStatusState)
+				|| (StringUtils.equals(InfoEnum.REJECT.getValue(), processStatusState))) ? staff.getStaffName() : "";
 		String processStatusProcessName = staff.getDepName() + "-" + staff.getDutyName();
 		int limit = Integer.parseInt(request.getParameter("limit"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		List<String> billIdList = processStatusDao.selectProcessStatusBillIds(staff.getCompanyName(),
 				processStatusProcessName, processStatusState, staffName, limit, limit * (page - 1));
 		List<Bill> billList = new ArrayList<>();
-		if (staffName != "") {
+		if (StringUtils.isNotBlank(staffName)) {
 			for (String billId : billIdList) {
 				billList.add(billDao.selectBillById(billId));
 			}
@@ -152,8 +157,8 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Transactional
-	public ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
-			String invoiceStatus) {
+	public ServerResult<String> auditBill(HttpServletRequest request, String billId, String auditSummary,
+			String contractStatus, String invoiceStatus) {
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
 		int currentStepNumber = currentStepDao.selectCurrentStepByBillId(billId);
 		int processStatusCount = processStatusDao.selectCountByBillId(billId);
@@ -166,9 +171,9 @@ public class BillServiceImpl implements BillService {
 					|| currentStepDao.updateCurrentStepNumberByBillId(billId, currentStepNumber) == 0
 					|| billDao.updateBillStatusById(billId, contractStatus, invoiceStatus) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
+				return new ServerResult<String>(1);
 			}
-			return new ServerResult(0);
+			return new ServerResult<String>(0);
 
 		}
 		if (currentStepNumber == processStatusCount) {
@@ -177,33 +182,33 @@ public class BillServiceImpl implements BillService {
 							staff.getStaffName(), auditSummary) == 0
 					|| billDao.updateBillStatusById(billId, contractStatus, invoiceStatus) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
+				return new ServerResult<String>(1);
 			}
 		}
-		return new ServerResult(0);
+		return new ServerResult<String>(0);
 	}
 
 	@Transactional
-	public ServerResult rejectBill(HttpServletRequest request, String billId, String opinion) {
+	public ServerResult<String> rejectBill(HttpServletRequest request, String billId, String opinion) {
 		int currentStep = currentStepDao.selectCurrentStepByBillId(billId);
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
 		if (processStatusDao.updateStateByStep(billId, currentStep, InfoEnum.REJECT.getValue(), staff.getStaffName(),
 				opinion) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
+			return new ServerResult<String>(1);
 		}
 		if (currentStep != 1) {
 			if (currentStepDao.updateCurrentStepNumberByBillId(billId, --currentStep) == 0 || processStatusDao
 					.updateStateByStep(billId, currentStep, InfoEnum.WAIT_AUDIT.getValue(), "", "") == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
+				return new ServerResult<String>(1);
 			}
 		}
-		return new ServerResult(0);
+		return new ServerResult<String>(0);
 	}
 
 	@Transactional
-	public ServerResult updateBill(HttpServletRequest httpServletRequest) {
+	public ServerResult<String> updateBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		Map<String, String[]> requestMap = request.getParameterMap();
 		Enumeration<String> keyEnumeration = request.getParameterNames();
@@ -215,29 +220,29 @@ public class BillServiceImpl implements BillService {
 		String billId = request.getParameter("bill_id");
 		if (billDao.updateBill(billMap) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1, InfoEnum.FAIL.getValue());
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
 		Staff staff = (Staff) (request.getSession().getAttribute(SessionEnum.STAFF.getValue()));
 		if (staff == null) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1, InfoEnum.FAIL.getValue());
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
 		if (processStatusDao.updateStateByStep(billId, 1, InfoEnum.WAIT_AUDIT.getValue(), staff.getStaffName(),
 				"") == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
+			return new ServerResult<String>(1);
 		}
-		return new ServerResult(0, InfoEnum.SUCCESS.getValue());
+		return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 	}
 
 	@Transactional
-	public ServerResult deleteBill(String billId) {
+	public ServerResult<String> deleteBill(String billId) {
 		if (currentStepDao.deleteCurrentStepByBillId(billId) == 0
 				|| processStatusDao.deleteProcessStatusByBillId(billId) == 0 || billDao.deleteBillById(billId) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
+			return new ServerResult<String>(1);
 		}
-		return new ServerResult(0);
+		return new ServerResult<String>(0);
 	}
 
 }

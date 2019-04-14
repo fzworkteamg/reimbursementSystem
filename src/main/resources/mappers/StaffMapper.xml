@@ -5,12 +5,10 @@
 <mapper namespace="cn.reimbursement.dao.StaffDao">
 
 	<!--resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象 -->
-	<resultMap id="staffMap"
-		type="cn.reimbursement.pojo.Staff">
+	<resultMap id="staffMap" type="cn.reimbursement.pojo.Staff">
 		<id property="staffId" column="staff_id" />
 		<result property="staffPassword" column="staff_password" />
-		<result property="staffName"
-			column="staff_name" />
+		<result property="staffName" column="staff_name" />
 		<result property="staffSex" column="staff_sex" />
 		<result property="staffAge" column="staff_age" />
 		<result property="staffTel" column="staff_tel" />
@@ -27,22 +25,33 @@
 		staff_id,staff_password,staff_name,staff_sex,staff_age,staff_tel,staff_eamil,staff_address,company_name,dep_name,duty_name,tem_duty_name
 	</sql>
 	<select id="selectStaffById" resultMap="staffMap">
-		SELECT <include refid="processColums"/> FROM staff WHERE staff_id=#{staffId}
+		SELECT
+		<include refid="processColums" />
+		FROM staff WHERE staff_id=#{staffId}
 	</select>
-	
+
 	<select id="selectStaffByTel" resultMap="staffMap">
-		SELECT <include refid="processColums"/> FROM staff WHERE staff_tel=#{staffTel}
+		SELECT
+		<include refid="processColums" />
+		FROM staff WHERE staff_tel=#{staffTel}
 	</select>
-	
+
 	<select id="selectStaffByCompanyAndDep" resultMap="staffMap">
-		SELECT <include refid="processColums"/> FROM staff WHERE company_name=#{company} and dep_name=#{dep}
+		SELECT
+		<include refid="processColums" />
+		FROM staff WHERE company_name=#{company}
+		<if test="dep!='' || dep!=null">
+			and dep_name=#{dep}
+		</if>
 	</select>
 	<insert id="insertWxStaff">
-		INSERT INTO staff(staff_id,staff_name,staff_sex,staff_tel,staff_eamil,company_name,dep_name,duty_name)
+		INSERT INTO
+		staff(staff_id,staff_name,staff_sex,staff_tel,staff_eamil,company_name,dep_name,duty_name)
 		VALUES(#{staffMap.userid},#{staffMap.name},#{staffMap.gender},#{staffMap.mobile},#{staffMap.email},#{staffMap.companyName},#{staffMap.depName},#{staffMap.position})
 	</insert>
 	<select id="selectStaffCount" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM staff
+		SELECT COUNT(*) FROM
+		staff
 	</select>
 	<delete id="deleteStaff">
 		DELETE FROM staff

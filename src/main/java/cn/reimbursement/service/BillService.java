@@ -33,7 +33,7 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	ServerResult insertBill(HttpServletRequest request);
+	ServerResult<String> insertBill(HttpServletRequest request);
 
 	/*
 	 * @Description: 通过条件查询账单
@@ -81,8 +81,8 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	ServerResult auditBill(HttpServletRequest request, String billId, String auditSummary, String contractStatus,
-			String invoiceStatus);
+	ServerResult<String> auditBill(HttpServletRequest request, String billId, String auditSummary,
+			String contractStatus, String invoiceStatus);
 
 	/*
 	 * @Description: 驳回账单
@@ -95,7 +95,7 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	ServerResult rejectBill(HttpServletRequest request, String billId, String opinion);
+	ServerResult<String> rejectBill(HttpServletRequest request, String billId, String opinion);
 
 	/*
 	 * @Description: 更新账单
@@ -104,7 +104,7 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	ServerResult updateBill(HttpServletRequest request);
+	ServerResult<String> updateBill(HttpServletRequest request);
 
 	/*
 	 * @Description: 删除账单
@@ -113,5 +113,5 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	ServerResult deleteBill(String billId);
+	ServerResult<String> deleteBill(String billId);
 }

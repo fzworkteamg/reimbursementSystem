@@ -38,7 +38,6 @@ public class ViewServiceImpl implements ViewService {
 		int currentStep = currentStepDao.selectCurrentStepByBillId(billId);
 		Staff staff = (Staff) session.getAttribute(SessionEnum.STAFF.getValue());
 		String company = staff.getCompanyName();
-		String dep = staff.getDepName();
 		if (currentStep == 1) {
 			if (processStatusDao.selectRejectByBillIdAndStep(billId, currentStep) == 1
 					&& billDao.selectRegist(billId, company, staff.getStaffName()) != 0) {

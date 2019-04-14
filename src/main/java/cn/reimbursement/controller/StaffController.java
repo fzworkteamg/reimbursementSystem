@@ -36,7 +36,7 @@ public class StaffController {
 	 * @return
 	 */
 	@PostMapping("/loginByTelAndPassword")
-	public ServerResult loginByIdAndPassword(@RequestBody Map<String, String> map, HttpServletRequest request) {
+	public ServerResult<String> loginByIdAndPassword(@RequestBody Map<String, String> map, HttpServletRequest request) {
 		return staffService.loginByTelAndPassword(request, map.get("staffTel"), map.get("staffPassword"));
 	}
 
@@ -62,8 +62,7 @@ public class StaffController {
 	 * @throws Exception
 	 */
 	@PostMapping("/updateOaStaff")
-	public ServerResult updateOaStaff() throws Exception {
-		System.out.println("开始更新");
+	public ServerResult<String> updateOaStaff() throws Exception {
 		return staffService.updateOaStaff();
 	}
 

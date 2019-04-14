@@ -24,7 +24,7 @@ public interface StaffService {
 	 * 
 	 * @return
 	 */
-	ServerResult loginByTelAndPassword(HttpServletRequest request, String staffTel, String staffPassword);
+	ServerResult<String> loginByTelAndPassword(HttpServletRequest request, String staffTel, String staffPassword);
 
 	/*
 	 * @Description: 通过公司部门筛选员工
@@ -51,5 +51,6 @@ public interface StaffService {
 	 * 
 	 * @throws Exception
 	 */
-	ServerResult updateOaStaff() throws Exception;
+	ServerResult<String> updateOaStaff() throws Exception;
+
 }

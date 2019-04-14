@@ -38,14 +38,15 @@ public class StaffServiceImpl implements StaffService {
 	@Autowired
 	private DepDao depDao;
 
-	public ServerResult loginByTelAndPassword(HttpServletRequest request, String staffTel, String staffPassword) {
+	public ServerResult<String> loginByTelAndPassword(HttpServletRequest request, String staffTel,
+			String staffPassword) {
 		Staff staff = staffDao.selectStaffByTel(staffTel);
 		if (staff == null || !staff.getStaffPassword().equals(staffPassword))
-			return new ServerResult(1, InfoEnum.FAIL.toString());
+			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
 		HttpSession session = request.getSession();
 		staff.setStaffPassword("");
 		session.setAttribute(SessionEnum.STAFF.getValue(), staff);
-		return new ServerResult(0, InfoEnum.SUCCESS.getValue());
+		return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 	}
 
 	public ServerResult<List<String>> selectStaffByCompanyAndDep(String company, String dep) {
@@ -66,12 +67,12 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Transactional
-	public ServerResult updateOaStaff() throws Exception {
+	public ServerResult<String> updateOaStaff() throws Exception {
 		int staffCount = staffDao.selectStaffCount();
 		int deleteStaffCount = staffDao.deleteStaff();
 		if (staffCount != deleteStaffCount) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult(1);
+			return new ServerResult<String>(1);
 		}
 		List<Map<String, Object>> strList = WxUtil.getOaStaffInfo(WxUtil.getAccessToken(), "2", "1");
 		for (Map<String, Object> staffMap : strList) {
@@ -82,35 +83,35 @@ public class StaffServiceImpl implements StaffService {
 				String companyName = companyDao.selectCompanyById(2);
 				if (StringUtils.isEmpty(companyName)) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult(1);
+					return new ServerResult<String>(1);
 				}
 				staffMap.put("companyName", companyName);
 				String depName = depDao.selectDepById(depId);
 				if (StringUtils.isEmpty(depName)) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult(1);
+					return new ServerResult<String>(1);
 				}
 				staffMap.put("depName", depName);
 			} else if (depId >= 14) {
 				String companyName = companyDao.selectCompanyById(depId);
 				if (StringUtils.isEmpty(companyName)) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult(1);
+					return new ServerResult<String>(1);
 				}
 				staffMap.put("companyName", companyName);
 				String depName = depDao.selectDepById(depId);
 				if (StringUtils.isEmpty(depName)) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult(1);
+					return new ServerResult<String>(1);
 				}
 				staffMap.put("depName", depName);
 			}
 			if (staffDao.insertWxStaff(staffMap) == 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult(1);
+				return new ServerResult<String>(1);
 			}
 		}
-		return new ServerResult(0);
+		return new ServerResult<String>(0);
 	}
 
 }

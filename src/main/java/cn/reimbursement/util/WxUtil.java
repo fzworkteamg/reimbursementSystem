@@ -52,7 +52,13 @@ public class WxUtil {
 		}
 	}
 	
-	//根据部门号获取部门及子部门
+	/*
+	 * @Description: 根据部门号获取部门及子部门
+	 * @param depNum
+	 * @return
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
 	public static List<Map<String,Object>> getDepartment(Integer depNum) throws IOException {
 		String accesstoken = WxUtil.getAccessToken();
 		String url = "https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + accesstoken+"&id="+depNum;
@@ -61,7 +67,11 @@ public class WxUtil {
 		return departmentList;
 	}
 	
-	//获取所有公司
+	/*
+	 * @Description: 获取所有公司
+	 * @return
+	 * @throws IOException
+	 */
 	public static List<Map<String,Object>> getCompanys()throws IOException{
 		List<Map<String,Object>> companyList=WxUtil.getDepartment(14);
 		List<Map<String,Object>> depList=WxUtil.getDepartment(2);
@@ -79,20 +89,27 @@ public class WxUtil {
 		}
 		return companyList;
 	}
-	//获取指定公司的部门
+	/*
+	 * @Description: 获取指定公司的部门
+	 * @param companyId
+	 * @return
+	 * @throws IOException
+	 */
 	public static List<Map<String,Object>> getDepByCompanyId(Integer companyId) throws IOException{
 		List<Map<String,Object>> depList=WxUtil.getDepartment(companyId);
-		for (Map<String, Object> map : depList) {
-			for(int i=0;i<depList.size();i++) {
-				if(!(depList.get(i).get("parentid").toString().equals(companyId.toString())) || (Integer)depList.get(i).get("parentid")==14) {
-					depList.remove(i);
-				}
+		for(int i=0;i<depList.size();i++) {
+			if(!(depList.get(i).get("parentid").toString().equals(companyId.toString())) || (Integer)depList.get(i).get("parentid")==14) {
+				depList.remove(i);
 			}
 		}
 		return depList;
 	}
 	
-	
+	/*
+	 * @Description: 获取accessToken
+	 * @return
+	 * @throws IOException
+	 */
 	public static String getAccessToken() throws IOException {
 		String access_token = "";
 		String AppId = WxEnum.APP_ID.getValue();// 第三方用户唯一凭证
@@ -103,7 +120,15 @@ public class WxUtil {
 		return access_token;
 	}
 
-	//根据部门id获取员工
+	/*
+	 * @Description: 根据部门id获取员工
+	 * @param accessToken
+	 * @param departmentId
+	 * @param fetchChild
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
 	public static List<Map<String,Object>> getOaStaffInfo(String accessToken, String departmentId, String fetchChild)
 			throws Exception {
 		String url = "https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=" + accessToken + "&department_id="
@@ -113,6 +138,11 @@ public class WxUtil {
 		return userList;
 	}
 	
+	/*
+	 * @Description: 每日零点自动同步OA数据
+	 * @throws IOException
+	 * @throws Exception
+	 */
 	@Transactional
 	@Scheduled(cron = "0 0 0 * * ? ")
 	private void updateOaStaff() throws IOException, Exception {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.reimbursement.dao.BillDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.BillService;
@@ -51,7 +50,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/insertBill")
-	public ServerResult insertBill(HttpServletRequest request) {
+	public ServerResult<String> insertBill(HttpServletRequest request) {
 		return billService.insertBill(request);
 	}
 
@@ -133,7 +132,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/auditBill")
-	public ServerResult auditBill(HttpServletRequest request, @RequestParam("billId") String billId,
+	public ServerResult<String> auditBill(HttpServletRequest request, @RequestParam("billId") String billId,
 			@RequestParam("audit_summary") String auditSummary,
 			@RequestParam("selectContractStatus") String contractStatus,
 			@RequestParam("selectInvoiceStatus") String invoiceStatus) {
@@ -152,7 +151,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/rejectBill")
-	public ServerResult rejectBill(HttpServletRequest request, @RequestParam("billId") String billId,
+	public ServerResult<String> rejectBill(HttpServletRequest request, @RequestParam("billId") String billId,
 			@RequestParam("audit_summary") String opinion) {
 		return billService.rejectBill(request, billId, opinion);
 	}
@@ -165,7 +164,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/updateBill")
-	public ServerResult updateBill(HttpServletRequest request) {
+	public ServerResult<String> updateBill(HttpServletRequest request) {
 		return billService.updateBill(request);
 	}
 
@@ -177,7 +176,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/delBill")
-	public ServerResult deleteBill(String billId) {
+	public ServerResult<String> deleteBill(String billId) {
 		return billService.deleteBill(billId);
 	}
 

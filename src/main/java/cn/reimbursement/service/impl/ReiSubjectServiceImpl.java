@@ -31,7 +31,7 @@ public class ReiSubjectServiceImpl implements ReiSubjectService {
 		int start = limit * (page - 1);
 		List<Map<String, String>> subjectMapList = reiSubjectDao.selectDepContentCommentByCompanyDep(company, dep,
 				limit, start);
-		return new LayuiResult(InfoEnum.SUCCESS.getValue(), subjectMapList, 0,
+		return new LayuiResult<List<Map<String, String>>>(InfoEnum.SUCCESS.getValue(), subjectMapList, 0,
 				reiSubjectDao.selectDepContentCommentByCompanyDepCount(company, dep));
 	}
 
