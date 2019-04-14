@@ -1,57 +1,69 @@
 package cn.reimbursement;
 
-import cn.reimbursement.util.AddressListTool;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.util.UUID;
+import cn.reimbursement.dao.CompanyDao;
+import cn.reimbursement.dao.DepDao;
+import cn.reimbursement.dao.StaffDao;
+import cn.reimbursement.util.WxUtil;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ReimbursementApplicationTests {
-
+	
+	@Autowired
+	private CompanyDao companyDao;
+	@Autowired
+	private DepDao depDao;
+	@Autowired
+	private StaffDao staffDao;
+	
+	//插入员工
 	@Test
-	public void contextLoads() {
+	public void test() throws IOException, Exception{
+		List<Map<String,Object>> strList=WxUtil.getOaStaffInfo(WxUtil.getAccessToken(), "2", "1");
+		for (Map<String, Object> staffMap : strList) {
+			String strDep=staffMap.get("department").toString().replaceAll("\\[", "");
+			strDep=strDep.replaceAll("\\]", "");
+			int depId=Integer.valueOf(strDep);
+			if(depId<=13) {
+				staffMap.put("companyName", companyDao.selectCompanyById(2));
+				staffMap.put("depName", depDao.selectDepById(depId));
+			}else if(depId>=14){
+				staffMap.put("companyName", companyDao.selectCompanyById(depId));
+				staffMap.put("depName", depDao.selectDepById(depId));
+			}
+			staffDao.insertWxStaff(staffMap);
+		}
 	}
-
-	@Test
-	public void test(){
-//		//1、获取AccessToken
-//		String accessToken =AddressListTool.getAccessToken();
-//
-//		//2、获取Ticket
-//		String jsapi_ticket = AddressListTool.getTicket(accessToken);
-//
-//		//3、时间戳和随机字符串
-//		String noncestr = UUID.randomUUID().toString().replace("-", "").substring(0, 16);//随机字符串
-//		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);//时间戳
-//
-//		System.out.println("accessToken:"+accessToken+"\njsapi_ticket:"+jsapi_ticket+"\n时间戳："+timestamp+"\n随机字符串："+noncestr);
-//
-//		//4、获取url
-//		String url="http://www.luiyang.com/add.html";
-//    /*根据JSSDK上面的规则进行计算，这里比较简单，我就手动写啦
-//    String[] ArrTmp = {"jsapi_ticket","timestamp","nonce","url"};
-//    Arrays.sort(ArrTmp);
-//    StringBuffer sf = new StringBuffer();
-//    for(int i=0;i<ArrTmp.length;i++){
-//        sf.append(ArrTmp[i]);
-//    }
-//    */
-//
-//		//5、将参数排序并拼接字符串
-//		String str = "jsapi_ticket="+jsapi_ticket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&url="+url;
-//
-//		//6、将字符串进行sha1加密
-//		String signature =AddressListTool.SHA1(str);
-//		System.out.println("参数："+str+"\n签名："+signature);
-	}
+	
+	//测试插入部门与公司
 	@Test
 	public void test2() throws Exception {
-//		AddressListTool.getAllDepartment();
-		AddressListTool.getOaStaffInfo(AddressListTool.getAccessToken(),"1","1");
+		List<Map<String,Object>> strList=WxUtil.getCompanys();
+		for (Map<String, Object> map : strList) {
+			Integer id=(Integer) map.get("id");
+			String name=(String) map.get("name");
+			companyDao.insertCompany(id, name);
+			if(id!=2) {
+				depDao.insertDep(id, name+"部门", name);
+			}else {
+				List<Map<String,Object>> depList=WxUtil.getDepByCompanyId(2);
+				System.out.println(depList.toString());
+				for (Map<String, Object> depMap : depList) {
+					depDao.insertDep((Integer)depMap.get("id"), (String)depMap.get("name"), name);
+				}
+			}
+			
+		}
 	}
 }

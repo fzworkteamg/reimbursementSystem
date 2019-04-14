@@ -20,4 +20,10 @@
 		company_name
 		FROM company
 	</select>
+	<insert id="insertCompany">
+		INSERT INTO company(company_id,company_name) VALUES(#{companyId},#{companyName})
+	</insert>
+	<select id="selectCompanyById" resultType="java.lang.String">
+		SELECT company_name FROM company WHERE company_id=#{companyId}
+	</select>
 </mapper>

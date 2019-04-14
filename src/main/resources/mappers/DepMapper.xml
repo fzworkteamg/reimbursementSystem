@@ -22,4 +22,10 @@
 		dep_name
 		FROM dep WHERE company_name=#{companyName}
 	</select>
+	<insert id="insertDep">
+		INSERT INTO dep (dep_id,dep_name,company_name) VALUES(#{depId},#{depName},#{companyName})
+	</insert>
+	<select id="selectDepById" resultType="java.lang.String">
+		SELECT dep_name FROM dep WHERE dep_id=#{depId}
+	</select>
 </mapper>

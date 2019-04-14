@@ -10,4 +10,5 @@ public interface StaffService {
 	ServerResult loginByIdAndPassword(HttpServletRequest request,String staffId,String staffPassword);
 	ServerResult<List<String>> selectStaffByCompanyAndDep(String company,String dep);
 	void loginOut(HttpServletRequest request);
+	ServerResult updateOaStaff()throws Exception;
 }

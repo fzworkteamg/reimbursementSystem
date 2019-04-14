@@ -33,4 +33,10 @@ public class StaffController {
 		return staffService.selectStaffByCompanyAndDep(company, dep);
 	}
 	
+	@PostMapping("/updateOaStaff")
+	public ServerResult updateOaStaff() throws Exception {
+		System.out.println("开始更新");
+		return staffService.updateOaStaff();
+	}
+	
 }

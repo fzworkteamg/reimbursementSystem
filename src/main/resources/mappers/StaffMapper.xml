@@ -33,5 +33,14 @@
 	<select id="selectStaffByCompanyAndDep" resultMap="staffMap">
 		SELECT <include refid="processColums"/> FROM staff WHERE company_name=#{company} and dep_name=#{dep}
 	</select>
-
+	<insert id="insertWxStaff">
+		INSERT INTO staff(staff_id,staff_name,staff_sex,staff_tel,staff_eamil,company_name,dep_name,duty_name)
+		VALUES(#{staffMap.userid},#{staffMap.name},#{staffMap.gender},#{staffMap.mobile},#{staffMap.email},#{staffMap.companyName},#{staffMap.depName},#{staffMap.position})
+	</insert>
+	<select id="selectStaffCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM staff
+	</select>
+	<delete id="deleteStaff">
+		DELETE FROM staff
+	</delete>
 </mapper>
