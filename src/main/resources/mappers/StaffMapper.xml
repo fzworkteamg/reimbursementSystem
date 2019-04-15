@@ -40,7 +40,7 @@
 		SELECT
 		<include refid="processColums" />
 		FROM staff WHERE company_name=#{company}
-		<if test="dep !='' && dep != null">
+		<if test="dep !=''">
 			and dep_name=#{dep}
 		</if>
 	</select>
