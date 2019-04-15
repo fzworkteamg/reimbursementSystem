@@ -109,19 +109,16 @@ public class BillServiceImpl implements BillService {
 		Map<String, Object> billMap = new HashMap<String, Object>();
 		while (keyEnumeration.hasMoreElements()) {
 			String key = keyEnumeration.nextElement();
-			System.out.println(key+","+requestMap.get(key)[0].toString()+":"+requestMap.get(key)[0].toString().endsWith("--"));
 			if (requestMap.get(key)[0].toString().endsWith("--"))
 				billMap.put(key, "");
 			else
 				billMap.put(key, requestMap.get(key)[0]);
 		}
-		System.out.println(billMap);
 		int limit = Integer.parseInt(request.getParameter("limit"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		billMap.put("limit", limit);
 		billMap.put("start", (limit * (page - 1)));
 		List<Bill> billList = billDao.selectBill(billMap);
-		System.out.println(billList.toString());
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billDao.selectBillCount(billMap));
 	}
 

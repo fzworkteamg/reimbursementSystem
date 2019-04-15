@@ -91,11 +91,6 @@
 			and bill_contract_status_name =
 			#{billMap.billContractStatusName}
 		</if>
-		<if
-			test="billMap.billContractStatusName != null and billMap.billContractStatusName != ''">
-			and bill_contract_status_name =
-			#{billMap.billContractStatusName}
-		</if>
 		<if test="billMap.billId != null and billMap.billId != ''">
 			and bill_id = #{billMap.billId}
 		</if>

@@ -18,31 +18,31 @@
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data" class="layui-form">
-            业务所属公司<select style="width:100px" id="selectCompany" name="company" lay-ignore>
+            业务所属公司<select style="width:100px" id="selectCompany" name="billCompany" lay-ignore>
             <option>--选择公司--</option>
         </select>
-            业务所属部门<select style="width:100px" id="selectDep" name="dep" lay-ignore>
+            业务所属部门<select style="width:100px" id="selectDep" name="billDep" lay-ignore>
             <option>--选择部门--</option>
         </select>
-            属性<select style="width:100px" name="attribute" id="attribute" lay-ignore>
+            属性<select style="width:100px" name="billAttribute" id="attribute" lay-ignore>
             <option>正常</option>
             <option>需要报备</option>
         </select>
-            类别<select style="width:100px" name="type" id="type" lay-ignore>
+            类别<select style="width:100px" name="billType" id="type" lay-ignore>
             <option>支出</option>
             <option>收入</option>
         </select>
-            发票状态<select style="width:100px" name="invoice" id="invoice" lay-ignore></select><br><br>
-            合同状态<select style="width:110px" name="contract" id="contract" lay-ignore></select>
+            发票状态<select style="width:100px" name="billInvoiceStatusName" id="invoice" lay-ignore></select><br><br>
+            合同状态<select style="width:110px" name="billContractStatusName" id="contract" lay-ignore></select>
             报销单号<input type="text" style="width:110px" name="billId" id="billId">
-            经办人<input type="text" style="width:110px" name="chargePerson" id="chargePerson">
-            登记人<input type="text" style="width:110px" name="registrantPerson" id="registrantPerson">
+            经办人<input type="text" style="width:110px" name="billChargePerson" id="chargePerson">
+            登记人<input type="text" style="width:110px" name="billRegistrantPerson" id="registrantPerson">
             <!--财务经手人<input type="text" style="width:110px" name="">-->
-            备注<input type="text" style="width:110px" name="summary" id="summary"><br><br>
-            科目<input style="width:110px" name="subject" id="subject">
-            产生日期<input type="date" style="width:120px" name="produceData" id="produceData">
-            登记日期<input type="date" style="width:120px" name="registrantDate" id="registrantDate">
-            结束日期<input type="date" style="width:120px" name="endDate" id="endDate">
+            备注<input type="text" style="width:110px" name="billSummary" id="summary"><br><br>
+            科目<input style="width:110px" name="billSubject" id="subject">
+            产生日期<input type="date" style="width:120px" name="billProduceDate" id="produceData">
+            登记日期<input type="date" style="width:120px" name="billRegistrantDate" id="registrantDate">
+            结束日期<input type="date" style="width:120px" name="billEndDate" id="endDate">
             金额<input type="text" style="width:60px" name="amountLow" id="amountLow">至<input type="text" style="width:60px"
                                                                              name="amoutHigh" id="amoutHigh">
             <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius" onclick="reloadBillTable()">
