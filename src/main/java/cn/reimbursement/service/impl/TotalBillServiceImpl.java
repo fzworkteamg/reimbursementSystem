@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.TotalBillDao;
 import cn.reimbursement.enums.InfoEnum;
@@ -16,6 +17,7 @@ import cn.reimbursement.util.LayuiResult;
  * @author linweijie
  * @date 2019年4月16日
  */
+@Service
 public class TotalBillServiceImpl implements TotalBillService {
 
 	@Autowired
