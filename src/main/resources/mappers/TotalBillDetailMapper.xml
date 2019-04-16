@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.TotalBillDetailDao">
+
+	<resultMap id="totalBillMap" type="cn.reimbursement.pojo.TotalBillDetail">
+		<id property="totalBillId" column="total_bill_id" />
+		<result property="billId" column="bill_id"/>
+	</resultMap>
+
+	<!--sql – 可被其他语句引用的可重用语句块 -->
+	<sql id="totalBillDetailColums">
+		total_bill_id,bill_id
+	</sql>
+	
+</mapper>

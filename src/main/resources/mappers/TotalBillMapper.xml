@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.TotalBillDao">
+
+	<resultMap id="totalBillMap"
+		type="cn.reimbursement.pojo.TotalBill">
+		<id property="totalBillId" column="total_bill_id" />
+		<result property="totalBillName" column="total_bill_name" />
+		<result property="companyName" column="company_name" />
+		<result property="totalBillMoney" column="total_bill_money" />
+		<result property="totalBillRegistDate"
+			column="total_bill_regist_date" />
+		<result property="totalBillRegistPerson"
+			column="total_bill_regist_person" />
+		<result property="totalBillRemark" column="total_bill_remark" />
+	</resultMap>
+
+	<!--sql – 可被其他语句引用的可重用语句块 -->
+	<sql id="totalBillColums">
+		total_bill_id,total_bill_name,company_name,total_bill_money,total_bill_regist_date,total_bill_regist_person,total_bill_remark
+	</sql>
+
+	<select id="selectBillByTotalBillId" resultMap="totalBillMap">
+		SELECT
+		<include refid="totalBillColums" />
+		FROM bill WHERE bill_id IN (SELECT bill_id FROM total_bill_detail
+		WHERE total_bill_id=#{totalBillId})
+		limit #{start},#{limit}
+	</select>
+	<select id="selectBillCountByTotalBillId"
+		resultMap="totalBillMap">
+		SELECT
+		COUNT(*)
+		FROM bill WHERE bill_id IN (SELECT bill_id
+		FROM total_bill_detail
+		WHERE total_bill_id=#{totalBillId})
+	</select>
+
+</mapper>
