@@ -64,7 +64,7 @@ public class ViewController {
 	 */
 	@RequestMapping("/toAddBill")
 	public String toAddBill() {
-		return "addBill";
+		return "bill/addBill";
 	}
 
 	/*
@@ -83,10 +83,10 @@ public class ViewController {
 		JSONObject object = JSONObject.fromObject(data);
 		if (session.getAttribute(SessionEnum.STATUS.getValue()).equals(NumberEnum.TWO.getValue())) {
 			session.setAttribute(SessionEnum.BILL.getValue(), object);
-			return "billAlter";
+			return "bill/billAlter";
 		}
 		session.setAttribute(SessionEnum.BILL.getValue(), object);
-		return "audit";
+		return "bill/audit";
 	}
 
 	/*
@@ -100,6 +100,19 @@ public class ViewController {
 	public String loginOut(HttpServletRequest request) {
 		staffService.loginOut(request);
 		return "login";
+	}
+
+	/*
+	 * @Description: 注销功能，返回到登陆页面
+	 *
+	 * @param request
+	 *
+	 * @return
+	 */
+	@RequestMapping("toAddTotalBill")
+	public String toAddTotalBill(HttpServletRequest request) {
+		staffService.loginOut(request);
+		return "bill/addTotalBill";
 	}
 
 }

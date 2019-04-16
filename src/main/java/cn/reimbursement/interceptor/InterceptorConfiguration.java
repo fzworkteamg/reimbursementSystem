@@ -18,6 +18,6 @@ public class InterceptorConfiguration extends WebMvcConfigurerAdapter {
 
 	// 这个方法用来注册拦截器，我们自己写好的拦截器需要通过这里添加注册才能生效
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor).addPathPatterns("/*").excludePathPatterns("/staff/loginByIdAndPassword","/view/toLogin");
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/staff/loginByIdAndPassword","/view/toLogin");
 	}
 }

@@ -20,6 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 		HttpSession session = request.getSession();
 		// 这里的User是登陆时放入session的
+		System.out.println("============"+session.getAttribute(SessionEnum.STAFF.getValue()).toString());
 		Staff user = (Staff) session.getAttribute(SessionEnum.STAFF.getValue());
 		// 如果session中没有user，表示没登陆
 		if (user == null) {

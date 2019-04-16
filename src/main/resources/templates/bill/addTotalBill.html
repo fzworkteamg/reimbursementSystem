@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
+    <!--<script src="/js/jquery-3.3.1.min.js"></script>-->
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
+    <title></title>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+    <form class="layui-form" id="form1" enctype="multipart/form-data">
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">总账名称</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="title" required  lay-verify="required" placeholder="请输入名称" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+        <table class="table-c">
+            <caption>支出（报销）新增</caption>
+            <tr>
+                <td>总账单号</td>
+                <td><input type="text" name="title" required  lay-verify="required" placeholder="请输入名称" class="layui-input"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>总账单号</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+<script>
+    layui.use('jquery',function () {
+        $ = layui.jquery;
+    })
+</script>
+</html>

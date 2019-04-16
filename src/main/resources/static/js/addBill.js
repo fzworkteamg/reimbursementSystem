@@ -180,20 +180,17 @@ function openAddReiPerson() {
                 success: function (result) {
                     deps = result.data;
                     for (var i = 0; i < deps.length; i++) {
-                        $("#depPane").append("<h5 name='dep' style='cursor: pointer' onclick='selectPersonsByCompanyAndDepShowInPane(\"" + company + "\",\"" + deps[i] + "\",2,1)'>" + deps[i] + "</h5><br>");
+                        $("#companyInCompanyPane").append("<h5 name='dep' style='cursor: pointer' onclick='selectPersonsByCompanyAndDepShowInPane(\"" + company + "\",\"" + deps[i] + "\",2,1)'>" + deps[i] + "</h5><br>");
                     }
                 }
             });
         },
         content:
-            "<div class='layui-row'>" +
-            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center' id='companyPane'>" +
+            "<div class='layui-row' style='text-align: center'>" +
+            "<div style='border-right-style: solid;float: left; width: 180px; text-align: left' id='companyPane'>" +
             "<h4 id='companyInCompanyPane'></h4>" +
             "</div> " +
-            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center'id='depPane'>" +
-            "" +
-            "</div> " +
-            "<div id='staffPane' style='border-right-style: solid;float: left; width: 180px; text-align: center'>" +
+            "<div id='staffPane' style='border-right-style: solid;float: left; width: 180px; left: center'>" +
             "" +
             "</div> " +
             "</div>"
@@ -250,20 +247,17 @@ function openAddChargePerson() {
                 success: function (result) {
                     deps = result.data;
                     for (var i = 0; i < deps.length; i++) {
-                        $("#depPane").append("<h5 name='dep' style='cursor: pointer' onclick='selectPersonsByCompanyAndDepShowInPane(\"" + company + "\",\"" + deps[i] + "\",3,1)'>" + deps[i] + "</h5><br>");
+                        $("#companyInCompanyPane").append("<h5 name='dep' style='cursor: pointer' onclick='selectPersonsByCompanyAndDepShowInPane(\"" + company + "\",\"" + deps[i] + "\",3,1)'>" + deps[i] + "</h5><br>");
                     }
                 }
             });
         },
         content:
-            "<div class='layui-row'>" +
-            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center' id='companyPane'>" +
+            "<div class='layui-row' style='text-align: center'>" +
+            "<div style='border-right-style: solid;float: left; width: 180px; text-align: left' id='companyPane'>" +
             "<h4 id='companyInCompanyPane'></h4>" +
             "</div> " +
-            "<div style='border-right-style: solid;float: left; width: 180px; text-align: center'id='depPane'>" +
-            "" +
-            "</div> " +
-            "<div id='staffPane' style='border-right-style: solid;float: left; width: 180px; text-align: center'>" +
+            "<div id='staffPane' style='border-right-style: solid;float: left; width: 180px; left: center'>" +
             "" +
             "</div> " +
             "</div>"

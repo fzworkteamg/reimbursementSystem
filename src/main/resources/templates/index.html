@@ -38,23 +38,23 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">台账查看</a></dd>
                         <dd><a href="javascript:openAddBill();">新增报销</a></dd>
-                        <dd><a href="javascript:addressList();">通讯录同步</a></dd>
+                        <dd><a href="javascript:;">总账查看</a></dd>
+                        <dd><a href="javascript:openAddTotalBill();">新增总账</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" layui-nav-itemed>
-                    <a class="" href="javascript:;">解决方案</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item" layui-nav-itemed>
+                <!--<li class="layui-nav-item layui-nav-itemed">-->
+                    <!--<a class="" href="javascript:;">解决方案</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd><a href="javascript:;">列表一</a></dd>-->
+                        <!--<dd><a href="javascript:;">列表二</a></dd>-->
+                        <!--<dd><a href="">超链接</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">信息同步</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">通讯录同步</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="/staff/updateOaStaff" >超链接</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -63,7 +63,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;width: 100%" class="layui-row" >
+        <div style="padding: 15px;width: 100%;text-align: left" class="layui-row" >
             <iframe style="border: none;width: 100%;height: 1000px;" th:src="@{/view/toShow}">
             </iframe>
         </div>
@@ -89,6 +89,17 @@
             shadeClose: true, //点击遮罩关闭层
             area : ['820px' , '620px'],
             content: '/view/toAddBill'
+        });
+    }
+
+    function openAddTotalBill() {
+        layer.open({
+            type: 2,
+            title: '支出（报销）总账新增',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area : ['900px' , '620px'],
+            content: '/view/toAddTotalBill'
         });
     }
 </script>
