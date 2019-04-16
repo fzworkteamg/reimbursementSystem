@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
-    <!--<script src="/js/jquery-3.3.1.min.js"></script>-->
     <script src="/layui-v2.4.5/layui/layui.js"></script>
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/tools.js"></script>
@@ -79,7 +78,7 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<script>
+<script th:inline="none">
 $(document).ready(function () {
     var totalBillId = billIdByTime();
     $("#total_bill_id").val(totalBillId);
@@ -119,7 +118,7 @@ function remoceBillTable() {
         // toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'print', 'exports'],
         where: {
-            total_bill_id:$("#total_bill_id").val()
+            totalBillId:$("#total_bill_id").val()
         },
         url: '/totalBill/selectBillByTotalBillId',
         method: 'post',
