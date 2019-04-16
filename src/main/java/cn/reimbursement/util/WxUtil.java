@@ -98,6 +98,7 @@ public class WxUtil {
 	public static List<Map<String,Object>> getDepByCompanyId(Integer companyId) throws IOException{
 		List<Map<String,Object>> depList=WxUtil.getDepartment(companyId);
 		for(int i=0;i<depList.size();i++) {
+			System.out.println((Integer)depList.get(i).get("parentid")==14);
 			if(!(depList.get(i).get("parentid").toString().equals(companyId.toString())) || (Integer)depList.get(i).get("parentid")==14) {
 				depList.remove(i);
 			}

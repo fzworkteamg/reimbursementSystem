@@ -60,7 +60,9 @@ public class ReimbursementApplicationTests {
 				List<Map<String,Object>> depList=WxUtil.getDepByCompanyId(2);
 				System.out.println(depList.toString());
 				for (Map<String, Object> depMap : depList) {
-					depDao.insertDep((Integer)depMap.get("id"), (String)depMap.get("name"), name);
+					if((Integer)depMap.get("id")!=14 && (Integer)depMap.get("parentid")!=14) {
+						depDao.insertDep((Integer)depMap.get("id"), (String)depMap.get("name"), name);
+					}
 				}
 			}
 			

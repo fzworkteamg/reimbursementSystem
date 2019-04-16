@@ -18,11 +18,12 @@
 		<result property="depName" column="dep_name" />
 		<result property="dutyName" column="duty_name" />
 		<result property="temDutyName" column="tem_duty_name" />
+		<result property="isLogin" column="is_login" />
 	</resultMap>
 
 	<!--sql – 可被其他语句引用的可重用语句块 -->
 	<sql id="processColums">
-		staff_id,staff_password,staff_name,staff_sex,staff_age,staff_tel,staff_eamil,staff_address,company_name,dep_name,duty_name,tem_duty_name
+		staff_id,staff_password,staff_name,staff_sex,staff_tel,staff_eamil,company_name,dep_name,duty_name,tem_duty_name,is_login
 	</sql>
 	<select id="selectStaffById" resultMap="staffMap">
 		SELECT
@@ -56,4 +57,7 @@
 	<delete id="deleteStaff">
 		DELETE FROM staff
 	</delete>
+	<update id="updateIsLogin">
+		UPDATE staff SET is_login=0
+	</update>
 </mapper>

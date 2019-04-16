@@ -11,12 +11,11 @@ public class Staff {
 	private String staffPassword;
 	private String staffName;
 	private Integer staffSex;
-	private Integer staffAge;
 	private String staffTel;
 	private String staffEmail;
-	private String staffAddress;
 	private String companyName;
 	private String depName;
 	private String dutyName;
 	private String temDutyName;
+	private int isLogin;
 }

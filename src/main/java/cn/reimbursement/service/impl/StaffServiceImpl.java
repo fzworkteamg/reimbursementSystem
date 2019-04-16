@@ -41,8 +41,10 @@ public class StaffServiceImpl implements StaffService {
 	public ServerResult<String> loginByTelAndPassword(HttpServletRequest request, String staffTel,
 			String staffPassword) {
 		Staff staff = staffDao.selectStaffByTel(staffTel);
-		if (staff == null || !staff.getStaffPassword().equals(staffPassword))
+		if (staff == null || !StringUtils.equals(staff.getStaffPassword(), staffPassword) || staff.getIsLogin() == 1
+				|| staffDao.updateIsLogin() == 0) {
 			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
+		}
 		HttpSession session = request.getSession();
 		staff.setStaffPassword("");
 		session.setAttribute(SessionEnum.STAFF.getValue(), staff);
