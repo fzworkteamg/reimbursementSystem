@@ -16,12 +16,7 @@ $(document).ready(function () {
         table = layui.table;
         remoceBillTable();
         table.on('row(billTable)', function (obj) {
-            // console.log(obj.tr) //得到当前行元素对象
-            // console.log(obj.data) //得到当前行数据
-            //obj.del(); //删除当前行
-            //obj.update(fields) //修改当前行数据
-            // openBillDetail(obj.data);
-            // openBillProcess(obj.data.billId);
+
         });
 
         table.on('rowDouble(billTable)', function (obj) {

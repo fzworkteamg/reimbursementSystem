@@ -5,7 +5,35 @@
     <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
     <!--<script src="/js/jquery-3.3.1.min.js"></script>-->
     <script src="/layui-v2.4.5/layui/layui.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/tools.js"></script>
     <title></title>
+    <style type="text/css">
+        .table-c {
+            border-right: 1px solid #9F9F9F;
+            border-bottom: 1px solid #9F9F9F;
+            width: 100%;
+            /*background-color: #f2fafe;*/
+        }
+        td {
+            border-left: 1px solid #9F9F9F;
+            border-top: 1px solid #9F9F9F;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .tdFirst{
+            width: 15%;
+        }
+        .tdSecond{
+            width: 30%;
+        }
+        .tdThird{
+            width: 15%;
+        }
+        .tdFourth{
+            width: 40%;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-container">
@@ -20,23 +48,109 @@
         <table class="table-c">
             <caption>支出（报销）新增</caption>
             <tr>
-                <td>总账单号</td>
-                <td><input type="text" name="title" required  lay-verify="required" placeholder="请输入名称" class="layui-input"></td>
-                <td></td>
+                <td class="tdFirst">总账单号</td>
+                <td class="tdSecond"><input type="text" id="total_bill_id" name="total_bill_id" required  lay-verify="required" class="layui-input"></td>
+                <td class="tdThird">总账名称</td>
+                <td class="tdFourth"><input type="text" id="total_bill_name" name="total_bill_name" required  lay-verify="required" placeholder="请输入名称" class="layui-input"></td>
             </tr>
             <tr>
-                <td>总账单号</td>
-                <td></td>
-                <td></td>
+                <td>时间范围</td>
+                <td class="tdSecond" style="text-align: center"><input type="date" name="total_bill_time_begin" required  lay-verify="required"class="layui-input">
+                    至
+                    <input type="date" name="total_bill_time_end" required  lay-verify="required"class="layui-input"></td>
+                <td class="tdThird">总账备注</td>
+                <td class="tdFourth"><textarea name="total_bill_comments" cols="3" rows="5" required  lay-verify="required" placeholder="请输入备注" class="layui-input"></textarea></td>
             </tr>
         </table>
     </form>
     </div>
+    <div class="layui-btn-group demoTable">
+        <button class="layui-btn"  onclick="openAddBill()" id="addBill">新增明细</button>
+        <button class="layui-btn" data-type="getCheckLength">关联明细</button>
+        <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
+    </div>
+    <div class="layui-row">
+        <table id="billTable" lay-filter="billTable"></table>
+    </div>
 </div>
 </body>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script>
-    layui.use('jquery',function () {
-        $ = layui.jquery;
+$(document).ready(function () {
+    var totalBillId = billIdByTime();
+    $("#total_bill_id").val(totalBillId);
+    $("#total_bill_id").attr('readOnly',true);
+    layui.use('table', function () {
+        table = layui.table;
+        remoceBillTable();
     })
+})
+
+function openAddBill() {
+    layer.open({
+        type: 2,
+        title: '支出（报销）总账新增',
+        maxmin: true,
+        shadeClose: true, //点击遮罩关闭层
+        area : ['820px' , '620px'],
+        content: '/view/toAddBill',
+        end: function () {
+
+        },
+        cancel: function(index, layero){
+            if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                layer.close(index)
+            }
+            return false;
+        }
+    });
+}
+
+//表格初始渲染
+function remoceBillTable() {
+    billTable = table.render({
+        id: 'billTable',
+        elem: '#billTable',
+        height: '670', //高度最大化减去差值
+        // toolbar: '#toolbarDemo',
+        defaultToolbar: ['filter', 'print', 'exports'],
+        where: {
+            total_bill_id:$("#total_bill_id").val()
+        },
+        url: '/totalBill/selectBillByTotalBillId',
+        method: 'post',
+        page: true,
+        limit: 10,
+        cols: [[
+            {field: 'xuhao', width: 80, title: '序号', templet: '#xuhao',fixed: 'left'},
+            {field: 'billId', width: 180, title: '单号',fixed: 'left'},
+            {field: 'billAttribute', width: 80, title: '属性'},
+            {field: 'billType', width: 80, title: '类型'},
+            {field: 'billReimbursementDep', width: 100, title: '报销部门'},
+            {field: 'billSubject', width: 100, title: '科目'},
+            {field: 'billBelongCompany', width: 130, title: '业务所属公司'},
+            {field: 'billReimbursementPerson', width: 80, title: '报销人'},
+            {field: 'billSummary', width: 150, title: '摘要'},
+            {field: 'billAmount', width: 100, title: '金额'},
+            {field: 'billContractStatusName', width: 120, title: '合同'},
+            {field: 'billInvoiceStatusName', width: 120, title: '发票'},
+            {field: 'billInvoiceAmount', width: 100, title: '发票金额'},
+            {field: 'billReimbursementPersonConfirm', width: 100, title: '报销人确认'},
+            {field: 'billChargePerson', width: 80, title: '经办人'},
+            {field: 'billRegistrantPerson', width: 80, title: '登记人'},
+            {field: 'billRegistrantDate', width: 120, title: '登记日期'},
+            {field: 'billProduceDate', width: 120, title: '产生日期'},
+            {field: 'billEndDate', width: 120, title: '结束日期'},
+            {fixed: 'right', width:80, align:'center', toolbar: '#barDemo'}
+        ]],
+        done: function (res) {
+            // console.log(res);
+        }
+    })
+}
 </script>
 </html>

@@ -103,7 +103,7 @@ public class ViewController {
 	}
 
 	/*
-	 * @Description: 注销功能，返回到登陆页面
+	 * @Description:弹出总账新增页面
 	 *
 	 * @param request
 	 *
@@ -111,7 +111,6 @@ public class ViewController {
 	 */
 	@RequestMapping("toAddTotalBill")
 	public String toAddTotalBill(HttpServletRequest request) {
-		staffService.loginOut(request);
 		return "bill/addTotalBill";
 	}
 
