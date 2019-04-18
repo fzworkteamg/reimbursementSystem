@@ -33,8 +33,8 @@ public class TotalBillServiceImpl implements TotalBillService {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int start = limit * (page - 1);
 		String totalBillId = request.getParameter("totalBillId");
-		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(),
-				totalBillDao.selectBillByTotalBillId(totalBillId, limit, start), 0,
+		List<Bill> l = totalBillDao.selectBillByTotalBillId(totalBillId, limit, start);
+		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), l, 0,
 				totalBillDao.selectBillCountByTotalBillId(totalBillId));
 	}
 
