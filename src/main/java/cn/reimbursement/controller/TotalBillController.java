@@ -32,7 +32,7 @@ public class TotalBillController {
 	private TotalBillService totalBillService;
 	
 	@PostMapping("/selectBillByTotalBillId")
-	LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request){
+	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request){
 		return totalBillService.selectBillByTotalBillId(request);
 	}
 
