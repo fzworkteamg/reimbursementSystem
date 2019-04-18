@@ -96,14 +96,6 @@ $(document).ready(function () {
             switch (obj.event) {
                 case 'addBill'://新增账单
                     openAddBill();
-                    billTable.reload({
-                        where:{
-                            totalBillId: $("#total_bill_id").val()
-                        },
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
                     break;
             }
         })
@@ -118,7 +110,16 @@ $(document).ready(function () {
             area: ['820px', '620px'],
             content: '/view/toAddBill?totalBillId='+$("#total_bill_id").val(),
             end: function () {
-
+                console.log("==========");
+                billTable.reload({
+                    url: '/totalBill/selectBillByTotalBillId',
+                    where:{
+                        totalBillId: $("#total_bill_id").val()
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
             },
             cancel: function (index, layero) {
                 if (confirm('确定要关闭么')) { //只有当点击confirm框的确定时，该层才会关闭
