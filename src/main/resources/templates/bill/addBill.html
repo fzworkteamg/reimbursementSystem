@@ -50,8 +50,8 @@
         <div class="layui-col-xs-10">
             <form class="layui-form" id="form1" enctype="multipart/form-data">
                 <!--<input type="hidden" id="staffId" name="staffId">-->
-                <input type="hidden" id="staffCompany" name="staffCompany">
-                <input type="hidden" id="staffDep" name="staffDep">
+                <input type="hidden" id="staffCompany" name="staffCompany" th:value="${session.staff.companyName}">
+                <input type="hidden" id="staffDep" name="staffDep" th:value="${session.staff.depName}">
                 <table class="table-c">
                     <caption>支出（报销）新增</caption>
                     <tr>
