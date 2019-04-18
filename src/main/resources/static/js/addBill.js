@@ -287,7 +287,6 @@ function chooseReiPersonAndCloseTip() {
     $("#reiPerson").attr("readOnly", false);
     var data = event.target.innerHTML;
     var arr = data.split("|");
-    console.log(arr);
     $("#reiPerson").val(arr[0]);
     layer.close(reiPersonIndex);
     $("#reiPerson").attr("readOnly", true);
@@ -298,7 +297,6 @@ function chooseChargeAndCloseTip() {
     $("#chargePerson").attr("readOnly", false);
     var staff = event.target.innerHTML;
     var temp = staff.split("|");
-    console.log(temp[0]);
     $("#chargePerson").val(temp[0]);
     layer.close(chargePersonIndex);
     $("#chargePerson").attr("readOnly", true);
