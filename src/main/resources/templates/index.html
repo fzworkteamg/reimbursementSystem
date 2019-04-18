@@ -97,9 +97,20 @@
             type: 2,
             title: '支出（报销）总账新增',
             maxmin: true,
-            shadeClose: true, //点击遮罩关闭层
+            shadeClose: false, //点击遮罩关闭层
             area : ['900px' , '650px'],
-            content: '/view/toAddTotalBill'
+            content: '/view/toAddTotalBill?',
+            cancel: function (index, layero) {
+                var index = layer.confirm('您确定关闭吗，关闭将不会保存你在此页面所做的操作', {
+                    btn: ['确定', '取消']
+                }, function () {
+                    layer.close(index);
+
+                })
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);//关闭当前页
+                return false;
+            }
         });
     }
 </script>

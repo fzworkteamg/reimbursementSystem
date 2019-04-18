@@ -50,6 +50,7 @@
         <div class="layui-col-xs-10">
             <form class="layui-form" id="form1" enctype="multipart/form-data">
                 <!--<input type="hidden" id="staffId" name="staffId">-->
+                <!--<input type="hidden" id="staffCompany" name="staffCompany" th:value="${session.staff.companyName}">-->
                 <input type="hidden" id="staffCompany" name="staffCompany" th:value="${session.staff.companyName}">
                 <input type="hidden" id="staffDep" name="staffDep" th:value="${session.staff.depName}">
                 <table class="table-c">
@@ -68,10 +69,6 @@
                     <tr>
                         <td class="firstTd">公司</td>
                         <td>
-                            <!--<select id="company" name="bill_company">-->
-                            <!--<option th:text="${session.staff.companyName}">-->
-                            <!--</option>-->
-                            <!--</select>-->
                             <input type="text" readonly th:value="${session.staff.companyName}" id="company"
                                    name="bill_company">
                             <font class="warn">*</font>
@@ -82,8 +79,6 @@
                     <tr>
                         <td class="firstTd">部门</td>
                         <td>
-                            <!--<select id="selectDep" required lay-verify="required" name="bill_reimbursement_dep">-->
-                            <!--</select>-->
                             <input type="text" readonly th:value="${session.staff.depName}"
                                    name="bill_reimbursement_dep" id="selectDep"> <font class="warn">*</font>
                         </td>
@@ -115,9 +110,6 @@
                     <tr>
                         <td class="firstTd">业务所属公司</td>
                         <td>
-                            <!--<select id="selectCompany" name="bill_belong_company" lay-filter='selectCompany' required-->
-                            <!--lay-verify="required">-->
-                            <!--</select>-->
                             <input type="text" id="selectCompany" name="bill_belong_company"
                                    th:value="${session.staff.companyName}" readonly> <font class="warn">*</font>
                         </td>
@@ -170,8 +162,6 @@
                         <td class="firstTd"></td>
                         <td>
                             <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
-                            <!--<input type="submit" value="新增保存" class="layui-btn layui-btn-primary layui-btn-sm"-->
-                            <!--lay-filter='insertBill'>-->
                         </td>
                         <td class="thirdTd"></td>
                         <td></td>
