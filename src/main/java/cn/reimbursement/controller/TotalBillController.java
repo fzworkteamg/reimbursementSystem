@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.TotalBillService;
 import cn.reimbursement.util.LayuiResult;
+import cn.reimbursement.util.ServerResult;
 
 /**
  * @author linweijie
@@ -21,19 +22,25 @@ import cn.reimbursement.util.LayuiResult;
 @RestController
 @RequestMapping("/totalBill")
 public class TotalBillController {
-	
-	/*
-	 * @Description: 通过总帐单Id查询对应的账单
-	 * @param request
-	 * @return
-	 */
-	
+
 	@Autowired
 	private TotalBillService totalBillService;
-	
+
+	/*
+	 * @Description: 通过总帐单Id查询对应的账单
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/selectBillByTotalBillId")
-	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request){
+	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request) {
 		return totalBillService.selectBillByTotalBillId(request);
+	}
+
+	@PostMapping("/deleteTotalBillDetailByTotalBillId")
+	public ServerResult<String> deleteTotalBillDetailByTotalBillId(HttpServletRequest request) {
+		return totalBillService.deleteTotalBillDetailByTotalBillId(request);
 	}
 
 }

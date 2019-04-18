@@ -20,6 +20,7 @@ import cn.reimbursement.dao.BillDao;
 import cn.reimbursement.dao.CurrentStepDao;
 import cn.reimbursement.dao.ProcessDao;
 import cn.reimbursement.dao.ProcessStatusDao;
+import cn.reimbursement.dao.TotalBillDetailDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.enums.SessionEnum;
 import cn.reimbursement.pojo.Bill;
@@ -44,6 +45,8 @@ public class BillServiceImpl implements BillService {
 	private ProcessStatusDao processStatusDao;
 	@Autowired
 	private CurrentStepDao currentStepDao;
+	@Autowired
+	private TotalBillDetailDao totalBillDetailDao;
 
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
@@ -54,6 +57,15 @@ public class BillServiceImpl implements BillService {
 	@Transactional
 	public ServerResult<String> insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
+		// 判断总帐ID是否为空
+		String isTotal = (String) request.getSession().getAttribute("isTotal");
+		String totalBillId = (String) request.getSession().getAttribute("totalBillId");
+		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
+		if (isTotal != null || !StringUtils.isEmpty(isTotal)) {
+			if (totalBillDetailDao.insertTotalBillDetail(totalBillId, billId) == 0) {
+				return new ServerResult<String>(1, InfoEnum.FAIL.toString());
+			}
+		}
 		Map<String, String[]> requestMap = request.getParameterMap();
 		String processContent = processDao.selectProcessByCompanyAndDepartment(request.getParameter("staffCompany"),
 				request.getParameter("staffDep"));
@@ -74,7 +86,6 @@ public class BillServiceImpl implements BillService {
 			if (isPut == true)
 				billMap.put(key, requestMap.get(key)[0]);
 		}
-		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
 		billMap.put("bill_id", billId);
 		String[] processContents = processContent.split("\\|");
 		for (int i = 0; i < processContents.length;)

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.reimbursement.dao.TotalBillDao;
+import cn.reimbursement.dao.TotalBillDetailDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.TotalBillService;
 import cn.reimbursement.util.LayuiResult;
+import cn.reimbursement.util.ServerResult;
 
 /**
  * @author linweijie
@@ -22,6 +24,8 @@ public class TotalBillServiceImpl implements TotalBillService {
 
 	@Autowired
 	private TotalBillDao totalBillDao;
+	@Autowired
+	private TotalBillDetailDao totalBillDetailDao;
 
 	@Override
 	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request) {
@@ -30,8 +34,15 @@ public class TotalBillServiceImpl implements TotalBillService {
 		int start = limit * (page - 1);
 		String totalBillId = request.getParameter("totalBillId");
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(),
-				totalBillDao.selectBillByTotalBillId(totalBillId,limit,start), 0,
+				totalBillDao.selectBillByTotalBillId(totalBillId, limit, start), 0,
 				totalBillDao.selectBillCountByTotalBillId(totalBillId));
+	}
+
+	@Override
+	public ServerResult<String> deleteTotalBillDetailByTotalBillId(HttpServletRequest request) {
+		String totalBillId = (String) request.getSession().getAttribute("totalBillId");
+		totalBillDetailDao.deleteTotalBillDetailByTotalBillId(totalBillId);
+		return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 	}
 
 }

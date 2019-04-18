@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.reimbursement.dao.TotalBillDetailDao">
 
-	<resultMap id="totalBillMap" type="cn.reimbursement.pojo.TotalBillDetail">
+	<resultMap id="totalBillDetailMap" type="cn.reimbursement.pojo.TotalBillDetail">
 		<id property="totalBillId" column="total_bill_id" />
 		<result property="billId" column="bill_id"/>
 	</resultMap>
@@ -12,5 +12,7 @@
 	<sql id="totalBillDetailColums">
 		total_bill_id,bill_id
 	</sql>
-	
+	<insert id="insertTotalBillDetail">
+		INSERT INTO total_bill_detail(total_bill_id,bill_id) VALUES(#{totalBillId},#{billId})
+	</insert>
 </mapper>

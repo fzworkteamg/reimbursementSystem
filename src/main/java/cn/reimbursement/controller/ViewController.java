@@ -63,7 +63,9 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/toAddBill")
-	public String toAddBill() {
+	public String toAddBill(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		session.setAttribute("totalBillId", request.getParameter("totalBillId"));
 		return "bill/addBill";
 	}
 
@@ -111,6 +113,8 @@ public class ViewController {
 	 */
 	@RequestMapping("toAddTotalBill")
 	public String toAddTotalBill(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		session.setAttribute("isTotal", request.getParameter("isTotal"));
 		return "bill/addTotalBill";
 	}
 
