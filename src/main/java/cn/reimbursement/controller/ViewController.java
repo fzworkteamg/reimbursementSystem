@@ -63,7 +63,9 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/toAddBill")
-	public String toAddBill() {
+	public String toAddBill(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		session.setAttribute("totalBillId", request.getParameter("totalBillId"));
 		return "bill/addBill";
 	}
 
@@ -100,6 +102,20 @@ public class ViewController {
 	public String loginOut(HttpServletRequest request) {
 		staffService.loginOut(request);
 		return "login";
+	}
+
+	/*
+	 * @Description:弹出总账新增页面
+	 *
+	 * @param request
+	 *
+	 * @return
+	 */
+	@RequestMapping("toAddTotalBill")
+	public String toAddTotalBill(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		session.setAttribute("isTotal", request.getParameter("isTotal"));
+		return "bill/addTotalBill";
 	}
 
 }
