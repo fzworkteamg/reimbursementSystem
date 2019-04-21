@@ -127,7 +127,6 @@ public class ViewController {
 	 */
 	@RequestMapping("toAddBillDetail")
 	public String toAddBillDetail(HttpServletRequest request) {
-
 		return "bill/addBillDetail";
 	}
 

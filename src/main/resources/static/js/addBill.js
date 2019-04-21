@@ -373,5 +373,7 @@ function toAddBillDetail() {
         });
 }
 
+function editBillDetail() {
 
+}
 

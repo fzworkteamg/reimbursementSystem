@@ -56,6 +56,7 @@
                 <input type="hidden" id="billDetail" name="billDetail">
                 <table class="table-c">
                     <caption>支出（报销）新增</caption>
+                    <tbody>
                     <tr>
                         <td class="firstTd">报销单号</td>
                         <td><input type="text" style="width: 50px" value="hbf" required lay-verify="required"
@@ -156,24 +157,40 @@
                             <input type="radio" name="bill_attribute" title="需要报备" value="需要报备">
                             <input type="radio" name="bill_attribute" title="正常" checked value="正常">
                         </td>
-                        <td class="thirdTd">增加明细</td>
+                        <td class="thirdTd"></td>
                         <td>
 
                         </td>
                     </tr>
-                    <tr>
-                        <td class="firstTd"></td>
-                        <td>
-                            <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
-                        </td>
-                        <td class="thirdTd"></td>
-                        <td></td>
-                    </tr>
+                    <!--<tr>-->
+                    <!--<td class="firstTd"></td>-->
+
+                    <!--<td>-->
+                    <!--<button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>-->
+                    <!--</td>-->
+                    <!--<td class="thirdTd"></td>-->
+                    <!--<td></td>-->
+                    <!--</tr>-->
+                    </tbody>
                 </table>
             </form>
-            <button class="layui-btn" onclick="toAddBillDetail()">
-                <i class="layui-icon">&#xe608;</i> 添加
-            </button>
+            <table class="table-c">
+                <tr>
+                    <td class="firstTd"></td>
+                    <td>
+                        <button class="layui-btn" lay-submit="" lay-filter="insertBill">新增保存</button>
+                    </td>
+                    <td class="thirdTd">增加明细</td>
+                    <td>
+                        <button class="layui-btn" onclick="toAddBillDetail()">
+                            <i class="layui-icon">&#xe608;</i>添加
+                        </button>
+                        <!--<button class="layui-btn layui-btn-sm">-->
+                            <!--<i class="layui-icon">&#xe642;</i>编辑-->
+                        <!--</button>-->
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
