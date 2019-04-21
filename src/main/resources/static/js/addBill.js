@@ -353,5 +353,25 @@ function selectPersonsByCompanyAndDepShowInPane(company, dep, type, flag) {
 }
 
 
+function toAddBillDetail() {
+       var addBillIndex = layer.open({
+            type: 2,
+            title: '明细新增',
+            maxmin: true,
+            shadeClose: false, //点击遮罩关闭层
+            area : ['600px' , '400px'],
+            content: '/view/toAddBillDetail',
+            cancel: function (index, layero) {
+                var index = layer.confirm('您确定关闭吗，关闭将不会保存你在此页面所做的操作', {
+                    btn: ['确定', '取消']
+                }, function () {
+                    layer.close(index);
+                    layer.close(addBillIndex);
+                })
+                return false;
+            }
+        });
+}
+
 
 

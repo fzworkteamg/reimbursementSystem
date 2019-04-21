@@ -37,20 +37,23 @@
             报销单号<input type="text" style="width:110px" name="billId" id="billId">
             经办人<input type="text" style="width:110px" name="billChargePerson" id="chargePerson">
             登记人<input type="text" style="width:110px" name="billRegistrantPerson" id="registrantPerson">
-            <!--财务经手人<input type="text" style="width:110px" name="">-->
             备注<input type="text" style="width:110px" name="billSummary" id="summary"><br><br>
             科目<input style="width:110px" name="billSubject" id="subject">
             产生日期<input type="date" style="width:120px" name="billProduceDate" id="produceData">
             登记日期<input type="date" style="width:120px" name="billRegistrantDate" id="registrantDate">
             结束日期<input type="date" style="width:120px" name="billEndDate" id="endDate">
-            金额<input type="text" style="width:60px" name="amountLow" id="amountLow">至<input type="text" style="width:60px"
-                                                                             name="amoutHigh" id="amoutHigh">
-            <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius" onclick="reloadBillTable()">
+            金额<input type="text" style="width:60px" name="amountLow" id="amountLow">至<input type="text"
+                                                                                            style="width:60px"
+                                                                                            name="amoutHigh"
+                                                                                            id="amoutHigh">
+            <input type="button" value="查询" class="layui-btn layui-btn-normal layui-btn-radius"
+                   onclick="reloadBillTable()">
         </form>
     </div>
     <div class="layui-row">
         <table id="billTable" lay-filter="billTable"></table>
     </div>
+    <input type="hidden" th:value="${session.staff.staffName}" id="billRegistrantPersonName">
 </div>
 </div>
 <script type="text/html" id="xuhao">
@@ -64,5 +67,26 @@
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="writeAndPast">登记被驳回</button>
     </div>
 </script>
+<script type="text/html" id="barDemo">
+    <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">明细</button>
+</script>
+<!--<script type="text/html" id="authorityJudgment">-->
+    <!--{{#-->
+    <!--var fn = function(){-->
+    <!--var billRegistrantPersonName = document.getElementById("billRegistrantPersonName").value;-->
+    <!--if(d.billRegistrantPerson == billRegistrantPersonName){-->
+            <!--return true;-->
+         <!--}else{-->
+            <!--return false;-->
+         <!--}-->
+        <!--};-->
+    <!--}}-->
+    <!--{{#  if(fn()){ }}-->
+    <!--<button class="layui-btn layui-btn-sm" lay-event="addDetail">新增明细</button>-->
+    <!--{{#  } else { }}-->
+    <!--&lt;!&ndash;{{ fn() }}&ndash;&gt;-->
+    <!--{{#  } }}-->
+<!--</script>-->
+
 </body>
 </html>

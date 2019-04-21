@@ -118,4 +118,17 @@ public class ViewController {
 		return "bill/addTotalBill";
 	}
 
+	/*
+	 * @Description:弹出账单明细新增页面
+	 *
+	 * @param request
+	 *
+	 * @return
+	 */
+	@RequestMapping("toAddBillDetail")
+	public String toAddBillDetail(HttpServletRequest request) {
+
+		return "bill/addBillDetail";
+	}
+
 }

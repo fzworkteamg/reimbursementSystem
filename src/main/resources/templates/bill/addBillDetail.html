@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账单明细增加</title>
+    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css" media="all">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
+</head>
+<body>
+<table class="table-c" style="text-align: center" id="detailTable">
+    <caption>支出（报销）账单明细新增</caption>
+    <th>明细名</th>
+    <th>金额</th>
+    <th>发生时间</th>
+    <tr>
+        <td><input type="text"></td>
+        <td><input type="number"></td>
+        <td><input type="date"></td>
+        <td>
+            <button class="layui-btn layui-btn-sm" id="addDetail">
+                <i class="layui-icon">&#xe654;</i>
+            </button>
+        </td>
+        <td style="padding-left: 6px">
+            <button class="layui-btn layui-btn-sm" id="saveBillDetail" onclick="saveBillDetail()">确定保存
+            </button>
+        </td>
+    </tr>
+</table>
+<script>
+    $("#addDetail").click(function () {
+        $("table tbody").append("<tr>" +
+            "<td><input type=\"text\"></td>" +
+            "<td><input type=\"number\"></td>" +
+            "<td><input type=\"date\"></td>"
+        );
+    });
+    // $("#saveBillDetail").click(saveBillDetail());
+    function saveBillDetail() {
+        var data = {};
+        data = getTableData();
+        console.log(Af);
+        $.ajax({
+            url:"/bill/saveBillDetail",
+            type:'post',
+            data:{
+                data:data
+            },
+            success:function () {
+
+            }
+        })
+    }
+    function getTableData() {
+        var set = [];
+        $('table tr').each(function() {
+            var row = [];
+            $(this).find('td').each(function() {
+                if($(this).find("input").length>0)
+                {
+                    let thisInputVal = $(this).find("input").val();
+                    row.push(thisInputVal);
+                }
+                else
+                {
+                    row.push($(this).text().trim());
+                }
+            });
+            set.push(row);
+        });
+        return set;
+    }
+</script>
+</body>
+</html>

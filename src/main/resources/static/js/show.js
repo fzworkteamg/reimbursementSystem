@@ -99,7 +99,7 @@ function remoceBillTable() {
     billTable = table.render({
         id: 'billTable',
         elem: '#billTable',
-        height: '670', //高度最大化减去差值
+        height: '570', //高度最大化减去差值
         toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'print', 'exports'],
         where: {
@@ -125,8 +125,8 @@ function remoceBillTable() {
         page: true,
         limit: 10,
         cols: [[
-            {field: 'xuhao', width: 80, title: '序号', templet: '#xuhao',fixed: 'left'},
-            {field: 'billId', width: 180, title: '单号',fixed: 'left'},
+            {field: 'xuhao', width: 60, title: '序号', templet: '#xuhao',fixed: 'left'},
+            {field: 'billId', width: 170, title: '单号',fixed: 'left'},
             {field: 'billAttribute', width: 80, title: '属性'},
             {field: 'billType', width: 80, title: '类型'},
             {field: 'billReimbursementDep', width: 100, title: '报销部门'},
@@ -144,8 +144,7 @@ function remoceBillTable() {
             {field: 'billRegistrantDate', width: 120, title: '登记日期'},
             {field: 'billProduceDate', width: 120, title: '产生日期'},
             {field: 'billEndDate', width: 120, title: '结束日期'},
-            // {field: 'billEndDate', width: 280, title: '流程执行情况'},
-            // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo',title:'确定'}
+            // {fixed: 'right', width:80, align:'center', toolbar: '#barDemo'}
         ]],
         done: function (res) {
             // console.log(res);
