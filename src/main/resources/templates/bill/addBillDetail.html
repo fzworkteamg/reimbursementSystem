@@ -47,17 +47,18 @@
     function saveBillDetail() {
         var data = {};
         data = getTableData();
-        console.log(data);
-        $.ajax({
-            url: "/bill/saveBillDetail",
-            type: 'post',
-            data: {
-                'data': JSON.stringify(data)
-            },
-            success: function () {
-
-            }
-        })
+        var temp = parent.$("#billDetail").val(data);
+        console.log(JSON.stringify(temp));
+        // $.ajax({
+        //     url: "/bill/saveBillDetail",
+        //     type: 'post',
+        //     data: {
+        //         'data': JSON.stringify(data)
+        //     },
+        //     success: function () {
+        //
+        //     }
+        // })
     }
 
     function getTableData() {
