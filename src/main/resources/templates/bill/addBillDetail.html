@@ -39,7 +39,7 @@
             "<td><input type=\"number\"></td>" +
             "<td><input type=\"date\"></td>"+
             "<td>" +
-            "<button class='layui-btn layui-btn-sm'>" +
+            "<button class='layui-btn layui-btn-sm' onclick='deleteTr(this)'>" +
             "    <i class='layui-icon'>&#xe640;</i>" +
             " </button>" +
             "</td>" +
@@ -93,7 +93,7 @@
                     "<td><input type='number' value='" + temp[i][1] + "'></td>" +
                     "<td><input type='date' value='" + temp[i][2] + "'></td>" +
                     "<td>" +
-                    "<button class='layui-btn layui-btn-sm' onclick='"+deleteTr(this)+"'>" +
+                    "<button class='layui-btn layui-btn-sm' onclick='deleteTr(this)'>" +
                     "    <i class='layui-icon'>&#xe640;</i>" +
                     " </button>" +
                     "</td>" +
@@ -103,9 +103,7 @@
         }
     })
     function deleteTr(button) {
-        console.log(button+"=====")
-        var i = button.parentNode.parentNode.rowIndex;
-        $("#detailTable").deleteRow(i);
+       $(button).parent().parent().remove();
     }
 </script>
 </body>
