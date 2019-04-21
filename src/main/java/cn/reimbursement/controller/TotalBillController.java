@@ -23,24 +23,29 @@ import cn.reimbursement.util.ServerResult;
 @RequestMapping("/totalBill")
 public class TotalBillController {
 
-	@Autowired
-	private TotalBillService totalBillService;
-
-	/*
-	 * @Description: 通过总帐单Id查询对应的账单
-	 * 
-	 * @param request
-	 * 
-	 * @return
-	 */
-	@PostMapping("/selectBillByTotalBillId")
-	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request) {
-		return totalBillService.selectBillByTotalBillId(request);
-	}
-
-	@PostMapping("/deleteTotalBillDetailByTotalBillId")
-	public ServerResult<String> deleteTotalBillDetailByTotalBillId(HttpServletRequest request) {
-		return totalBillService.deleteTotalBillDetailByTotalBillId(request);
-	}
+//	@Autowired
+//	private TotalBillService totalBillService;
+//
+//	/*
+//	 * @Description: 通过总帐单Id查询对应的账单
+//	 * 
+//	 * @param request
+//	 * 
+//	 * @return
+//	 */
+//	@PostMapping("/selectBillByTotalBillId")
+//	public LayuiResult<List<Bill>> selectBillByTotalBillId(HttpServletRequest request) {
+//		return totalBillService.selectBillByTotalBillId(request);
+//	}
+//	
+//	/*
+//	 * @Description: 删除总账单
+//	 * @param request
+//	 * @return
+//	 */
+//	@PostMapping("/deleteTotalBillDetailByTotalBillId")
+//	public ServerResult<String> deleteTotalBillDetailByTotalBillId(HttpServletRequest request) {
+//		return totalBillService.deleteTotalBillDetailByTotalBillId(request);
+//	}
 
 }
