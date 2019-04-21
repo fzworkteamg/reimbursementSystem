@@ -13,19 +13,25 @@
     <th>明细名</th>
     <th>金额</th>
     <th>发生时间</th>
+    <th>
+        <button class="layui-btn layui-btn-sm" id="addDetail">
+            <i class="layui-icon">&#xe654;</i>
+        </button>
+    </th>
+    <th style="padding-left: 6px">
+        <button class="layui-btn layui-btn-sm" id="saveBillDetail" onclick="saveBillDetail()">确定保存
+        </button>
+    </th>
     <tr>
         <td><input type="text"></td>
         <td><input type="number"></td>
         <td><input type="date"></td>
-        <td>
-            <button class="layui-btn layui-btn-sm" id="addDetail">
-                <i class="layui-icon">&#xe654;</i>
-            </button>
-        </td>
-        <td style="padding-left: 6px">
-            <button class="layui-btn layui-btn-sm" id="saveBillDetail" onclick="saveBillDetail()">确定保存
-            </button>
-        </td>
+        <!--<td>-->
+
+        <!--</td>-->
+        <!--<td style="padding-left: 6px">-->
+
+        <!--</td>-->
     </tr>
 </table>
 <script>
@@ -36,34 +42,33 @@
             "<td><input type=\"date\"></td>"
         );
     });
+
     // $("#saveBillDetail").click(saveBillDetail());
     function saveBillDetail() {
         var data = {};
         data = getTableData();
         console.log(data);
         $.ajax({
-            url:"/bill/saveBillDetail",
-            type:'post',
-            data:{
-                'data':data
+            url: "/bill/saveBillDetail",
+            type: 'post',
+            data: {
+                'data': JSON.stringify(data)
             },
-            success:function () {
+            success: function () {
 
             }
         })
     }
+
     function getTableData() {
         var set = [];
-        $('table tr').each(function() {
+        $('table tr').each(function () {
             var row = [];
-            $(this).find('td').each(function() {
-                if($(this).find("input").length>0)
-                {
+            $(this).find('td').each(function () {
+                if ($(this).find("input").length > 0) {
                     let thisInputVal = $(this).find("input").val();
                     row.push(thisInputVal);
-                }
-                else
-                {
+                } else {
                     row.push($(this).text().trim());
                 }
             });
