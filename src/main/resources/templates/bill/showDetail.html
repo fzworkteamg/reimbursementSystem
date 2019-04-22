@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>明细查看</title>
-    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css"
-          media="all">
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/layui-v2.4.5/layui/layui.js"></script>
+<meta charset="UTF-8">
+<title>明细查看</title>
+<link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css"
+	media="all">
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/layui-v2.4.5/layui/layui.js"></script>
 </head>
 <body>
-<table id="detailTable" lay-filter="detailTable"></table>
+	<table id="detailTable" lay-filter="detailTable"></table>
 </body>
 <script th:inline="none">
-    layui.use('table', function () {
-        var table = layui.table;
-        //第一个实例
-        var billId = parent.$("#bill_id").val();
-        table.render({
-            elem: '#detailTable',
-            height: 312,
-            url: '/billDetail/selectBillDetailByBillId',//数据接口
-            method: 'post',
-            page: true,
-            limit: 10,
-            where: {
-                billId: billId
-            },
-            cols: [[ //表头
-                {field: 'detailName', title: '明细名', width: 80},
-                {field: 'detailAoumt', title: '明细金额', width: 80},
-                {field: 'detailOccurDate', title: '发生时间', width: 100}
-            ]]
-        });
-    });
+	layui.use('table', function() {
+		var table = layui.table;
+		//第一个实例
+		var billId = parent.$("#bill_id").val();
+		table.render({
+			elem : '#detailTable',
+			height : 312,
+			url : '/billDetail/selectBillDetailByBillId',//数据接口
+			method : 'post',
+			page : true,
+			limit : 10,
+			width : 100%,
+			where : {
+				billId : billId
+			},
+			cols : [ [ //表头
+			{
+				field : 'name',
+				title : '明细名',
+				width : 25%
+			}, {
+				field : 'amounts',
+				title : '明细金额',
+				width : 25%
+			}, {
+				field : 'occurDate',
+				title : '发生时间',
+				width : 25%
+			} ] ]
+		});
+	});
 </script>
 </html>

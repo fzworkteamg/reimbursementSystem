@@ -16,12 +16,14 @@
 		INSERT INTO bill_relation(bill_id,bill_detail_id)
 		VALUES(#{billId},#{billDetailId})
 	</insert>
-	<select id="selectBillDetaiIdByBillId">
+	<select id="selectBillDetaiIdByBillId"
+		resultType="java.lang.String">
 		SELECT bill_detail_id FROM bill_relation WHERE
 		bill_id=#{billId} limit #{start},#{limit}
 	</select>
-	<select id="selectBillDetaiIdByBillIdCount">
-		SELECT COUNT(*) FROM bill_relation WHERE
+	<select id="selectBillDetaiIdByBillIdCount" resultType="int">
+		SELECT
+		COUNT(*) FROM bill_relation WHERE
 		bill_id=#{billId}
 	</select>
 </mapper>

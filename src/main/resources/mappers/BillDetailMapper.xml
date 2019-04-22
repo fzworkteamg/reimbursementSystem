@@ -18,8 +18,10 @@
 		INSERT INTO bill_detail(id,name,amounts,occur_date)
 		VALUES(#{id},#{name},#{amounts},#{occurDate})
 	</insert>
-	<select id="selectBillDetailById">
-		SELECT name,amounts,occur_date FROM bill_detail WHERE
+	<select id="selectBillDetailById" resultMap="billDetailMap">
+		SELECT
+		<include refid="billDetailColums" />
+		FROM bill_detail WHERE
 		id=#{id}
 	</select>
 </mapper>
