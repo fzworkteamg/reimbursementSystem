@@ -12,18 +12,24 @@
 <table id="detailTable" lay-filter="detailTable"></table>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use('table', function () {
         var table = layui.table;
         //第一个实例
+        var billId = parent.$("#bill_id").val();
         table.render({
-            elem: '#detailTable'
-            ,height: 312
-            ,url: '/bill/findBillDetailByBillId' //数据接口
-            ,page: true //开启分页
-            ,cols: [[ //表头
-                {field: 'detailName', title: '明细名', width:80},
-                {field: 'detailAoumt', title: '明细金额', width:80},
-                {field:'detailOccurDate',title:'发生时间',width:100}
+            elem: '#detailTable',
+            height: 312,
+            url: '/bill/selectBillDetailByBillId',//数据接口
+            method: 'post',
+            page: true,
+            limit: 10,
+            where: {
+                billId: billId
+            },
+            cols: [[ //表头
+                {field: 'detailName', title: '明细名', width: 80},
+                {field: 'detailAoumt', title: '明细金额', width: 80},
+                {field: 'detailOccurDate', title: '发生时间', width: 100}
             ]]
         });
     });

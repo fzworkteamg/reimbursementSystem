@@ -149,3 +149,16 @@ window.summaryTip = function(i) {
         time: 5000
     });
 }
+
+//弹出明细页面
+function showDetail() {
+    var detailIndex = layer.open({
+        type: 2,
+        title: '账单明细详情',
+        maxmin: true,
+        offset: '1px',
+        shadeClose: true, //点击遮罩关闭层
+        area: ['200px', '600px'],
+        content: '/view/toShowBillDetail'
+    })
+}
