@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>明细查看</title>
+    <link rel="stylesheet" href="/layui-v2.4.5/layui/css/layui.css"
+          media="all">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/layui-v2.4.5/layui/layui.js"></script>
+</head>
+<body>
+<table id="detailTable" lay-filter="detailTable"></table>
+</body>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#detailTable'
+            ,height: 312
+            ,url: '/bill/findBillDetailByBillId' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'detailName', title: '明细名', width:80},
+                {field: 'detailAoumt', title: '明细金额', width:80},
+                {field:'detailOccurDate',title:'发生时间',width:100}
+            ]]
+        });
+    });
+</script>
+</html>

@@ -75,6 +75,8 @@ public class ViewController {
 	 * @param data
 	 * 
 	 * @param request
+	 *
+	 * @author fly
 	 * 
 	 * @return
 	 */
@@ -123,6 +125,8 @@ public class ViewController {
 	 *
 	 * @param request
 	 *
+	 * @author fly
+	 *
 	 * @return
 	 */
 	@RequestMapping("toAddBillDetail")
@@ -130,4 +134,18 @@ public class ViewController {
 		return "bill/addBillDetail";
 	}
 
+
+	/*
+	 * @Description:弹出账单明细查看页面
+	 *
+	 * @param request
+	 *
+	 * @return
+	 *
+	 * @author fly
+	 */
+	@RequestMapping("toShowBillDetail")
+	public String toShowBillDetail(HttpServletRequest request) {
+		return "bill/showDetail";
+	}
 }
