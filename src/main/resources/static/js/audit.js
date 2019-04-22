@@ -158,7 +158,7 @@ function showDetail() {
         maxmin: true,
         offset: '1px',
         shadeClose: true, //点击遮罩关闭层
-        area: ['200px', '600px'],
+        area: ['400px', '450px'],
         content: '/view/toShowBillDetail'
     })
 }
