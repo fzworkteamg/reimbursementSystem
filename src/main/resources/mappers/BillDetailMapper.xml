@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.BillDetailDao">
+
+	<resultMap id="billDetailMap"
+		type="cn.reimbursement.pojo.BillDetail">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="amounts" column="amounts" />
+		<result property="occurDate" column="occur_date" />
+	</resultMap>
+
+	<sql id="billDetailColums">
+		id,name,amounts,occur_date
+	</sql>
+	<insert id="insertBillDetailDao">
+		INSERT INTO bill_detail(id,name,amounts,occur_date)
+		VALUES(#{id},#{name},#{amounts},#{occurDate})
+	</insert>
+	<select id="selectBillDetailById">
+		SELECT name,amounts,occur_date FROM bill_detail WHERE
+		id=#{id}
+	</select>
+</mapper>

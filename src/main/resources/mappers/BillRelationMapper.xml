@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.reimbursement.dao.BillRelationDao">
+
+	<resultMap id="bilRelationMap"
+		type="cn.reimbursement.pojo.BillRelation">
+		<result property="billId" column="bill_id" />
+		<result property="billDetailId" column="bill_detail_id" />
+	</resultMap>
+
+	<sql id="billRelationColums">
+		bill_id,bill_detail_id
+	</sql>
+	<insert id="insertBillRelation">
+		INSERT INTO bill_relation(bill_id,bill_detail_id)
+		VALUES(#{billId},#{billDetailId})
+	</insert>
+	<select id="selectBillDetaiIdByBillId">
+		SELECT bill_detail_id FROM bill_relation WHERE
+		bill_id=#{billId} limit #{start},#{limit}
+	</select>
+	<select id="selectBillDetaiIdByBillIdCount">
+		SELECT COUNT(*) FROM bill_relation WHERE
+		bill_id=#{billId}
+	</select>
+</mapper>

@@ -1,11 +1,14 @@
 package cn.reimbursement.service.impl;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +20,11 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.reimbursement.dao.BillDao;
+import cn.reimbursement.dao.BillDetailDao;
+import cn.reimbursement.dao.BillRelationDao;
 import cn.reimbursement.dao.CurrentStepDao;
 import cn.reimbursement.dao.ProcessDao;
 import cn.reimbursement.dao.ProcessStatusDao;
-import cn.reimbursement.dao.TotalBillDetailDao;
 import cn.reimbursement.enums.InfoEnum;
 import cn.reimbursement.enums.SessionEnum;
 import cn.reimbursement.pojo.Bill;
@@ -45,8 +49,10 @@ public class BillServiceImpl implements BillService {
 	private ProcessStatusDao processStatusDao;
 	@Autowired
 	private CurrentStepDao currentStepDao;
-//	@Autowired
-//	private TotalBillDetailDao totalBillDetailDao;
+	@Autowired
+	private BillDetailDao billDetailDao;
+	@Autowired
+	private BillRelationDao billRelationDao;
 
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
@@ -57,23 +63,33 @@ public class BillServiceImpl implements BillService {
 	@Transactional
 	public ServerResult<String> insertBill(HttpServletRequest httpServletRequest) {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
-		// 判断总帐ID是否为空
-//		String isTotal = (String) request.getSession().getAttribute("isTotal");
-//		String totalBillId = (String) request.getSession().getAttribute("totalBillId");
 		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
-//		if (isTotal != null || !StringUtils.isEmpty(isTotal)) {
-//			if (totalBillDetailDao.insertTotalBillDetail(totalBillId, billId) == 0) {
-//				return new ServerResult<String>(1, InfoEnum.FAIL.toString());
-//			}
-//		}
 		Map<String, String[]> requestMap = request.getParameterMap();
+		
+		//增加明細表,關聯表
+		String[] detailData = (((String[])requestMap.get("billDetail"))[0]).replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"", "").split(",");
+		if(detailData.length%3!=0) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
+		}
+		for(int i=0;i<detailData.length;) {
+			String billDetailId=UUID.randomUUID().toString();
+			if(billDetailDao.insertBillDetailDao(billDetailId,detailData[i++], new BigDecimal(detailData[i++]), detailData[i++])!=1 || billRelationDao.insertBillRelation(billId, billDetailId)!=1) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
+			}
+		}
+		
+		//根据公司部门获取流程表
 		String processContent = processDao.selectProcessByCompanyAndDepartment(request.getParameter("staffCompany"),
 				request.getParameter("staffDep"));
 		if (processContent == null)
 			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
+		
+		//获取request里的全部数据，并将需要的数据存入
 		Enumeration<String> keyEnumeration = request.getParameterNames();
 		Map<String, String> billMap = new HashMap<String, String>();
-		String[] keyArray = new String[] { "bill_id_pre", "bill_id_suff", "staffCompany", "staffDep" };
+		String[] keyArray = new String[] { "bill_id_pre", "bill_id_suff", "staffCompany", "staffDep", "billDetail" };
 		while (keyEnumeration.hasMoreElements()) {
 			String key = keyEnumeration.nextElement();
 			boolean isPut = true;
@@ -87,6 +103,8 @@ public class BillServiceImpl implements BillService {
 				billMap.put(key, requestMap.get(key)[0]);
 		}
 		billMap.put("bill_id", billId);
+		
+		//将流程分割，并将账单号每步流程名存入流程状态表
 		String[] processContents = processContent.split("\\|");
 		for (int i = 0; i < processContents.length;)
 			if (processStatusDao.insertProcessStatus(billId, processContents[i],
@@ -95,19 +113,26 @@ public class BillServiceImpl implements BillService {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 			}
+		//插入当前步数表
 		if (currentStepDao.insertCurrentStep(billId) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
+		
+		//如果账单号已经存在，回滚
 		if (billDao.selectBillCountById(billId) > 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
+		
+		//如果插入账单失败，回滚
 		if (billDao.insertBill(billMap) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
-		if (billDao.selectBillCountById(billId) > 0) {
+		
+		//如果查询数量为1，成功，否则失败
+		if (billDao.selectBillCountById(billId) == 1) {
 			return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 		}
 		TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
