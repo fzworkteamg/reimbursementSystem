@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>明细查看</title>
@@ -11,7 +11,7 @@
 <body>
 <table id="detailTable" lay-filter="detailTable"></table>
 </body>
-<script>
+<script th:inline="none">
     layui.use('table', function () {
         var table = layui.table;
         //第一个实例
@@ -19,7 +19,7 @@
         table.render({
             elem: '#detailTable',
             height: 312,
-            url: '/bill/selectBillDetailByBillId',//数据接口
+            url: '/billDetail/selectBillDetailByBillId',//数据接口
             method: 'post',
             page: true,
             limit: 10,
