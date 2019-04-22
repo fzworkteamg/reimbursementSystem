@@ -27,7 +27,7 @@ public class BillController {
 
 	@Autowired
 	private BillService billService;
-
+	
 	/*
 	 * @Description: 查询登记人所属公司的所有账单
 	 * 

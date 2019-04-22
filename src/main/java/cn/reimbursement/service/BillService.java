@@ -15,6 +15,7 @@ import cn.reimbursement.util.ServerResult;
  */
 
 public interface BillService {
+	
 	/*
 	 * @Description: 通过公司查询账单
 	 * 
