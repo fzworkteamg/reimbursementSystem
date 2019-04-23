@@ -26,4 +26,12 @@
 		COUNT(*) FROM bill_relation WHERE
 		bill_id=#{billId}
 	</select>
+	<select id="selectAllBillDetaiIdByBillId"
+		resultType="java.lang.String">
+		SELECT bill_detail_id FROM bill_relation WHERE
+		bill_id=#{billId}
+	</select>
+	<delete id="deleteBillRelationByBillId">
+		DELETE FROM bill_relation WHERE bill_id=#{billId}
+	</delete>
 </mapper>

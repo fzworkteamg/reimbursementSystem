@@ -2,8 +2,6 @@ package cn.reimbursement.service.impl;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,28 +64,30 @@ public class BillServiceImpl implements BillService {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) httpServletRequest;
 		String billId = request.getParameter("bill_id_pre") + request.getParameter("bill_id_suff");
 		Map<String, String[]> requestMap = request.getParameterMap();
-		
-		//增加明細表,關聯表
-		String[] detailData = (((String[])requestMap.get("billDetail"))[0]).replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"", "").split(",");
-		if(detailData.length%3!=0) {
+
+		// 增加明細表,關聯表
+		String[] detailData = (((String[]) requestMap.get("billDetail"))[0]).replaceAll("\\[", "").replaceAll("\\]", "")
+				.replaceAll("\"", "").split(",");
+		if (detailData.length % 3 != 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
-		for(int i=0;i<detailData.length;) {
-			String billDetailId=UUID.randomUUID().toString();
-			if(billDetailDao.insertBillDetailDao(billDetailId,detailData[i++], new BigDecimal(detailData[i++]), detailData[i++])!=1 || billRelationDao.insertBillRelation(billId, billDetailId)!=1) {
+		for (int i = 0; i < detailData.length;) {
+			String billDetailId = UUID.randomUUID().toString();
+			if (billDetailDao.insertBillDetailDao(billDetailId, detailData[i++], new BigDecimal(detailData[i++]),
+					detailData[i++]) != 1 || billRelationDao.insertBillRelation(billId, billDetailId) != 1) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 			}
 		}
-		
-		//根据公司部门获取流程表
+
+		// 根据公司部门获取流程表
 		String processContent = processDao.selectProcessByCompanyAndDepartment(request.getParameter("staffCompany"),
 				request.getParameter("staffDep"));
 		if (processContent == null)
 			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
-		
-		//获取request里的全部数据，并将需要的数据存入
+
+		// 获取request里的全部数据，并将需要的数据存入
 		Enumeration<String> keyEnumeration = request.getParameterNames();
 		Map<String, String> billMap = new HashMap<String, String>();
 		String[] keyArray = new String[] { "bill_id_pre", "bill_id_suff", "staffCompany", "staffDep", "billDetail" };
@@ -103,8 +104,8 @@ public class BillServiceImpl implements BillService {
 				billMap.put(key, requestMap.get(key)[0]);
 		}
 		billMap.put("bill_id", billId);
-		
-		//将流程分割，并将账单号每步流程名存入流程状态表
+
+		// 将流程分割，并将账单号每步流程名存入流程状态表
 		String[] processContents = processContent.split("\\|");
 		for (int i = 0; i < processContents.length;)
 			if (processStatusDao.insertProcessStatus(billId, processContents[i],
@@ -113,25 +114,25 @@ public class BillServiceImpl implements BillService {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 			}
-		//插入当前步数表
+		// 插入当前步数表
 		if (currentStepDao.insertCurrentStep(billId) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
-		
-		//如果账单号已经存在，回滚
+
+		// 如果账单号已经存在，回滚
 		if (billDao.selectBillCountById(billId) > 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
-		
-		//如果插入账单失败，回滚
+
+		// 如果插入账单失败，回滚
 		if (billDao.insertBill(billMap) == 0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1, InfoEnum.FAIL.getValue());
 		}
-		
-		//如果查询数量为1，成功，否则失败
+
+		// 如果查询数量为1，成功，否则失败
 		if (billDao.selectBillCountById(billId) == 1) {
 			return new ServerResult<String>(0, InfoEnum.SUCCESS.getValue());
 		}
@@ -168,14 +169,13 @@ public class BillServiceImpl implements BillService {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
 		if (staff == null)
 			return new LayuiResult<List<Bill>>(InfoEnum.FAIL.getValue(), null, 1, 0);
-		String staffName = (StringUtils.equals(InfoEnum.AUDITED.getValue(), processStatusState)
-				|| (StringUtils.equals(InfoEnum.REJECT.getValue(), processStatusState))) ? staff.getStaffName() : "";
+		String staffName = staff.getStaffName();
 		String processStatusProcessName = staff.getDepName() + "-" + staff.getDutyName();
 		int limit = Integer.parseInt(request.getParameter("limit"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		List<String> billIdList = processStatusDao.selectProcessStatusBillIds(staff.getCompanyName(),
 				processStatusProcessName, processStatusState, staffName, limit, limit * (page - 1));
-		List<Bill> billList = new ArrayList<>();
+		List<Bill> billList = Lists.newArrayList();
 		if (StringUtils.isNotBlank(staffName)) {
 			for (String billId : billIdList) {
 				billList.add(billDao.selectBillById(billId));
@@ -275,6 +275,18 @@ public class BillServiceImpl implements BillService {
 	public ServerResult<String> deleteBill(String billId) {
 		if (currentStepDao.deleteCurrentStepByBillId(billId) == 0
 				|| processStatusDao.deleteProcessStatusByBillId(billId) == 0 || billDao.deleteBillById(billId) == 0) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return new ServerResult<String>(1);
+		}
+		List<String> billDetailIdList = billRelationDao.selectAllBillDetaiIdByBillId(billId);
+		for (String billDetailId : billDetailIdList) {
+			if (billDetailDao.deleteBillDetailById(billDetailId) != 1) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ServerResult<String>(1);
+			}
+		}
+		if (billRelationDao.selectBillDetaiIdByBillIdCount(billId) != billRelationDao
+				.deleteBillRelationByBillId(billId)) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1);
 		}

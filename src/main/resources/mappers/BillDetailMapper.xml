@@ -24,4 +24,7 @@
 		FROM bill_detail WHERE
 		id=#{id}
 	</select>
+	<delete id="deleteBillDetailById">
+		DELETE FROM bill_detail WHERE id=#{id}
+	</delete>
 </mapper>

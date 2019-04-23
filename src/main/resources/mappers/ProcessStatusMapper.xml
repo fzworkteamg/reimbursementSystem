@@ -34,16 +34,18 @@
 		resultType="java.lang.String">
 		SELECT process_status_bill_id FROM process_status WHERE
 		process_status_company=#{processStatusCompany} 
+		<if test="processStatusState=='待审核'">
 		AND process_status_process_name=#{processStatusProcessName}
-		<if test="processStatusState!='已审核'">
-		AND
-		process_status_state=#{processStatusState}
+		AND process_status_state=#{processStatusState}
 		</if>
-		<if test="staffName!='' and staffName!=null ">
-			AND process_status_auditor=#{staffName}
+		<if test="processStatusState=='已审核'">
+		AND process_status_process_name=#{processStatusProcessName}
+		AND process_status_auditor=#{staffName}
+		AND (process_status_state=#{processStatusState} OR process_status_state='驳回')
 		</if>
 		<if test="processStatusState == '驳回'">
-			AND process_status_step=1
+		AND process_status_bill_id IN (SELECT bill_id FROM bill WHERE bill_registrant_person=#{staffName})
+		AND process_status_step=1 AND process_status_State = #{processStatusState}
 		</if>
 		limit #{start},#{limit}
 	</select>
@@ -51,16 +53,18 @@
 		resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM process_status WHERE
 		process_status_company=#{processStatusCompany} 
+		<if test="processStatusState=='待审核'">
 		AND process_status_process_name=#{processStatusProcessName}
-		<if test="processStatusState!='已审核'">
-		AND
-		process_status_state=#{processStatusState}
+		AND process_status_state=#{processStatusState}
 		</if>
-		<if test="staffName!='' and staffName!=null ">
-			AND process_status_auditor=#{staffName}
+		<if test="processStatusState=='已审核'">
+		AND process_status_process_name=#{processStatusProcessName}
+		AND process_status_auditor=#{staffName}
+		AND process_status_state=#{processStatusState}
 		</if>
 		<if test="processStatusState == '驳回'">
-			AND process_status_step=1
+		AND process_status_bill_id IN (SELECT bill_id FROM bill WHERE bill_registrant_person=#{staffName})
+		AND process_status_step=1 AND process_status_State = #{processStatusState}
 		</if>
 	</select>
 	<select id="selectCountByBillId" resultType="java.lang.Integer">

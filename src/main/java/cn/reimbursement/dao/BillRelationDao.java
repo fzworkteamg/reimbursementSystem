@@ -12,5 +12,9 @@ public interface BillRelationDao {
 	List<String> selectBillDetaiIdByBillId(@Param("billId") String billId, @Param("limit") int limit,
 			@Param("start") int start);
 
+	List<String> selectAllBillDetaiIdByBillId(@Param("billId") String billId);
+
 	int selectBillDetaiIdByBillIdCount(@Param("billId") String billId);
+
+	int deleteBillRelationByBillId(@Param("billId") String billId);
 }

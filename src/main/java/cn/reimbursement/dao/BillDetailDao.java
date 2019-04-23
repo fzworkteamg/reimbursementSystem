@@ -13,4 +13,6 @@ public interface BillDetailDao {
 			@Param("occurDate") String occurDate);
 
 	BillDetail selectBillDetailById(@Param("id") String id);
+	
+	int deleteBillDetailById(@Param("id") String id);
 }
