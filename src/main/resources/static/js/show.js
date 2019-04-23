@@ -2,6 +2,9 @@ var formData;
 var billTable;
 var processTip;
 $(document).ready(function () {
+    $("#selectCompany").attr("readOnly",true);
+    var deps = selectDepByCompany($("#selectCompany").val());
+    romance(deps,'selectDep');
     layui.use('layer', function () {
         var layer = layui.layer;
     });
@@ -22,6 +25,41 @@ $(document).ready(function () {
         table.on('rowDouble(billTable)', function (obj) {
             openBillDetail(obj.data);
         });
+        //
+        table.on('tool(billTable)',function (obj) {
+            if(obj.event === 'confirmReceipt'){
+                var index = layer.confirm('您确定已到账吗', {
+                    btn: ['确定', '取消']
+                }, function () {
+                    layer.close(index);
+                    $.ajax({
+                        url: '/bill/updateBillReimbursementComfirmByBillId',
+                        type: 'post',
+                        async: false,
+                        data: {
+                            billId:obj.get('billId')
+                        },
+                        success: function (data) {
+                            if (data.status == 0) {
+                                parent.layer.msg('确认到账成功', {
+                                    icon: 1,
+                                    offset: '300px',
+                                    time: 1000
+                                });
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);//关闭当前页
+                            } else {
+                                parent.layer.msg('确认到账失败，请联系系统管理员', {
+                                    icon: 3,
+                                    offset: '300px',
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                })
+            }
+        })
         //顶部工具栏
         table.on('toolbar(billTable)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
@@ -98,18 +136,18 @@ $(document).ready(function () {
         });
     });
     //获取公司填充下拉列表
-    var companys = selectCompany();
-    romance(companys, "selectCompany")
+    // var companys = selectCompany();
+    // romance(companys, "selectCompany")
 
     //填充部门
-    $("select[name='billCompany']").change(function () {
-        var company = $("#selectCompany").val();
-        if (company != "--选择公司--") {
-            var deps = selectDepByCompany(company);
-            cleanSelect("selectDep");
-            romance(deps, "selectDep");
-        }
-    })
+    // $("select[name='billCompany']").change(function () {
+    //     var company = $("#selectCompany").val();
+    //     if (company != "--选择公司--") {
+    //         var deps = selectDepByCompany(company);
+    //         cleanSelect("selectDep");
+    //         romance(deps, "selectDep");
+    //     }
+    // })
     //填充发票
     var invoice = selectInvoiceStatus();
     romance(invoice, "invoice");

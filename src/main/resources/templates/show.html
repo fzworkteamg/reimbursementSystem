@@ -18,9 +18,9 @@
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data" class="layui-form">
-            业务所属公司<select style="width:100px" id="selectCompany" name="billCompany" lay-ignore>
-            <option>--选择公司--</option>
-        </select>
+            业务所属公司
+            <!--<select style="width:100px" id="selectCompany" name="billCompany" lay-ignore></select>-->
+            <input type="text" th:value="${session.staff.companyName}" id="selectCompany" name="billCompany">
             业务所属部门<select style="width:100px" id="selectDep" name="billDep" lay-ignore>
             <option>--选择部门--</option>
         </select>
@@ -75,7 +75,7 @@
     {{#  if(d.reimbursementStatus==0){ }}
     <span>审核中</span>
     {{#  } else if(d.reimbursementStatus==1){ }}
-    <button class="layui-btn layui-btn-sm" lay-event="addDetail">确认到账</button>
+    <button class="layui-btn layui-btn-sm" lay-event="confirmReceipt">确认到账</button>
     {{#  } else if(d.reimbursementStatus==2){ }}
     <span>已到账</span>
     {{#  } }}
