@@ -23,7 +23,7 @@ layui.use('form', function () {
                     selectInvoiceStatus: $('#selectInvoiceStatus').val()
                 },
                 async: false,
-                method: 'post',
+                type: 'post',
                 success: function (result) {
                     if (result.status == 0) {
                         parent.layer.msg('审核已通过', {
