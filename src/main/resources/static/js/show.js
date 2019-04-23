@@ -29,7 +29,8 @@ $(document).ready(function () {
         table.on('tool(billTable)', function (obj) {
             if (obj.event === 'confirmReceipt') {
                 var index = layer.confirm('您确定已到账吗', {
-                    btn: ['确定', '取消']
+                    btn: ['确定', '取消'],
+                    offset:'100px',
                 }, function () {
                     layer.close(index);
                     $.ajax({
@@ -41,14 +42,14 @@ $(document).ready(function () {
                         },
                         success: function (data) {
                             if (data.status == 0) {
-                                parent.layer.msg('确认到账成功', {
+                                layer.msg('确认到账成功', {
                                     icon: 1,
-                                    offset: '100px',
+                                    offset:'100px',
                                     time: 1000
                                 });
                                 reimbursed();
                             } else {
-                                parent.layer.msg('确认到账失败，请联系系统管理员', {
+                                layer.msg('确认到账失败，请联系系统管理员', {
                                     icon: 3,
                                     offset: '100px',
                                     time: 1000
