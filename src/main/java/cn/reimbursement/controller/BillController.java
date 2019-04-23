@@ -181,9 +181,16 @@ public class BillController {
 		return billService.deleteBill(billId);
 	}
 
+	/*
+	 * @Description: 显示报销列表
+	 * 
+	 * @param request
+	 * 
+	 * @return
+	 */
 	@PostMapping("/reimbursedBill")
-	LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request) {
-		return billService.reimbursementBill(request);
+	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
+		return billService.selectBillByReimbursementStatus(request);
 	}
 
 }

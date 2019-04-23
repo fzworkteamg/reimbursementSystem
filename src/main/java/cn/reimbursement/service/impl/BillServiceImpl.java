@@ -297,7 +297,7 @@ public class BillServiceImpl implements BillService {
 
 	@SuppressWarnings("static-access")
 	@Override
-	public LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request) {
+	public LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Staff staff = (Staff) session.getAttribute(SessionEnum.STAFF.getValue());
 		if (staff == null) {
