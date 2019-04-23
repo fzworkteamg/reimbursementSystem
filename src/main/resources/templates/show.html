@@ -65,28 +65,21 @@
         <button class="layui-btn layui-btn-sm" lay-event="done">已审核的</button>
         <button class="layui-btn layui-btn-sm" lay-event="toAudit">待审核</button>
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="writeAndPast">登记被驳回</button>
+        <button class="layui-btn layui-btn-sm" lay-event="reimbursed">本人报销</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
     <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">明细</button>
 </script>
-<!--<script type="text/html" id="authorityJudgment">-->
-    <!--{{#-->
-    <!--var fn = function(){-->
-    <!--var billRegistrantPersonName = document.getElementById("billRegistrantPersonName").value;-->
-    <!--if(d.billRegistrantPerson == billRegistrantPersonName){-->
-            <!--return true;-->
-         <!--}else{-->
-            <!--return false;-->
-         <!--}-->
-        <!--};-->
-    <!--}}-->
-    <!--{{#  if(fn()){ }}-->
-    <!--<button class="layui-btn layui-btn-sm" lay-event="addDetail">新增明细</button>-->
-    <!--{{#  } else { }}-->
-    <!--&lt;!&ndash;{{ fn() }}&ndash;&gt;-->
-    <!--{{#  } }}-->
-<!--</script>-->
+<script type="text/html" id="judgment">
+    {{#  if(d.reimbursementStatus==0){ }}
+    <span>审核中</span>
+    {{#  } else if(d.reimbursementStatus==1){ }}
+    <button class="layui-btn layui-btn-sm" lay-event="addDetail">确认到账</button>
+    {{#  } else if(d.reimbursementStatus==2){ }}
+    <span>已到账</span>
+    {{#  } }}
+</script>
 
 </body>
 </html>

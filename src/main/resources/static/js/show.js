@@ -63,6 +63,37 @@ $(document).ready(function () {
                         }
                     });
                     break;
+                case 'reimbursed'://本人报销
+                    billTable.reload({
+                        url:'/bill/reimbursedBill',
+                        cols: [[
+                            {field: 'xuhao', width: 60, title: '序号', templet: '#xuhao',fixed: 'left'},
+                            {field: 'billId', width: 170, title: '单号',fixed: 'left'},
+                            {field: 'billAttribute', width: 80, title: '属性'},
+                            {field: 'billType', width: 80, title: '类型'},
+                            {field: 'billReimbursementDep', width: 100, title: '报销部门'},
+                            {field: 'billSubject', width: 100, title: '科目'},
+                            {field: 'billBelongCompany', width: 130, title: '业务所属公司'},
+                            {field: 'billReimbursementPerson', width: 80, title: '报销人'},
+                            {field: 'billSummary', width: 150, title: '摘要'},
+                            {field: 'billAmount', width: 100, title: '金额'},
+                            {field: 'billContractStatusName', width: 120, title: '合同'},
+                            {field: 'billInvoiceStatusName', width: 120, title: '发票'},
+                            {field: 'billInvoiceAmount', width: 100, title: '发票金额'},
+                            {field: 'billReimbursementPersonConfirm', width: 100, title: '报销人确认'},
+                            {field: 'billChargePerson', width: 80, title: '经办人'},
+                            {field: 'billRegistrantPerson', width: 80, title: '登记人'},
+                            {field: 'billRegistrantDate', width: 120, title: '登记日期'},
+                            {field: 'billProduceDate', width: 120, title: '产生日期'},
+                            {field: 'billEndDate', width: 120, title: '结束日期'},
+                            {field: 'reimbursementStatus',width:120,fixed:'right',templet: '#judgment'}
+                        ]],
+                        page: {
+                            curr: 1
+                        }
+
+                    });
+                    break;
             };
         });
     });
