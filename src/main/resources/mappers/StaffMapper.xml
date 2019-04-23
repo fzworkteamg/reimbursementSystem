@@ -58,6 +58,6 @@
 		DELETE FROM staff
 	</delete>
 	<update id="updateIsLogin">
-		UPDATE staff SET is_login=0
+		UPDATE staff SET is_login=0 WHERE staff_tel=#{staffTel}
 	</update>
 </mapper>

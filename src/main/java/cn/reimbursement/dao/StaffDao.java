@@ -22,5 +22,5 @@ public interface StaffDao {
 
 	Integer deleteStaff();
 	
-	Integer updateIsLogin();
+	Integer updateIsLogin(@Param("staffTel")String staffTel);
 }
