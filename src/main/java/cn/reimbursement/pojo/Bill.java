@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import cn.reimbursement.vo.BillVo;
 import lombok.Data;
 
 @Data
@@ -30,5 +31,15 @@ public class Bill {
 	private Date billProduceDate;
 	private Integer billIsEnd;
 	private Date billEndDate;
+
+	public static BillVo toBillVo(Bill bill, int reimbursementStatus) {
+		return new BillVo(bill.getBillId(), bill.getBillAttribute(), bill.getBillCompany(), bill.getBillType(),
+				bill.getBillReimbursementDep(), bill.getBillSubject(), bill.getBillBelongCompany(),
+				bill.getBillReimbursementPerson(), bill.getBillSummary(), bill.getBillAmount(),
+				bill.getBillContractStatusName(), bill.getBillInvoiceStatusName(), bill.getBillInvoiceAmount(),
+				bill.getBillReimbursementPersonConfirm(), bill.getBillChargePerson(), bill.getBillRegistrantPerson(),
+				bill.getBillRegistrantDate(), bill.getBillProduceDate(), bill.getBillIsEnd(), bill.getBillEndDate(),
+				reimbursementStatus);
+	}
 
 }

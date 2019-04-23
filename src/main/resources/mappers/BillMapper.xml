@@ -132,8 +132,8 @@
 			and bill_amount<![CDATA[<=]]>#{billMap.amountHigh}
 		</if>
 		<if
-	test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
-	and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
+			test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
+			and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
 		</if>
 		limit #{billMap.start},#{billMap.limit}
 	</select>
@@ -210,8 +210,8 @@
 			and bill_amount<![CDATA[<=]]>#{billMap.amountHigh}
 		</if>
 		<if
-	test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
-	and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
+			test="(billMap.amountLow != null and billMap.amountLow != '') and (billMap.amountHigh == null and billMap.amountHigh == '')">
+			and bill_amount<![CDATA[>=]]>#{billMap.amountlow}
 		</if>
 	</select>
 	<select id="selectBillByMonth" resultMap="billMap">
@@ -245,7 +245,8 @@
 	</select>
 
 	<update id="updateBill" parameterType="java.util.Map">
-		UPDATE bill SET bill_amount=#{billMap.bill_amount},bill_company=#{billMap.bill_company},bill_produce_date=#{billMap.bill_produce_date},
+		UPDATE bill SET
+		bill_amount=#{billMap.bill_amount},bill_company=#{billMap.bill_company},bill_produce_date=#{billMap.bill_produce_date},
 		bill_reimbursement_dep=#{billMap.bill_reimbursement_dep},bill_registrant_date=#{billMap.bill_registrant_date},bill_type=#{billMap.bill_type},
 		bill_summary=#{billMap.bill_summary},bill_subject=#{billMap.bill_subject},bill_belong_company=#{billMap.bill_belong_company},bill_reimbursement_person=#{billMap.bill_reimbursement_person},
 		bill_invoice_status_name=#{billMap.bill_invoice_status_name},bill_charge_person=#{billMap.bill_charge_person},bill_invoice_amount=#{billMap.bill_invoice_amount},
@@ -255,4 +256,17 @@
 	<delete id="deleteBillById">
 		DELETE FROM bill WHERE bill_id=#{billId}
 	</delete>
+	<select id="selectBillByCompanyDepName" resultMap="billMap">
+		SELECT
+		<include refid="billColums" />
+		FROM bill WHERE bill_company=#{staffCompany} AND
+		bill_reimbursement_dep=#{staffDep} AND
+		bill_registrant_person=#{staffName} LIMIT #{start},#{limit}
+	</select>
+	<select id="selectBillByCompanyDepNameCount"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM bill WHERE
+		bill_company=#{staffCompany} AND bill_reimbursement_dep=#{staffDep}
+		AND bill_registrant_person=#{staffName}
+	</select>
 </mapper>

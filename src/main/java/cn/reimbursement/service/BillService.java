@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.vo.BillVo;
 
 /**
  * @author linweijie
@@ -115,4 +116,11 @@ public interface BillService {
 	 * @return
 	 */
 	ServerResult<String> deleteBill(String billId);
+	
+	/*
+	 * @Description: 显示报销列表
+	 * @param request
+	 * @return
+	 */
+	LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request);
 }

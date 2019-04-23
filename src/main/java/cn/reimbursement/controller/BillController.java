@@ -16,6 +16,7 @@ import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.vo.BillVo;
 
 /**
  * @author linweijie
@@ -27,7 +28,7 @@ public class BillController {
 
 	@Autowired
 	private BillService billService;
-	
+
 	/*
 	 * @Description: 查询登记人所属公司的所有账单
 	 * 
@@ -178,6 +179,11 @@ public class BillController {
 	@PostMapping("/delBill")
 	public ServerResult<String> deleteBill(String billId) {
 		return billService.deleteBill(billId);
+	}
+
+	@PostMapping("/reimbursedBill")
+	LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request) {
+		return billService.reimbursementBill(request);
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
@@ -31,6 +32,7 @@ import cn.reimbursement.pojo.Staff;
 import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
+import cn.reimbursement.vo.BillVo;
 
 /**
  * @author linweijie
@@ -291,6 +293,36 @@ public class BillServiceImpl implements BillService {
 			return new ServerResult<String>(1);
 		}
 		return new ServerResult<String>(0);
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Staff staff = (Staff) session.getAttribute(SessionEnum.STAFF.getValue());
+		if (staff == null) {
+			return new LayuiResult<List<BillVo>>(InfoEnum.FAIL.getValue(), null, 1, 0);
+		}
+		int limit = Integer.parseInt(request.getParameter("limit"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		List<Bill> billList = billDao.selectBillByCompanyDepName(staff.getCompanyName(), staff.getDepName(),
+				staff.getStaffName(), limit, limit * (page - 1));
+		List<BillVo> billVoList = Lists.newArrayList();
+		for (Bill bill : billList) {
+			if (bill.getBillIsEnd() == 0) {
+				billVoList.add(bill.toBillVo(bill, 0));
+				continue;
+			}
+			if (bill.getBillIsEnd() == 1 && bill.getBillReimbursementPersonConfirm() == 0) {
+				billVoList.add(bill.toBillVo(bill, 1));
+				continue;
+			}
+			if (bill.getBillIsEnd() == 1 && bill.getBillReimbursementPersonConfirm() == 1) {
+				billVoList.add(bill.toBillVo(bill, 2));
+			}
+		}
+		return new LayuiResult<List<BillVo>>(InfoEnum.SUCCESS.getValue(), billVoList, 0, billDao
+				.selectBillByCompanyDepNameCount(staff.getCompanyName(), staff.getDepName(), staff.getStaffName()));
 	}
 
 }
