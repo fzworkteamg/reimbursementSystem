@@ -31,7 +31,6 @@ $(document).ready(function () {
                 var index = layer.confirm('您确定已到账吗', {
                     btn: ['确定', '取消']
                 }, function () {
-                    console.log(obj.data)
                     layer.close(index);
                     $.ajax({
                         url: '/bill/updateBillReimbursementComfirmByBillId',
@@ -44,14 +43,14 @@ $(document).ready(function () {
                             if (data.status == 0) {
                                 parent.layer.msg('确认到账成功', {
                                     icon: 1,
-                                    offset: '300px',
+                                    offset: '100px',
                                     time: 1000
                                 });
                                 reimbursed();
                             } else {
                                 parent.layer.msg('确认到账失败，请联系系统管理员', {
                                     icon: 3,
-                                    offset: '300px',
+                                    offset: '100px',
                                     time: 1000
                                 });
                             }
