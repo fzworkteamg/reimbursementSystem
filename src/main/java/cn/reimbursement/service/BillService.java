@@ -16,7 +16,7 @@ import cn.reimbursement.vo.BillVo;
  */
 
 public interface BillService {
-	
+
 	/*
 	 * @Description: 通过公司查询账单
 	 * 
@@ -116,11 +116,13 @@ public interface BillService {
 	 * @return
 	 */
 	ServerResult<String> deleteBill(String billId);
-	
+
 	/*
 	 * @Description: 显示报销列表
+	 * 
 	 * @param request
+	 * 
 	 * @return
 	 */
-	LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request);
+	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request);
 }
