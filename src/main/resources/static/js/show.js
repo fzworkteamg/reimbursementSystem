@@ -71,7 +71,7 @@ $(document).ready(function () {
     romance(companys, "selectCompany")
 
     //填充部门
-    $("select[name='company']").change(function () {
+    $("select[name='billCompany']").change(function () {
         var company = $("#selectCompany").val();
         if (company != "--选择公司--") {
             var deps = selectDepByCompany(company);

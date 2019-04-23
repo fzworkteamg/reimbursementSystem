@@ -125,11 +125,11 @@ function buildProcess() {
                         + processStatus.process_status_process_name + " " +" "+
                         processStatus.process_status_state + " </font>&nbsp;&nbsp;"
                 } else if ((processStatus.process_status_state == "已审核")) {
-                    object['i'] = processStatus.process_status_opinion;
+                    object[i] = processStatus.process_status_opinion;
                     var content = "<font style='color: green;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "驳回") {
-                    object['i'] = processStatus.process_status_opinion;
+                    object[i] = processStatus.process_status_opinion;
                     var content = "<font style='color: red;border-style: solid;cursor: pointer' id='"+i+"' onclick='summaryTip("+i+")'>" + processStatus.process_status_process_name +
                         " " +" "+processStatus.process_status_auditor+" "+ processStatus.process_status_state + "   </font>&nbsp;&nbsp;"
                 } else if (processStatus.process_status_state == "") {
@@ -143,7 +143,7 @@ function buildProcess() {
 }
 window.summaryTip = function(i) {
     //小tips
-    let temp = object.i;
+    let temp = object[i];
     layer.tips(temp, "#"+i, {
         tips: [3, '#3595CC'],
         time: 5000

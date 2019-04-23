@@ -1,7 +1,5 @@
 
 
-
-
 function selectCompany() {
     var companys;
     $.ajax({
