@@ -269,4 +269,7 @@
 		bill_company=#{staffCompany} AND bill_reimbursement_dep=#{staffDep}
 		AND bill_registrant_person=#{staffName}
 	</select>
+	<update id="updateBillReimbursementComfirmByBillIdAndComfirm">
+		UPDATE bill SET bill_reimbursement_person_confirm=#{billReimbursementPersonConfirm} WHERE bill_id=#{billId}
+	</update>
 </mapper>

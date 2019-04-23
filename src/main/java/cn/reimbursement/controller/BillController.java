@@ -192,5 +192,15 @@ public class BillController {
 	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
 		return billService.selectBillByReimbursementStatus(request);
 	}
+	
+	/*
+	 * @Description: 更新账单确认到账
+	 * @param billId
+	 * @return
+	 */
+	@PostMapping("/updateBillReimbursementComfirmByBillId")
+	public ServerResult<String> updateBillReimbursementComfirmByBillId(@RequestParam("billId")String billId){
+		return billService.updateBillReimbursementComfirmByBillId(billId);
+	}
 
 }

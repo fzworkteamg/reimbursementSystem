@@ -324,5 +324,13 @@ public class BillServiceImpl implements BillService {
 		return new LayuiResult<List<BillVo>>(InfoEnum.SUCCESS.getValue(), billVoList, 0, billDao
 				.selectBillByCompanyDepNameCount(staff.getCompanyName(), staff.getDepName(), staff.getStaffName()));
 	}
+	
+	public ServerResult<String> updateBillReimbursementComfirmByBillId(String billId){
+		if(billDao.updateBillReimbursementComfirmByBillIdAndComfirm(billId, 1)==0) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return new ServerResult<String>(1);
+		}
+		return new ServerResult<String>(0,InfoEnum.SUCCESS.getValue());
+	}
 
 }

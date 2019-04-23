@@ -125,4 +125,13 @@ public interface BillService {
 	 * @return
 	 */
 	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request);
+
+	
+	/*
+	 * @Description: 更新账单确认到账
+	 * @param BillId
+	 * @return
+	 */
+	ServerResult<String> updateBillReimbursementComfirmByBillId(String billId);
+
 }
