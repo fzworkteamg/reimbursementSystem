@@ -328,7 +328,7 @@ public class BillServiceImpl implements BillService {
 	public ServerResult<String> updateBillReimbursementComfirmByBillId(String billId){
 		if(billDao.updateBillReimbursementComfirmByBillIdAndComfirm(billId, 1)==0) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			return new ServerResult<String>(1);
+			return new ServerResult<String>(1,InfoEnum.FAIL.getValue());
 		}
 		return new ServerResult<String>(0,InfoEnum.SUCCESS.getValue());
 	}
