@@ -1,6 +1,7 @@
 package cn.reimbursement.service.impl;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	private BillRelationDao billRelationDao;
 
-	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) {
+	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
 		List<Bill> billList = billDao.selectBillByCompany(staff.getCompanyName());
 		return new ServerResult<List<Bill>>(0, InfoEnum.SUCCESS.getValue(), billList);
@@ -160,7 +161,7 @@ public class BillServiceImpl implements BillService {
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billDao.selectBillCount(billMap));
 	}
 
-	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) {
+	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException {
 		String date = request.getParameter("date");
 		List<Bill> billList = billDao.selectBillByMonth(date.split("-")[0], date.split("-")[1]);
 		return new LayuiResult<List<Bill>>(InfoEnum.SUCCESS.getValue(), billList, 0, billList.size());
