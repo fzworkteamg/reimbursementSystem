@@ -75,7 +75,7 @@
     {{#  if(d.reimbursementStatus==0){ }}
     <span>审核中</span>
     {{#  } else if(d.reimbursementStatus==1){ }}
-    <button class="layui-btn layui-btn-sm" lay-event="addDetail">确认到账</button>
+    <button class="layui-btn layui-btn-sm" lay-event="confirmReceipt">确认到账</button>
     {{#  } else if(d.reimbursementStatus==2){ }}
     <span>已到账</span>
     {{#  } }}
