@@ -18,9 +18,9 @@
 <div class="layui-container">
     <div class="layui-row">
         <form id="selectForm" enctype="multipart/form-data" class="layui-form">
-            业务所属公司<select style="width:100px" id="selectCompany" name="billCompany" lay-ignore>
-            <option>--选择公司--</option>
-        </select>
+            业务所属公司
+            <!--<select style="width:100px" id="selectCompany" name="billCompany" lay-ignore></select>-->
+            <input type="text" th:value="${session.staff.companyName}" id="selectCompany" name="billCompany">
             业务所属部门<select style="width:100px" id="selectDep" name="billDep" lay-ignore>
             <option>--选择部门--</option>
         </select>

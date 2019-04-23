@@ -2,6 +2,9 @@ var formData;
 var billTable;
 var processTip;
 $(document).ready(function () {
+    $("#selectCompany").attr("readOnly",true);
+    var deps = selectDepByCompany($("#selectCompany").val());
+    romance(deps,'selectDep');
     layui.use('layer', function () {
         var layer = layui.layer;
     });
@@ -98,18 +101,18 @@ $(document).ready(function () {
         });
     });
     //获取公司填充下拉列表
-    var companys = selectCompany();
-    romance(companys, "selectCompany")
+    // var companys = selectCompany();
+    // romance(companys, "selectCompany")
 
     //填充部门
-    $("select[name='billCompany']").change(function () {
-        var company = $("#selectCompany").val();
-        if (company != "--选择公司--") {
-            var deps = selectDepByCompany(company);
-            cleanSelect("selectDep");
-            romance(deps, "selectDep");
-        }
-    })
+    // $("select[name='billCompany']").change(function () {
+    //     var company = $("#selectCompany").val();
+    //     if (company != "--选择公司--") {
+    //         var deps = selectDepByCompany(company);
+    //         cleanSelect("selectDep");
+    //         romance(deps, "selectDep");
+    //     }
+    // })
     //填充发票
     var invoice = selectInvoiceStatus();
     romance(invoice, "invoice");
