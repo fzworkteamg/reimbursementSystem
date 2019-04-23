@@ -39,7 +39,7 @@ public class BillController {
 	 * @throws Exception
 	 */
 	@PostMapping("/selctBillByCompany")
-	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
+	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request){
 		return billService.selctBillByCompany(request);
 	}
 
@@ -77,7 +77,7 @@ public class BillController {
 	 * @throws ParseException
 	 */
 	@PostMapping("/selectBillByMonth")
-	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException {
+	public LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request){
 		return billService.selectBillByMonth(request);
 	}
 

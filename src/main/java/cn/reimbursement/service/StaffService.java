@@ -51,6 +51,6 @@ public interface StaffService {
 	 * 
 	 * @throws Exception
 	 */
-	ServerResult<String> updateOaStaff() throws Exception;
+	ServerResult<String> updateOaStaff();
 
 }

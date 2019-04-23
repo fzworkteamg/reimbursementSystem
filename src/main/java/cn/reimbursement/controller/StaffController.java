@@ -62,7 +62,7 @@ public class StaffController {
 	 * @throws Exception
 	 */
 	@PostMapping("/updateOaStaff")
-	public ServerResult<String> updateOaStaff() throws Exception {
+	public ServerResult<String> updateOaStaff(){
 		return staffService.updateOaStaff();
 	}
 

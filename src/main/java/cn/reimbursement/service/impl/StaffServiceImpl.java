@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,9 @@ public class StaffServiceImpl implements StaffService {
 	private CompanyDao companyDao;
 	@Autowired
 	private DepDao depDao;
-
+	
+	private Logger logger = Logger.getLogger(StaffServiceImpl.class);
+	
 	public ServerResult<String> loginByTelAndPassword(HttpServletRequest request, String staffTel,
 			String staffPassword) {
 		Staff staff = staffDao.selectStaffByTel(staffTel);
@@ -69,49 +72,55 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Transactional
-	public ServerResult<String> updateOaStaff() throws Exception {
+	public ServerResult<String> updateOaStaff() {
 		int staffCount = staffDao.selectStaffCount();
 		int deleteStaffCount = staffDao.deleteStaff();
 		if (staffCount != deleteStaffCount) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			return new ServerResult<String>(1);
 		}
-		List<Map<String, Object>> strList = WxUtil.getOaStaffInfo(WxUtil.getAccessToken(), "2", "1");
-		for (Map<String, Object> staffMap : strList) {
-			String strDep = staffMap.get("department").toString().replaceAll("\\[", "");
-			strDep = strDep.replaceAll("\\]", "");
-			int depId = Integer.valueOf(strDep);
-			if (depId <= 13) {
-				String companyName = companyDao.selectCompanyById(2);
-				if (StringUtils.isEmpty(companyName)) {
+		List<Map<String, Object>> strList;
+		try {
+			strList = WxUtil.getOaStaffInfo(WxUtil.getAccessToken(), "2", "1");
+			for (Map<String, Object> staffMap : strList) {
+				String strDep = staffMap.get("department").toString().replaceAll("\\[", "");
+				strDep = strDep.replaceAll("\\]", "");
+				int depId = Integer.valueOf(strDep);
+				if (depId <= 13) {
+					String companyName = companyDao.selectCompanyById(2);
+					if (StringUtils.isEmpty(companyName)) {
+						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+						return new ServerResult<String>(1);
+					}
+					staffMap.put("companyName", companyName);
+					String depName = depDao.selectDepById(depId);
+					if (StringUtils.isEmpty(depName)) {
+						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+						return new ServerResult<String>(1);
+					}
+					staffMap.put("depName", depName);
+				} else if (depId >= 14) {
+					String companyName = companyDao.selectCompanyById(depId);
+					if (StringUtils.isEmpty(companyName)) {
+						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+						return new ServerResult<String>(1);
+					}
+					staffMap.put("companyName", companyName);
+					String depName = depDao.selectDepById(depId);
+					if (StringUtils.isEmpty(depName)) {
+						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+						return new ServerResult<String>(1);
+					}
+					staffMap.put("depName", depName);
+				}
+				if (staffDao.insertWxStaff(staffMap) == 0) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 					return new ServerResult<String>(1);
 				}
-				staffMap.put("companyName", companyName);
-				String depName = depDao.selectDepById(depId);
-				if (StringUtils.isEmpty(depName)) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult<String>(1);
-				}
-				staffMap.put("depName", depName);
-			} else if (depId >= 14) {
-				String companyName = companyDao.selectCompanyById(depId);
-				if (StringUtils.isEmpty(companyName)) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult<String>(1);
-				}
-				staffMap.put("companyName", companyName);
-				String depName = depDao.selectDepById(depId);
-				if (StringUtils.isEmpty(depName)) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					return new ServerResult<String>(1);
-				}
-				staffMap.put("depName", depName);
 			}
-			if (staffDao.insertWxStaff(staffMap) == 0) {
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				return new ServerResult<String>(1);
-			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return new ServerResult<String>(1);
 		}
 		return new ServerResult<String>(0);
 	}

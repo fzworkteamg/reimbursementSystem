@@ -26,7 +26,7 @@ public interface BillService {
 	 * 
 	 * @throws Exception
 	 */
-	ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception;
+	ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request);
 
 	/*
 	 * @Description: 增加账单
@@ -55,7 +55,7 @@ public interface BillService {
 	 * 
 	 * @throws ParseException
 	 */
-	LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request) throws ParseException;
+	LayuiResult<List<Bill>> selectBillByMonth(HttpServletRequest request);
 
 	/*
 	 * @Description: 查询指定状态的账单：待审核，已审核，驳回
