@@ -180,7 +180,12 @@ public class BillController {
 	public ServerResult<String> deleteBill(String billId) {
 		return billService.deleteBill(billId);
 	}
-
+	
+	/*
+	 * @Description: 显示报销列表
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/reimbursedBill")
 	LayuiResult<List<BillVo>> reimbursementBill(HttpServletRequest request) {
 		return billService.reimbursementBill(request);
