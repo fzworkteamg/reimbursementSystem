@@ -148,4 +148,18 @@ public class ViewController {
 	public String toShowBillDetail(HttpServletRequest request) {
 		return "bill/showDetail";
 	}
+
+	/*
+	 * @Description:弹出添加附件页面
+	 *
+	 * @param request
+	 *
+	 * @return
+	 *
+	 * @author fly
+	 */
+	@RequestMapping("toAddBillAppendix")
+	public String ttoAddBillAppendix(HttpServletRequest request) {
+		return "bill/billAppendix";
+	}
 }

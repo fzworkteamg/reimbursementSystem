@@ -1,5 +1,6 @@
 package cn.reimbursement.service;
 
+import java.security.Provider;
 import java.text.ParseException;
 import java.util.List;
 
@@ -7,8 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.util.LayuiResult;
+import cn.reimbursement.util.LayuiUploadResult;
 import cn.reimbursement.util.ServerResult;
 import cn.reimbursement.vo.BillVo;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @author linweijie
@@ -133,5 +137,7 @@ public interface BillService {
 	 * @return
 	 */
 	ServerResult<String> updateBillReimbursementComfirmByBillId(String billId);
+
+	LayuiUploadResult<String> addBillAppendix(MultipartHttpServletRequest request, MultipartFile[] files);
 
 }

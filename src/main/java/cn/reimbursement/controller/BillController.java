@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cn.reimbursement.util.LayuiUploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
 import cn.reimbursement.vo.BillVo;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @author linweijie
@@ -203,4 +206,14 @@ public class BillController {
 		return billService.updateBillReimbursementComfirmByBillId(billId);
 	}
 
+	/*
+	 * @Description: 批量上传附件
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/addBillAppendix")
+	public LayuiUploadResult<String> addBillAppendix(@RequestParam(value = "file", required = false) MultipartFile[] files,
+													 MultipartHttpServletRequest request){
+		return billService.addBillAppendix(request,files);
+	}
 }

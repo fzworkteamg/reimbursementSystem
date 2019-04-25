@@ -43,4 +43,6 @@ public interface BillDao {
 	Integer selectBillByCompanyDepNameCount(@Param("staffCompany") String staffCompany,@Param("staffDep") String staffDep,@Param("staffName") String staffName);
 	
 	Integer updateBillReimbursementComfirmByBillIdAndComfirm(@Param("billId")String billId,@Param("billReimbursementPersonConfirm")Integer billReimbursementPersonConfirm);
+
+	Integer addBillAppendix(@Param("billId")String billId,@Param("filePath")String filePath);
 }

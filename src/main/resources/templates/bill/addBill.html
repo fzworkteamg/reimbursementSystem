@@ -59,7 +59,7 @@
                     <tbody>
                     <tr>
                         <td class="firstTd">报销单号</td>
-                        <td><input type="text" style="width: 50px" value="hbf" required lay-verify="required"
+                        <td><input type="text" style="width: 50px" value="hbf" required lay-verify="required" id="bill_id_pre"
                                    name="bill_id_pre">+<input type="text"
                                                               style="width: 120px;background-color: #9F9F9F"
                                                               name="bill_id_suff" id="bill_id_suff">*自动生成
@@ -159,7 +159,7 @@
                         </td>
                         <td class="thirdTd">添加附件</td>
                         <td>
-                            <a href="#" class="layui-btn">添加附件</a>
+                            <a href='javascript:editBillDetail();' class="layui-btn">添加附件</a>
                         </td>
                     </tr>
                     <!--<tr>-->

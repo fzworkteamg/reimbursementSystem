@@ -272,4 +272,7 @@
 	<update id="updateBillReimbursementComfirmByBillIdAndComfirm">
 		UPDATE bill SET bill_reimbursement_person_confirm=#{billReimbursementPersonConfirm} WHERE bill_id=#{billId}
 	</update>
+	<insert id="addBillAppendix">
+		insert into file(bill_id,address) values (#{billId},#{filePath})
+	</insert>
 </mapper>

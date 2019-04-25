@@ -11,12 +11,16 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cn.reimbursement.util.FileUpload;
+import cn.reimbursement.util.LayuiUploadResult;
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.reimbursement.dao.BillDao;
@@ -54,6 +58,12 @@ public class BillServiceImpl implements BillService {
 	private BillDetailDao billDetailDao;
 	@Autowired
 	private BillRelationDao billRelationDao;
+	@Autowired
+	private ServerResult<String> serverResult;
+	@Autowired
+	private LayuiUploadResult<String> layuiUploadResult;
+	@Value("${file.uploadFolder}")
+	private String saveUrl;
 
 	public ServerResult<List<Bill>> selctBillByCompany(HttpServletRequest request) throws Exception {
 		Staff staff = (Staff) request.getSession().getAttribute(SessionEnum.STAFF.getValue());
@@ -331,6 +341,24 @@ public class BillServiceImpl implements BillService {
 			return new ServerResult<String>(1,InfoEnum.FAIL.getValue());
 		}
 		return new ServerResult<String>(0,InfoEnum.SUCCESS.getValue());
+	}
+
+	@Override
+	public LayuiUploadResult<String> addBillAppendix(MultipartHttpServletRequest request, MultipartFile[] files) {
+		if(files.length == 0){
+			layuiUploadResult.setMsg("无文件");
+		}else{
+			String billId = request.getParameter("billId");
+			List<String> list = FileUpload.fileMany(files,saveUrl,null,billId);
+			if (list.size() != 0 ){
+				for (int i=0;i<list.size();i++){
+					billDao.addBillAppendix(billId,list.get(i));
+				}
+				layuiUploadResult.setMsg("成功上传"+list.size()+"个附件");
+				layuiUploadResult.setCode(0);
+			}
+		}
+		return layuiUploadResult;
 	}
 
 }

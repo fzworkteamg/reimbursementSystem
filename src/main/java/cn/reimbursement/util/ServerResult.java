@@ -1,8 +1,10 @@
 package cn.reimbursement.util;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class ServerResult<T> {
 	private Integer status;
 	private String msg;

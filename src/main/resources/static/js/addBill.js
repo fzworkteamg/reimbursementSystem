@@ -30,6 +30,7 @@ var subjectIndex;
 var reiPersonIndex;
 var chargePersonIndex;
 var form;
+
 //载入table模块
 layui.use('table', function () {
     table = layui.table;
@@ -352,7 +353,7 @@ function selectPersonsByCompanyAndDepShowInPane(company, dep, type, flag) {
 
 }
 
-
+//弹出新增明细页面
 function toAddBillDetail() {
        var addBillIndex = layer.open({
             type: 2,
@@ -374,6 +375,21 @@ function toAddBillDetail() {
 }
 
 function editBillDetail() {
-
+        var addBillAppendix = layer.open({
+            type:2,
+            title:'附件新增',
+            shadeClose:false,
+            area : ['600px' , '400px'],
+            content: '/view/toAddBillAppendix',
+            cancel: function (index, layero) {
+                var index = layer.confirm('您确定关闭吗，关闭将不会保存你在此页面所做的操作', {
+                    btn: ['确定', '取消']
+                }, function () {
+                    layer.close(index);
+                    layer.close(addBillAppendix);
+                })
+                return false;
+            }
+        })
 }
 
