@@ -303,7 +303,6 @@ public class BillServiceImpl implements BillService {
 		return new ServerResult<String>(0);
 	}
 
-	@SuppressWarnings("static-access")
 	@Override
 	public LayuiResult<List<BillReimbursementStatusVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
 		HttpSession session = request.getSession();
