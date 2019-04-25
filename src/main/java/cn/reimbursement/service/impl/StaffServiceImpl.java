@@ -42,7 +42,7 @@ public class StaffServiceImpl implements StaffService {
 			String staffPassword) {
 		Staff staff = staffDao.selectStaffByTel(staffTel);
 		if (staff == null || !StringUtils.equals(staff.getStaffPassword(), staffPassword) || staff.getIsLogin() == 1
-				|| staffDao.updateIsLogin() == 0) {
+				|| staffDao.updateIsLogin(staffTel) == 0) {
 			return new ServerResult<String>(1, InfoEnum.FAIL.toString());
 		}
 		HttpSession session = request.getSession();
