@@ -1,18 +1,18 @@
 package cn.reimbursement.service;
 
-import java.security.Provider;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.LayuiUploadResult;
 import cn.reimbursement.util.ServerResult;
-import cn.reimbursement.vo.BillVo;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import cn.reimbursement.vo.BillReimbursementStatusVo;
 
 /**
  * @author linweijie
@@ -128,7 +128,7 @@ public interface BillService {
 	 * 
 	 * @return
 	 */
-	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request);
+	LayuiResult<List<BillReimbursementStatusVo>> selectBillByReimbursementStatus(HttpServletRequest request);
 
 	
 	/*
