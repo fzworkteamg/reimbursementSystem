@@ -36,7 +36,7 @@ import cn.reimbursement.pojo.Staff;
 import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
-import cn.reimbursement.vo.BillVo;
+import cn.reimbursement.vo.BillReimbursementStatusVo;
 
 /**
  * @author linweijie
@@ -58,8 +58,6 @@ public class BillServiceImpl implements BillService {
 	private BillDetailDao billDetailDao;
 	@Autowired
 	private BillRelationDao billRelationDao;
-	@Autowired
-	private ServerResult<String> serverResult;
 	@Autowired
 	private LayuiUploadResult<String> layuiUploadResult;
 	@Value("${file.uploadFolder}")
@@ -307,31 +305,18 @@ public class BillServiceImpl implements BillService {
 
 	@SuppressWarnings("static-access")
 	@Override
-	public LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
+	public LayuiResult<List<BillReimbursementStatusVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Staff staff = (Staff) session.getAttribute(SessionEnum.STAFF.getValue());
 		if (staff == null) {
-			return new LayuiResult<List<BillVo>>(InfoEnum.FAIL.getValue(), null, 1, 0);
+			return new LayuiResult<List<BillReimbursementStatusVo>>(InfoEnum.FAIL.getValue(), null, 1, 0);
 		}
 		int limit = Integer.parseInt(request.getParameter("limit"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		List<Bill> billList = billDao.selectBillByCompanyDepName(staff.getCompanyName(), staff.getDepName(),
 				staff.getStaffName(), limit, limit * (page - 1));
-		List<BillVo> billVoList = Lists.newArrayList();
-		for (Bill bill : billList) {
-			if (bill.getBillIsEnd() == 0) {
-				billVoList.add(bill.toBillVo(bill, 0));
-				continue;
-			}
-			if (bill.getBillIsEnd() == 1 && bill.getBillReimbursementPersonConfirm() == 0) {
-				billVoList.add(bill.toBillVo(bill, 1));
-				continue;
-			}
-			if (bill.getBillIsEnd() == 1 && bill.getBillReimbursementPersonConfirm() == 1) {
-				billVoList.add(bill.toBillVo(bill, 2));
-			}
-		}
-		return new LayuiResult<List<BillVo>>(InfoEnum.SUCCESS.getValue(), billVoList, 0, billDao
+		List<BillReimbursementStatusVo> billVoList = BillReimbursementStatusVo.toBillVoList(billList);
+		return new LayuiResult<List<BillReimbursementStatusVo>>(InfoEnum.SUCCESS.getValue(), billVoList, 0, billDao
 				.selectBillByCompanyDepNameCount(staff.getCompanyName(), staff.getDepName(), staff.getStaffName()));
 	}
 	

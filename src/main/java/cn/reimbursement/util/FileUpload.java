@@ -1,12 +1,11 @@
 package cn.reimbursement.util;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class FileUpload {
     /**
@@ -23,8 +22,8 @@ public class FileUpload {
         String newFileUrl = "";
         for(MultipartFile file : files){
             if(file != null){
-                String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-                System.out.println(file.getOriginalFilename());
+//                String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+//                System.out.println(file.getOriginalFilename());
                 String fileName = file.getOriginalFilename();
                 newFileUrl = newUrl+fileName;
                 File saveFile = new File(newFileUrl);

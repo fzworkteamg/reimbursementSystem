@@ -17,7 +17,7 @@ import cn.reimbursement.pojo.Bill;
 import cn.reimbursement.service.BillService;
 import cn.reimbursement.util.LayuiResult;
 import cn.reimbursement.util.ServerResult;
-import cn.reimbursement.vo.BillVo;
+import cn.reimbursement.vo.BillReimbursementStatusVo;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -192,7 +192,7 @@ public class BillController {
 	 * @return
 	 */
 	@PostMapping("/reimbursedBill")
-	LayuiResult<List<BillVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
+	LayuiResult<List<BillReimbursementStatusVo>> selectBillByReimbursementStatus(HttpServletRequest request) {
 		return billService.selectBillByReimbursementStatus(request);
 	}
 	
